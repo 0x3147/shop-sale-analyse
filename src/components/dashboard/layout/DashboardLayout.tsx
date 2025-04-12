@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { StoreSwitcher } from './StoreSwitcher'
 
 interface DashboardLayoutProps {
@@ -34,6 +34,11 @@ export function DashboardLayout({
         <div className="absolute left-0 top-0 h-8 w-8 border-l-2 border-t-2 border-[#2483ff]"></div>
         {/* 右上角装饰 */}
         <div className="absolute right-0 top-0 h-8 w-8 border-r-2 border-t-2 border-[#2483ff]"></div>
+
+        {/* 右侧当前时间 */}
+        <div className="absolute right-8 top-1/2 -translate-y-1/2">
+          <CurrentTime />
+        </div>
       </header>
 
       {/* 主内容区域 */}
@@ -50,6 +55,41 @@ export function DashboardLayout({
           当前门店: {activeStore === 'all' ? '全部门店' : `ID: ${activeStore}`}
         </span>
       </footer>
+    </div>
+  )
+}
+
+/**
+ * 当前时间组件 - 实时更新
+ */
+function CurrentTime() {
+  const [time, setTime] = useState(new Date())
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date())
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  const formattedDate = time.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  })
+
+  const formattedTime = time.toLocaleTimeString('zh-CN', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  })
+
+  return (
+    <div className="flex flex-col items-end">
+      <div className="text-lg font-bold text-[#6fbbff]">{formattedTime}</div>
+      <div className="text-xs text-slate-400">{formattedDate}</div>
     </div>
   )
 }

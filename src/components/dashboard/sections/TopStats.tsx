@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { DigitalFlop } from '../cards/DigitalFlop'
-import { StatisticCard } from '../cards/StatisticCard'
 import { generateSalesData, generateVisitorData } from '../utils/mockData'
 
 /**
@@ -47,9 +46,9 @@ export function TopStats() {
   }, [])
 
   return (
-    <>
+    <div className="col-span-12 mb-2 grid grid-cols-12 gap-4">
       {/* 总销售额 - 数字翻牌器 */}
-      <div className="col-span-4 flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90">
+      <div className="col-span-3 flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90">
         <div className="border-b border-[#1c3e7a] px-3 py-2">
           <h3 className="text-sm font-medium text-slate-300">今日总销售额</h3>
         </div>
@@ -62,112 +61,103 @@ export function TopStats() {
         </div>
       </div>
 
-      {/* B端、C端销售额 */}
-      <div className="col-span-4 flex flex-col gap-2">
-        <StatisticCard
-          title="B端销售额"
-          value={salesData.bEnd.toLocaleString('en-US')}
-          prefix="¥"
-          trend="up"
-          trendValue={`${salesData.bEndTrend.toFixed(2)}%`}
-          rowSpan={1}
-          colSpan={4}
-        />
-        <StatisticCard
-          title="C端销售额"
-          value={salesData.cEnd.toLocaleString('en-US')}
-          prefix="¥"
-          trend="up"
-          trendValue={`${salesData.cEndTrend.toFixed(2)}%`}
-          rowSpan={1}
-          colSpan={4}
-        />
+      {/* B端销售额 */}
+      <div className="col-span-2 flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90">
+        <div className="border-b border-[#1c3e7a] px-3 py-2">
+          <h3 className="text-sm font-medium text-slate-300">B端销售额</h3>
+        </div>
+        <div className="flex flex-1 flex-col items-center justify-center p-3">
+          <div className="mb-1 text-2xl font-bold text-[#6fbbff]">
+            ¥{salesData.bEnd.toLocaleString('en-US')}
+          </div>
+          <div className="text-xs text-green-400">
+            <span className="mr-1">↑</span>
+            <span>{salesData.bEndTrend.toFixed(2)}%</span>
+          </div>
+        </div>
       </div>
 
-      {/* 访客数据 */}
-      <div className="col-span-4 grid grid-cols-2 gap-2">
-        {/* 实时访客 */}
-        <div className="flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90 p-3">
-          <h3 className="mb-1 text-xs font-medium text-slate-300">
-            实时访客数
-          </h3>
+      {/* C端销售额 */}
+      <div className="col-span-2 flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90">
+        <div className="border-b border-[#1c3e7a] px-3 py-2">
+          <h3 className="text-sm font-medium text-slate-300">C端销售额</h3>
+        </div>
+        <div className="flex flex-1 flex-col items-center justify-center p-3">
+          <div className="mb-1 text-2xl font-bold text-[#6fbbff]">
+            ¥{salesData.cEnd.toLocaleString('en-US')}
+          </div>
+          <div className="text-xs text-green-400">
+            <span className="mr-1">↑</span>
+            <span>{salesData.cEndTrend.toFixed(2)}%</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 实时访客 */}
+      <div className="col-span-1 flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90">
+        <div className="border-b border-[#1c3e7a] px-3 py-2">
+          <h3 className="text-sm font-medium text-slate-300">实时访客</h3>
+        </div>
+        <div className="flex flex-1 flex-col items-center justify-center p-3">
           <div className="flex items-center">
-            <span className="relative flex h-3 w-3">
+            <span className="relative mr-1 flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-green-500"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
             </span>
-            <span className="ml-2 text-2xl font-bold text-green-400">
+            <span className="text-xl font-bold text-green-400">
               {visitorData.realTime}
             </span>
           </div>
-          <div className="mt-2 text-xs text-slate-400">实时更新</div>
-        </div>
-
-        {/* 今日访客总数 */}
-        <div className="flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90 p-3">
-          <h3 className="mb-1 text-xs font-medium text-slate-300">
-            今日访客总数
-          </h3>
-          <div className="text-2xl font-bold text-[#6fbbff]">
-            {visitorData.total.toLocaleString('en-US')}
-          </div>
-          <div className="mt-2 text-xs text-slate-400">
-            截至 {new Date().getHours()}:00
-          </div>
-        </div>
-
-        {/* 转化率 */}
-        <div className="flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90 p-3">
-          <h3 className="mb-1 text-xs font-medium text-slate-300">
-            实时转化率
-          </h3>
-          <div className="text-2xl font-bold text-yellow-400">
-            {visitorData.conversion}%
-          </div>
-          <div className="mt-2 text-xs text-slate-400">高于平均水平</div>
-        </div>
-
-        {/* 时间信息 */}
-        <div className="flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90 p-3">
-          <h3 className="mb-1 text-xs font-medium text-slate-300">当前时间</h3>
-          <CurrentTime />
         </div>
       </div>
-    </>
-  )
-}
 
-/**
- * 当前时间组件 - 实时更新
- */
-function CurrentTime() {
-  const [time, setTime] = useState(new Date())
+      {/* 今日访客总数 */}
+      <div className="col-span-1 flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90">
+        <div className="border-b border-[#1c3e7a] px-3 py-2">
+          <h3 className="text-sm font-medium text-slate-300">访客总数</h3>
+        </div>
+        <div className="flex flex-1 flex-col items-center justify-center p-3">
+          <div className="text-xl font-bold text-[#6fbbff]">
+            {visitorData.total.toLocaleString('en-US')}
+          </div>
+        </div>
+      </div>
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date())
-    }, 1000)
+      {/* 转化率 */}
+      <div className="col-span-1 flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90">
+        <div className="border-b border-[#1c3e7a] px-3 py-2">
+          <h3 className="text-sm font-medium text-slate-300">转化率</h3>
+        </div>
+        <div className="flex flex-1 flex-col items-center justify-center p-3">
+          <div className="text-xl font-bold text-yellow-400">
+            {visitorData.conversion}%
+          </div>
+        </div>
+      </div>
 
-    return () => clearInterval(timer)
-  }, [])
+      {/* 点击率 */}
+      <div className="col-span-1 flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90">
+        <div className="border-b border-[#1c3e7a] px-3 py-2">
+          <h3 className="text-sm font-medium text-slate-300">点击率</h3>
+        </div>
+        <div className="flex flex-1 flex-col items-center justify-center p-3">
+          <div className="text-xl font-bold text-blue-400">
+            {visitorData.click}%
+          </div>
+        </div>
+      </div>
 
-  const formattedDate = time.toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  })
-
-  const formattedTime = time.toLocaleTimeString('zh-CN', {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false
-  })
-
-  return (
-    <>
-      <div className="text-lg font-bold text-[#6fbbff]">{formattedTime}</div>
-      <div className="mt-2 text-xs text-slate-400">{formattedDate}</div>
-    </>
+      {/* 销售投产比 */}
+      <div className="col-span-1 flex flex-col rounded-sm border border-[#1c3e7a] bg-gradient-to-b from-[#0c2454]/90 to-[#0a1a3c]/90">
+        <div className="border-b border-[#1c3e7a] px-3 py-2">
+          <h3 className="text-sm font-medium text-slate-300">投产比</h3>
+        </div>
+        <div className="flex flex-1 flex-col items-center justify-center p-3">
+          <div className="text-xl font-bold text-purple-400">
+            {(salesData.total / (salesData.total * 0.12)).toFixed(1)}
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
