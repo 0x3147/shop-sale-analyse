@@ -3,7 +3,7 @@ import { GeoDistributionChart } from './charts/GeoDistributionChart'
 import HotProductsChart from './charts/HotProductsChart'
 import { MonthlySalesChart } from './charts/MonthlySalesChart'
 import { DashboardLayout } from './layout/DashboardLayout'
-import { TopStats } from './sections/TopStats'
+import { TopStats } from './sections/TopStats/index'
 
 /**
  * 数据大屏主组件
