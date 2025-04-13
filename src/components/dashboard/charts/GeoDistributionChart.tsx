@@ -113,7 +113,7 @@ export function GeoDistributionChart() {
       <BaseEChart
         option={option}
         loading={loading}
-        style={{ height: '180px' }}
+        style={{ height: '220px' }}
       />
     </DashboardCard>
   )
