@@ -1,0 +1,60 @@
+.hot-products-chart {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .filter-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+    gap: 8px;
+    flex-shrink: 0;
+
+    .filter-button {
+      padding: 3px 10px;
+      font-size: 12px;
+      border-radius: 3px;
+      border: none;
+      background-color: transparent;
+      color: #a1b4d4;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: rgba(28, 62, 122, 0.5);
+        color: #dbe6f6;
+      }
+
+      &.active {
+        background-color: rgba(59, 130, 246, 0.3);
+        color: #60a5fa;
+      }
+    }
+  }
+
+  .loading-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: #94a3b8;
+  }
+
+  :global {
+    .echarts-for-react {
+      flex: 1;
+      height: 100% !important;
+      width: 100% !important;
+
+      canvas {
+        height: 100% !important;
+      }
+    }
+
+    /* 确保图表容器有足够高度 */
+    .recharts-wrapper {
+      height: 100% !important;
+    }
+  }
+}

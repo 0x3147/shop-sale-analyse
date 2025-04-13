@@ -1,0 +1,38 @@
+.monthly-sales-chart {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 增强图表样式 */
+  :global {
+    .echarts-tooltip-diy {
+      background: rgba(0, 21, 41, 0.9);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+      border: 1px solid rgba(78, 131, 226, 0.2);
+      padding: 10px 15px;
+    }
+
+    .echarts-legend-text {
+      color: #a1b4d4 !important;
+    }
+
+    /* ECharts容器样式 */
+    .echarts-for-react {
+      flex: 1;
+      height: 100%;
+      width: 100% !important;
+
+      canvas {
+        height: 100% !important;
+      }
+    }
+
+    /* 调整图表网格 */
+    .echarts-react-container {
+      height: 100%;
+    }
+  }
+}

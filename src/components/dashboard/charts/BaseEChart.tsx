@@ -92,7 +92,7 @@ export function BaseEChart({
       className={`echarts-container ${className}`}
       showLoading={loading}
       theme={theme}
-      opts={{ renderer: 'canvas' }}
+      opts={{ renderer: 'canvas', devicePixelRatio: 2 }}
     />
   )
 }
