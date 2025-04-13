@@ -4,9 +4,9 @@ import './DashboardCard.less'
 interface DashboardCardProps {
   title: string
   children: ReactNode
-  className?: string
-  // 卡片内容高度
-  contentHeight?: string | number
+  colSpan?: number
+  rowSpan?: number
+  contentHeight?: string
   // 是否显示边框装饰
   showDecoration?: boolean
 }
@@ -18,25 +18,19 @@ interface DashboardCardProps {
 export function DashboardCard({
   title,
   children,
-  className = '',
-  contentHeight,
+  colSpan = 4,
+  rowSpan = 1,
+  contentHeight = 'auto',
   showDecoration = true
 }: DashboardCardProps) {
-  // 生成内容样式
-  const contentStyle = contentHeight ? { height: contentHeight } : {}
-
   return (
-    <div className={`dashboard-card ${className}`}>
-      {/* 卡片标题 */}
-      <div className="dashboard-card-header">
-        <h2 className="dashboard-card-title">{title}</h2>
-      </div>
-
-      {/* 卡片内容 */}
-      <div className="dashboard-card-content" style={contentStyle}>
-        {children}
-      </div>
-
+    <div
+      className="dashboard-card"
+      style={{
+        gridColumn: `span ${colSpan}`,
+        gridRow: `span ${rowSpan}`
+      }}
+    >
       {/* 装饰角 */}
       {showDecoration && (
         <>
@@ -46,6 +40,16 @@ export function DashboardCard({
           <div className="dashboard-card-corner dashboard-card-corner-br"></div>
         </>
       )}
+
+      {/* 卡片标题 */}
+      <div className="dashboard-card-header">
+        <h3 className="dashboard-card-title">{title}</h3>
+      </div>
+
+      {/* 卡片内容 */}
+      <div className="dashboard-card-content" style={{ height: contentHeight }}>
+        {children}
+      </div>
     </div>
   )
 }

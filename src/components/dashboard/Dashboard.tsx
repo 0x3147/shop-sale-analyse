@@ -1,7 +1,6 @@
-import { ConversionChart } from './charts/ConversionChart'
-import { GeoDistributionChart } from './charts/GeoDistributionChart'
 import './Dashboard.less'
 import { DashboardLayout } from './layout/DashboardLayout'
+import { BottomContent } from './sections/BottomContent'
 import { MidContent } from './sections/MidContent'
 import { TopStats } from './sections/TopStats/index'
 
@@ -24,14 +23,7 @@ export function Dashboard() {
 
       {/* 底部区域 - 转化率和地域分布 */}
       <div className="dashboard-section bottom-section">
-        <div className="charts-container">
-          <div className="chart-item">
-            <ConversionChart />
-          </div>
-          <div className="chart-item">
-            <GeoDistributionChart />
-          </div>
-        </div>
+        <BottomContent />
       </div>
     </DashboardLayout>
   )
