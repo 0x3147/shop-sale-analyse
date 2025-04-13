@@ -59,31 +59,47 @@ export function generateSalesData() {
  * @param count 产品数量
  * @returns 热门产品数据数组
  */
-export function generateHotProductsData(count = 5) {
+export function generateHotProductsData(count: number = 10) {
   const products = [
-    '智能手机',
-    '笔记本电脑',
-    '平板电脑',
-    '智能手表',
-    '无线耳机',
-    '游戏机',
-    '相机',
-    '音箱',
-    '显示器',
-    '键盘',
-    '鼠标',
-    '充电器'
+    { name: '智能工业机器人', type: 'bEnd' },
+    { name: '数据分析平台', type: 'bEnd' },
+    { name: '企业云服务套件', type: 'bEnd' },
+    { name: '工业物联网系统', type: 'bEnd' },
+    { name: '智能生产线解决方案', type: 'bEnd' },
+    { name: '办公协同软件', type: 'bEnd' },
+    { name: '企业安全防护系统', type: 'bEnd' },
+    { name: '智能手机Pro', type: 'cEnd' },
+    { name: '智能家居套装', type: 'cEnd' },
+    { name: '无线耳机MAX', type: 'cEnd' },
+    { name: '超薄笔记本电脑', type: 'cEnd' },
+    { name: '智能手表Ultra', type: 'cEnd' },
+    { name: '4K高清投影仪', type: 'cEnd' },
+    { name: '智能健康监测仪', type: 'cEnd' },
+    { name: '无线充电套装', type: 'cEnd' }
   ]
 
-  return Array.from({ length: count }, (_, i) => {
-    const productName = products[randomInt(0, products.length - 1)]
+  // 随机获取count个产品
+  const selectedProducts = [...products]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, count)
+
+  return selectedProducts.map((product) => {
+    // 生成更真实的销售数据，B端产品销售额通常更高
+    const baseValue =
+      product.type === 'bEnd'
+        ? Math.floor(Math.random() * 500000) + 500000
+        : Math.floor(Math.random() * 300000) + 200000
+
+    // 生成增长率，正负5%到30%之间
+    const growth = Math.floor(Math.random() * 60) - 30
+
     return {
-      id: i + 1,
-      name: productName,
-      sales: randomInt(50000, 500000),
-      growth: randomFloat(-10, 30, 1)
+      name: product.name,
+      type: product.type,
+      sales: baseValue,
+      growth: growth
     }
-  }).sort((a, b) => b.sales - a.sales)
+  })
 }
 
 /**
@@ -139,4 +155,68 @@ export function generateHotCountriesData(count = 5) {
       }
     })
     .sort((a, b) => b.value - a.value)
+}
+
+/**
+ * 生成月度销售数据
+ * @returns 月度销售数据
+ */
+export function generateMonthlySalesData() {
+  const months = [
+    '1月',
+    '2月',
+    '3月',
+    '4月',
+    '5月',
+    '6月',
+    '7月',
+    '8月',
+    '9月',
+    '10月',
+    '11月',
+    '12月'
+  ]
+
+  // 基础增长趋势 - 确保整体呈上升趋势
+  const baseGrowthB = Array(12)
+    .fill(0)
+    .map((_, i) => {
+      // 添加一些随机波动，但保持总体增长趋势
+      const trend = i * 50000 // 基础增长
+      const fluctuation = Math.random() * 100000 - 50000 // 随机波动
+      return Math.max(300000 + trend + fluctuation, 250000) // 确保最小值
+    })
+
+  const baseGrowthC = Array(12)
+    .fill(0)
+    .map((_, i) => {
+      // C端销售额略低，但增长更快
+      const trend = i * 60000 // 基础增长
+      const fluctuation = Math.random() * 80000 - 40000 // 随机波动
+      return Math.max(200000 + trend + fluctuation, 180000) // 确保最小值
+    })
+
+  // 添加季节性因素
+  // 例如：Q1增长缓慢，Q2增长加速，Q3略有下降，Q4节日季快速增长
+  const seasonalFactors = [
+    0.9, 0.95, 1.1, 1.0, 1.05, 1.1, 0.95, 0.9, 1.0, 1.1, 1.15, 1.25
+  ]
+
+  // 应用季节性因素
+  const bEndSales = baseGrowthB.map((value, i) =>
+    Math.round(value * seasonalFactors[i])
+  )
+  const cEndSales = baseGrowthC.map((value, i) =>
+    Math.round(value * seasonalFactors[i])
+  )
+
+  // 计算总销售额
+  const totalSales = bEndSales.map((b, i) => b + cEndSales[i])
+
+  return {
+    months,
+    bEndSales,
+    cEndSales,
+    totalSales
+  }
 }
