@@ -139,7 +139,7 @@ const HotProductsChart: React.FC = () => {
   }
 
   return (
-    <DashboardCard title="热门产品销售排行" colSpan={4} rowSpan={5}>
+    <DashboardCard title="热门产品销售排行" colSpan={4} rowSpan={3}>
       <div className="flex justify-end mb-3 space-x-2">
         <button
           className={`px-3 py-1 text-xs rounded-sm transition-colors ${
@@ -173,11 +173,11 @@ const HotProductsChart: React.FC = () => {
         </button>
       </div>
       {loading ? (
-        <div className="flex items-center justify-center h-[400px] text-slate-400">
+        <div className="flex items-center justify-center h-[300px] text-slate-400">
           加载中...
         </div>
       ) : (
-        <ReactECharts option={option} style={{ height: 320 }} notMerge={true} />
+        <ReactECharts option={option} style={{ height: 300 }} notMerge={true} />
       )}
     </DashboardCard>
   )

@@ -221,9 +221,13 @@ export function MonthlySalesChart() {
   }
 
   return (
-    <DashboardCard title="月度销售趋势" colSpan={8} rowSpan={5}>
+    <DashboardCard title="月度销售趋势" colSpan={8} rowSpan={3}>
       <div className="h-full">
-        <BaseEChart option={option} loading={loading} style={{ height: 360 }} />
+        <BaseEChart
+          option={option}
+          loading={loading}
+          style={{ height: '350px' }}
+        />
       </div>
     </DashboardCard>
   )

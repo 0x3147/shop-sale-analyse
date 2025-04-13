@@ -42,7 +42,7 @@ export function DashboardLayout({
       </header>
 
       {/* 主内容区域 */}
-      <main className="flex-1 overflow-hidden p-4">
+      <main className="flex-1 overflow-auto p-4 pb-10">
         <div className="grid h-full w-full grid-cols-12 grid-rows-6 gap-4">
           {children}
         </div>
