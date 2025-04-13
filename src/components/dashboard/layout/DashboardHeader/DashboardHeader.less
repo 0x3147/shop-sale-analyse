@@ -1,0 +1,56 @@
+.dashboard-header {
+  position: relative;
+  display: flex;
+  height: 96px;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #1d3b7b;
+  background-color: #0c1f44;
+
+  .title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #6fbbff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(111, 187, 255, 0.5);
+  }
+
+  .decoration {
+    position: absolute;
+    height: 48px;
+    width: 48px;
+
+    &.decoration-left-top {
+      left: 0;
+      top: 0;
+      border-left: 3px solid #2483ff;
+      border-top: 3px solid #2483ff;
+    }
+
+    &.decoration-right-top {
+      right: 0;
+      top: 0;
+      border-right: 3px solid #2483ff;
+      border-top: 3px solid #2483ff;
+    }
+  }
+
+  .time-container {
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: right;
+
+    .time {
+      font-size: 36px;
+      font-weight: bold;
+      color: #6fbbff;
+    }
+
+    .date {
+      font-size: 20px;
+      color: #94a3b8;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react'
-import { StoreSwitcher } from './StoreSwitcher'
+import { StoreSwitcher } from '../StoreSwitcher'
+import './DashboardHeader.less'
 
 interface DashboardLayoutProps {
   children: ReactNode
@@ -26,17 +27,17 @@ export function DashboardLayout({
     // 大屏主容器，深色背景，满屏显示
     <div className="flex h-screen w-screen flex-col overflow-hidden bg-[#0a1a3c] text-white">
       {/* 顶部标题区域 */}
-      <header className="relative flex h-16 items-center justify-center border-b border-[#1d3b7b] bg-[#0c1f44]">
-        <h1 className="text-2xl font-bold text-[#6fbbff]">{title}</h1>
+      <header className="dashboard-header">
+        <h1 className="title">{title}</h1>
         {/* 店铺选择器 */}
         <StoreSwitcher onChange={handleStoreChange} />
         {/* 左上角装饰 */}
-        <div className="absolute left-0 top-0 h-8 w-8 border-l-2 border-t-2 border-[#2483ff]"></div>
+        <div className="decoration decoration-left-top"></div>
         {/* 右上角装饰 */}
-        <div className="absolute right-0 top-0 h-8 w-8 border-r-2 border-t-2 border-[#2483ff]"></div>
+        <div className="decoration decoration-right-top"></div>
 
         {/* 右侧当前时间 */}
-        <div className="absolute right-8 top-1/2 -translate-y-1/2">
+        <div className="time-container">
           <CurrentTime />
         </div>
       </header>
@@ -87,9 +88,9 @@ function CurrentTime() {
   })
 
   return (
-    <div className="flex flex-col items-end">
-      <div className="text-lg font-bold text-[#6fbbff]">{formattedTime}</div>
-      <div className="text-xs text-slate-400">{formattedDate}</div>
-    </div>
+    <>
+      <div className="time">{formattedTime}</div>
+      <div className="date">{formattedDate}</div>
+    </>
   )
 }

@@ -2,7 +2,7 @@ import { ConversionChart } from './charts/ConversionChart'
 import { GeoDistributionChart } from './charts/GeoDistributionChart'
 import HotProductsChart from './charts/HotProductsChart'
 import { MonthlySalesChart } from './charts/MonthlySalesChart'
-import { DashboardLayout } from './layout/DashboardLayout'
+import { DashboardLayout } from './layout/DashboardHeader/DashboardLayout'
 import { TopStats } from './sections/TopStats'
 
 /**

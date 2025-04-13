@@ -1,0 +1,60 @@
+.store-switcher {
+  display: flex;
+  align-items: center;
+  min-width: 160px;
+
+  .label {
+    color: #fff;
+    margin-right: 8px;
+    font-size: 14px;
+  }
+
+  .ant-select {
+    color: #fff;
+    min-width: 120px;
+    background: transparent;
+
+    .ant-select-selector {
+      background-color: transparent !important;
+      border: none;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+  }
+
+  .select-arrow {
+    color: #3d77ff;
+    font-size: 12px;
+  }
+}
+
+// 全局样式，需要放在less文件中
+:global {
+  .store-select-dropdown {
+    background-color: #0d2552;
+    border-radius: 4px;
+    border: 1px solid #1d4393;
+
+    .ant-select-item {
+      color: rgba(255, 255, 255, 0.85);
+      background: transparent;
+
+      &:hover {
+        background-color: rgba(61, 119, 255, 0.1);
+      }
+    }
+
+    .ant-select-item-option-selected {
+      background-color: rgba(61, 119, 255, 0.2);
+      font-weight: 500;
+
+      &:hover {
+        background-color: rgba(61, 119, 255, 0.3);
+      }
+    }
+
+    .ant-select-item-option-active {
+      background-color: rgba(61, 119, 255, 0.1);
+    }
+  }
+}
