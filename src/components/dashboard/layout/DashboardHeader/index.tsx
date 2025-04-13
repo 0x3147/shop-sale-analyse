@@ -17,9 +17,12 @@ export function DashboardHeader({
 }: DashboardHeaderProps) {
   return (
     <header className="dashboard-header">
-      <h1 className="title">{title}</h1>
       {/* 店铺选择器 */}
       <StoreSwitcher onChange={onStoreChange} />
+
+      {/* 标题居中显示 */}
+      <h1 className="title">{title}</h1>
+
       {/* 左上角装饰 */}
       <div className="decoration decoration-left-top"></div>
       {/* 右上角装饰 */}

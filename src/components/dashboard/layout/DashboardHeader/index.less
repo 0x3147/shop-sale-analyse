@@ -5,14 +5,31 @@
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid #1d3b7b;
-  background-color: #0c1f44;
+  background: linear-gradient(to bottom, #0c2454, #0c1f44);
+  overflow: visible;
 
   .title {
-    font-size: 48px;
+    font-size: 46px;
     font-weight: bold;
     color: #6fbbff;
     letter-spacing: 2px;
     text-shadow: 0 0 10px rgba(111, 187, 255, 0.5);
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 5;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40%;
+      height: 3px;
+      background: linear-gradient(to right, transparent, #3d77ff, transparent);
+      border-radius: 3px;
+    }
   }
 
   .decoration {

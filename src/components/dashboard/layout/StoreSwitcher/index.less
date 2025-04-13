@@ -1,60 +1,248 @@
 .store-switcher {
   display: flex;
   align-items: center;
-  min-width: 160px;
+  min-width: 280px;
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    to right,
+    rgba(13, 37, 82, 0.6),
+    rgba(29, 67, 147, 0.4)
+  );
+  border: 1px solid rgba(61, 119, 255, 0.3);
+  border-radius: 20px;
+  padding: 6px 16px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 
-  .label {
-    color: #fff;
-    margin-right: 8px;
-    font-size: 14px;
-  }
+  &:hover {
+    border-color: rgba(61, 119, 255, 0.6);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 
-  .ant-select {
-    color: #fff;
-    min-width: 120px;
-    background: transparent;
-
-    .ant-select-selector {
-      background-color: transparent !important;
-      border: none;
-      box-shadow: none !important;
-      padding: 0 !important;
+    .store-location-icon {
+      transform: scale(1.05);
     }
   }
 
-  .select-arrow {
-    color: #3d77ff;
-    font-size: 12px;
+  // 活跃状态（下拉框打开时）
+  &.active {
+    border-color: rgba(61, 119, 255, 0.8);
+    box-shadow: 0 4px 15px rgba(61, 119, 255, 0.25);
+    background: linear-gradient(
+      to right,
+      rgba(13, 37, 82, 0.8),
+      rgba(29, 67, 147, 0.6)
+    );
+
+    .store-select-button {
+      .select-arrow {
+        transform: rotate(180deg);
+        background: rgba(61, 119, 255, 0.4);
+      }
+    }
+  }
+
+  .store-location-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3d77ff, #0a1a3c);
+    margin-right: 12px;
+    color: #fff;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+    cursor: pointer;
+  }
+
+  .store-select-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 32px;
+    width: 32px;
+
+    &:hover {
+      background: transparent;
+
+      .select-arrow {
+        background: rgba(61, 119, 255, 0.3);
+      }
+    }
+
+    &:focus {
+      background: transparent;
+    }
+
+    .anticon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .select-arrow {
+      color: #3d77ff;
+      font-size: 12px;
+      background: rgba(13, 37, 82, 0.5);
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid rgba(61, 119, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+  }
+
+  .selected-store-info {
+    flex: 1;
+    padding-left: 6px;
+    padding-right: 12px;
+    overflow: hidden;
+    margin-right: 5px;
+
+    .current-store {
+      color: #fff;
+      font-weight: 500;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .current-city {
+      color: #a7bdff;
+      font-size: 12px;
+      margin-top: 2px;
+      opacity: 0.8;
+    }
   }
 }
 
 // 全局样式，需要放在less文件中
 :global {
+  // Select下拉框样式
   .store-select-dropdown {
-    background-color: #0d2552;
-    border-radius: 4px;
+    padding: 8px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0d2552, #0f1e38);
     border: 1px solid #1d4393;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    min-width: 240px !important;
+    animation: dropdownFadeIn 0.2s ease;
 
-    .ant-select-item {
-      color: rgba(255, 255, 255, 0.85);
+    &:before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 20px;
+      width: 12px;
+      height: 12px;
+      background: #0d2552;
+      border-left: 1px solid #1d4393;
+      border-top: 1px solid #1d4393;
+      transform: rotate(45deg);
+    }
+
+    .ant-dropdown-menu {
       background: transparent;
+      box-shadow: none;
 
-      &:hover {
-        background-color: rgba(61, 119, 255, 0.1);
+      .ant-dropdown-menu-item {
+        padding: 4px;
+        margin-bottom: 4px;
+        background: transparent;
+        color: #ffffff;
+
+        &:hover {
+          background: rgba(61, 119, 255, 0.15);
+        }
+
+        &-active {
+          background: rgba(61, 119, 255, 0.15);
+        }
+
+        &-selected {
+          background: rgba(61, 119, 255, 0.25);
+
+          &:hover {
+            background: rgba(61, 119, 255, 0.3);
+          }
+        }
       }
     }
 
-    .ant-select-item-option-selected {
-      background-color: rgba(61, 119, 255, 0.2);
-      font-weight: 500;
+    .custom-option {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      cursor: pointer;
 
       &:hover {
-        background-color: rgba(61, 119, 255, 0.3);
+        background: rgba(61, 119, 255, 0.1);
+      }
+
+      .store-icon {
+        color: #3d77ff;
+        font-size: 16px;
+        margin-right: 10px;
+      }
+
+      .store-info {
+        flex: 1;
+
+        .store-name {
+          color: #ffffff;
+          font-size: 14px;
+          margin-bottom: 2px;
+        }
+
+        .store-city {
+          color: #a7bdff;
+          font-size: 12px;
+          opacity: 0.8;
+        }
       }
     }
+  }
 
-    .ant-select-item-option-active {
-      background-color: rgba(61, 119, 255, 0.1);
+  // Tooltip样式
+  .ant-tooltip {
+    .ant-tooltip-inner {
+      background-color: rgba(13, 37, 82, 0.9);
+      border: 1px solid #1d4393;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      color: #ffffff;
+      font-size: 12px;
     }
+
+    .ant-tooltip-arrow-content {
+      background-color: rgba(13, 37, 82, 0.9);
+    }
+  }
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
