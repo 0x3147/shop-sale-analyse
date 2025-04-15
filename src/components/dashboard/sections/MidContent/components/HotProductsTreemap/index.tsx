@@ -1,10 +1,11 @@
-import { DashboardCard } from '@/components/dashboard/cards/DashboardCard'
-import { ProductSalesBar } from '@/components/dashboard/charts/ProductSalesBar'
+import { useEffect, useState } from 'react'
+import { DashboardCard } from '../../../../cards/DashboardCard'
+// 使用相对路径导入ProductSalesBar组件
+import { ProductSalesBar } from '../../../../charts/ProductSalesBar'
 import {
   generateHotProductsData,
   ProductType
-} from '@/components/dashboard/utils/mockData'
-import { useEffect, useState } from 'react'
+} from '../../../../utils/mockData'
 import './index.less'
 
 /**
@@ -54,6 +55,7 @@ export function HotProductsTreemap() {
         </div>
 
         <div className="chart-container">
+          {/* 使用key确保组件完全重新渲染 */}
           <ProductSalesBar
             key={`product-chart-${activeType}`}
             data={filteredData}

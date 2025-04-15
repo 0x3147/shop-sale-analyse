@@ -1,6 +1,9 @@
 .shop-monthly-sales-content {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 
   // 工具提示样式覆盖
   :global {
@@ -15,6 +18,13 @@
     .tooltip-item {
       font-size: 12px;
       color: #a1b4d4;
+    }
+
+    .echarts-for-react {
+      flex: 1;
+      height: 100% !important;
+      width: 100% !important;
+      background-color: transparent !important;
     }
   }
 }

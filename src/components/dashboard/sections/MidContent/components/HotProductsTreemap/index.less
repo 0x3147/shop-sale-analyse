@@ -1,6 +1,8 @@
 .hot-products-content {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
   // 隐藏任何可能的轴线
   :global {
@@ -54,11 +56,17 @@
 
   // 图表容器
   .chart-container {
-    height: calc(100% - 45px);
-    padding-top: 5px;
+    flex: 1;
+    // height: calc(100% - 45px);
+    max-height: calc(100% - 45px);
+    padding-top: 10px;
+    overflow: hidden;
+    position: relative;
 
     :global {
       .echarts-for-react {
+        height: 100% !important;
+        width: 100% !important;
         background-color: transparent !important;
       }
     }
