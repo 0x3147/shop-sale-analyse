@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   plugins: {
     'postcss-px-to-viewport': {
       viewportWidth: 3840, // 基准宽度，对应设计稿宽度
