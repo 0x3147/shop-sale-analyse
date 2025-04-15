@@ -52,10 +52,16 @@
     }
   }
 
-  // 树图容器
-  .treemap-container {
-    height: calc(100% - 35px);
+  // 图表容器
+  .chart-container {
+    height: calc(100% - 45px);
     padding-top: 5px;
+
+    :global {
+      .echarts-for-react {
+        background-color: transparent !important;
+      }
+    }
   }
 
   // 工具提示样式

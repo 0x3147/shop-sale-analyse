@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react'
-import { DashboardCard } from '../../../../cards/DashboardCard'
-import { ProductSalesTreemap } from '../../../../charts/ProductSalesTreemap'
+import { DashboardCard } from '@/components/dashboard/cards/DashboardCard'
+import { ProductSalesBar } from '@/components/dashboard/charts/ProductSalesBar'
 import {
   generateHotProductsData,
   ProductType
-} from '../../../../utils/mockData'
+} from '@/components/dashboard/utils/mockData'
+import { useEffect, useState } from 'react'
 import './index.less'
 
 /**
- * 热门产品树图组件
+ * 热门产品柱状图组件
  * 展示各类产品的销售额数据
  */
 export function HotProductsTreemap() {
@@ -53,9 +53,9 @@ export function HotProductsTreemap() {
           </div>
         </div>
 
-        <div className="treemap-container">
-          <ProductSalesTreemap
-            key={`product-treemap-${activeType}`}
+        <div className="chart-container">
+          <ProductSalesBar
+            key={`product-chart-${activeType}`}
             data={filteredData}
             showTypeGroup={false}
             notMerge={true}
