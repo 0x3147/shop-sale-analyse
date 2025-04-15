@@ -3,4 +3,26 @@
   height: 100%;
   padding: 16px;
   box-sizing: border-box;
+
+  .mid-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-gap: 20px;
+    width: 100%;
+    height: 100%;
+
+    .mid-cell {
+      height: 100%;
+
+      // 月销售额占据左侧
+      &.monthly-sales {
+        grid-column: 1;
+      }
+
+      // 热门产品占据右侧
+      &.hot-products {
+        grid-column: 2;
+      }
+    }
+  }
 }

@@ -8,6 +8,7 @@ interface BaseEChartProps {
   style?: CSSProperties
   className?: string
   theme?: 'dark'
+  notMerge?: boolean
 }
 
 /**
@@ -19,7 +20,8 @@ export function BaseEChart({
   loading = false,
   style,
   className = '',
-  theme = 'dark'
+  theme = 'dark',
+  notMerge = false
 }: BaseEChartProps) {
   // 默认ECharts主题配置
   const [baseOption, setBaseOption] = useState<EChartsOption>({})
@@ -81,9 +83,14 @@ export function BaseEChart({
       }
     }
 
-    // 深度合并配置对象
-    setBaseOption({ ...defaultOption, ...option })
-  }, [option])
+    // 是否合并配置
+    if (notMerge) {
+      setBaseOption(option)
+    } else {
+      // 深度合并配置对象
+      setBaseOption({ ...defaultOption, ...option })
+    }
+  }, [option, notMerge])
 
   return (
     <ReactEcharts
@@ -93,6 +100,7 @@ export function BaseEChart({
       showLoading={loading}
       theme={theme}
       opts={{ renderer: 'canvas', devicePixelRatio: 2 }}
+      notMerge={notMerge}
     />
   )
 }
