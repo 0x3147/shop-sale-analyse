@@ -8,7 +8,14 @@ import './index.less'
 export function TopStats() {
   return (
     <div className="top-stats">
-      <ShopDailySales />
+      <div className="stats-grid">
+        {/* 店铺日销售额 */}
+        <div className="stats-cell daily-sales">
+          <ShopDailySales />
+        </div>
+
+        {/* 未来可以添加更多卡片 */}
+      </div>
     </div>
   )
 }

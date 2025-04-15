@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { DashboardCard } from '../../../../cards/DashboardCard'
 import { DigitalFlop } from '../../../../cards/DigitalFlop'
 import { ShopSalesBar } from '../../../../charts/ShopSalesBar'
 import { generateShopsSalesData } from '../../../../utils/mockData'
@@ -27,27 +28,24 @@ export function ShopDailySales() {
   }, [])
 
   return (
-    <div className="shop-daily-sales">
-      {/* 总销售额数字翻牌器 */}
-      <div className="total-sales">
-        <div className="label">今日总销售额</div>
-        <DigitalFlop
-          value={totalSales}
-          precision={0}
-          prefix="¥"
-          className="digital-value"
-        />
-      </div>
+    <DashboardCard title="店铺日销售额" contentHeight="100%">
+      <div className="shop-daily-sales-content">
+        {/* 总销售额数字翻牌器 */}
+        <div className="total-sales">
+          <div className="label">今日总销售额</div>
+          <DigitalFlop
+            value={totalSales}
+            precision={0}
+            prefix="¥"
+            className="digital-value"
+          />
+        </div>
 
-      {/* 店铺销售额横向柱状图 */}
-      <div className="sales-chart">
-        <ShopSalesBar
-          data={salesData}
-          title="各店铺销售额"
-          autoSort={true}
-          unit="¥"
-        />
+        {/* 店铺销售额横向柱状图 */}
+        <div className="sales-chart">
+          <ShopSalesBar data={salesData} autoSort={true} unit="¥" />
+        </div>
       </div>
-    </div>
+    </DashboardCard>
   )
 }

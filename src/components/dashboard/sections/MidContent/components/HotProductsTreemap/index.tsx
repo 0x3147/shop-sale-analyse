@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { DashboardCard } from '../../../../cards/DashboardCard'
 import { ProductSalesTreemap } from '../../../../charts/ProductSalesTreemap'
 import {
   generateHotProductsData,
@@ -32,31 +33,35 @@ export function HotProductsTreemap() {
   )
 
   return (
-    <div className="hot-products-treemap">
-      <div className="product-type-tabs">
-        <div
-          className={`tab-item ${activeType === ProductType.B_END ? 'active' : ''}`}
-          onClick={() => setActiveType(ProductType.B_END)}
-        >
-          B端产品
+    <DashboardCard
+      title={`热门${activeType}销售`}
+      contentHeight="calc(100% - 40px)"
+    >
+      <div className="hot-products-content">
+        <div className="product-type-tabs">
+          <div
+            className={`tab-item ${activeType === ProductType.B_END ? 'active' : ''}`}
+            onClick={() => setActiveType(ProductType.B_END)}
+          >
+            B端产品
+          </div>
+          <div
+            className={`tab-item ${activeType === ProductType.C_END ? 'active' : ''}`}
+            onClick={() => setActiveType(ProductType.C_END)}
+          >
+            C端产品
+          </div>
         </div>
-        <div
-          className={`tab-item ${activeType === ProductType.C_END ? 'active' : ''}`}
-          onClick={() => setActiveType(ProductType.C_END)}
-        >
-          C端产品
-        </div>
-      </div>
 
-      <div style={{ height: 'calc(100% - 45px)', paddingTop: '5px' }}>
-        <ProductSalesTreemap
-          key={`product-treemap-${activeType}`}
-          data={filteredData}
-          title={`热门${activeType}销售`}
-          showTypeGroup={false}
-          notMerge={true}
-        />
+        <div className="treemap-container">
+          <ProductSalesTreemap
+            key={`product-treemap-${activeType}`}
+            data={filteredData}
+            showTypeGroup={false}
+            notMerge={true}
+          />
+        </div>
       </div>
-    </div>
+    </DashboardCard>
   )
 }

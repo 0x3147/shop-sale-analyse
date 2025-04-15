@@ -1,11 +1,6 @@
-.hot-products-treemap {
+.hot-products-content {
   width: 100%;
   height: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  border-radius: 8px;
-  background-color: rgba(5, 30, 70, 0.5);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 
   // 隐藏任何可能的轴线
   :global {
@@ -55,6 +50,12 @@
         box-shadow: 0 0 10px rgba(100, 180, 255, 0.3);
       }
     }
+  }
+
+  // 树图容器
+  .treemap-container {
+    height: calc(100% - 45px);
+    padding-top: 5px;
   }
 
   // 工具提示样式

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { DashboardCard } from '../../../../cards/DashboardCard'
 import { ShopMonthlySales } from '../../../../charts/ShopMonthlySales'
 import { generateMonthlyShopSalesData } from '../../../../utils/mockData'
 import './index.less'
@@ -22,13 +23,14 @@ export function ShopMonthlySalesChart() {
   }, [])
 
   return (
-    <div className="shop-monthly-sales-chart">
-      <ShopMonthlySales
-        data={salesData}
-        title="店铺月销售额趋势"
-        showLegend={true}
-        maxShops={7} // 最多显示7个店铺的数据，避免图表过于拥挤
-      />
-    </div>
+    <DashboardCard title="店铺月销售额趋势" contentHeight="100%">
+      <div className="shop-monthly-sales-content">
+        <ShopMonthlySales
+          data={salesData}
+          showLegend={true}
+          maxShops={7} // 最多显示7个店铺的数据，避免图表过于拥挤
+        />
+      </div>
+    </DashboardCard>
   )
 }
