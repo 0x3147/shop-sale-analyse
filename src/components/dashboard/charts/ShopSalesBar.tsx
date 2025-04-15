@@ -34,10 +34,7 @@ interface ShopSalesBarProps {
    * 是否自动排序
    */
   autoSort?: boolean
-  /**
-   * 标题
-   */
-  title?: string
+
   /**
    * 单位
    */
@@ -54,7 +51,7 @@ export function ShopSalesBar({
   className,
   loading = false,
   autoSort = true,
-  title = '店铺销售额',
+
   unit = '¥'
 }: ShopSalesBarProps) {
   // ECharts配置项
@@ -76,13 +73,6 @@ export function ShopSalesBar({
 
     // 设置柱状图配置
     const chartOption: EChartsOption = {
-      title: {
-        text: title,
-        left: 'center',
-        textStyle: {
-          fontSize: 16
-        }
-      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -171,7 +161,7 @@ export function ShopSalesBar({
     }
 
     setOption(chartOption)
-  }, [data, autoSort, title, unit])
+  }, [data, autoSort, unit])
 
   return (
     <BaseEChart

@@ -35,10 +35,6 @@ interface ShopMonthlySalesProps {
    */
   loading?: boolean
   /**
-   * 标题
-   */
-  title?: string
-  /**
    * 是否显示图例
    */
   showLegend?: boolean
@@ -58,7 +54,6 @@ export function ShopMonthlySales({
   style,
   className,
   loading = false,
-  title = '店铺月度销售趋势',
   showLegend = true,
   maxShops = 5
 }: ShopMonthlySalesProps) {
@@ -121,13 +116,6 @@ export function ShopMonthlySales({
 
     // 设置折线图配置
     const chartOption: any = {
-      title: {
-        text: title,
-        left: 'center',
-        textStyle: {
-          fontSize: 16
-        }
-      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -228,7 +216,7 @@ export function ShopMonthlySales({
     }
 
     setOption(chartOption)
-  }, [data, title, showLegend, maxShops])
+  }, [data, showLegend, maxShops])
 
   return (
     <BaseEChart

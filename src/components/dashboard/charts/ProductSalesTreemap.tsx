@@ -36,10 +36,7 @@ interface ProductSalesTreemapProps {
    * 是否显示加载状态
    */
   loading?: boolean
-  /**
-   * 图表标题
-   */
-  title?: string
+
   /**
    * 是否显示产品类型分组
    */
@@ -59,7 +56,6 @@ export function ProductSalesTreemap({
   style,
   className,
   loading = false,
-  title = '热门产品销售',
   showTypeGroup = true,
   notMerge = false
 }: ProductSalesTreemapProps) {
@@ -148,13 +144,6 @@ export function ProductSalesTreemap({
 
     // 设置矩形树图配置
     const chartOption: any = {
-      title: {
-        text: title,
-        left: 'center',
-        textStyle: {
-          fontSize: 16
-        }
-      },
       // 禁用动画
       animation: false,
       // 完全隐藏坐标轴和网格
@@ -362,7 +351,7 @@ export function ProductSalesTreemap({
     }
 
     setOption(chartOption)
-  }, [data, title, showTypeGroup])
+  }, [data, showTypeGroup])
 
   return (
     <BaseEChart

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { DashboardCard } from '../../../../cards/DashboardCard'
-import { DigitalFlop } from '../../../../cards/DigitalFlop'
 import { ShopSalesBar } from '../../../../charts/ShopSalesBar'
 import { generateShopsSalesData } from '../../../../utils/mockData'
 import './index.less'
@@ -12,9 +11,6 @@ import './index.less'
 export function ShopDailySales() {
   // 店铺销售额数据
   const [salesData, setSalesData] = useState(generateShopsSalesData())
-
-  // 计算总销售额
-  const totalSales = salesData.reduce((sum, shop) => sum + shop.sales, 0)
 
   // 模拟实时数据更新
   useEffect(() => {
@@ -30,17 +26,6 @@ export function ShopDailySales() {
   return (
     <DashboardCard title="店铺日销售额" contentHeight="100%">
       <div className="shop-daily-sales-content">
-        {/* 总销售额数字翻牌器 */}
-        <div className="total-sales">
-          <div className="label">今日总销售额</div>
-          <DigitalFlop
-            value={totalSales}
-            precision={0}
-            prefix="¥"
-            className="digital-value"
-          />
-        </div>
-
         {/* 店铺销售额横向柱状图 */}
         <div className="sales-chart">
           <ShopSalesBar data={salesData} autoSort={true} unit="¥" />
