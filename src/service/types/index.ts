@@ -30,3 +30,12 @@ export interface MonthlySales {
  * 以店铺名称为键，值为该店铺的销售数据数组
  */
 export type MonthSalesResponse = Record<string, MonthlySales[]>
+
+/**
+ * 热门产品数据类型
+ */
+export interface ProductSummary {
+  product_id: number
+  product_name: string
+  total_sales: number
+}

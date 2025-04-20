@@ -1,65 +1,35 @@
-import { useEffect, useState } from 'react'
-import { DashboardCard } from '../../../../cards/DashboardCard'
-// 使用相对路径导入ProductSalesBar组件
-import { ProductSalesBar } from '../../../../charts/ProductSalesBar'
-import {
-  generateHotProductsData,
-  ProductType
-} from '../../../../utils/mockData'
+import { DashboardCard } from '@/components/dashboard/cards/DashboardCard'
+import { ProductSalesBar } from '@/components/dashboard/charts/ProductSalesBar'
+import { getHotProducts } from '@/service/api/index'
+import { useRequest } from 'ahooks'
 import './index.less'
 
 /**
  * 热门产品柱状图组件
- * 展示各类产品的销售额数据
+ * 展示热门产品的销售额数据
  */
 export function HotProductsTreemap() {
-  // 产品销售数据
-  const [productData, setProductData] = useState(generateHotProductsData())
-  // 当前选中的产品类型
-  const [activeType, setActiveType] = useState<ProductType>(ProductType.B_END)
+  // 使用API获取热门产品数据
+  const { data, loading } = useRequest(getHotProducts, {
+    pollingInterval: 30000, // 每30秒轮询一次
+    pollingWhenHidden: false, // 页面隐藏时不轮询
+    loadingDelay: 300, // 延迟显示loading状态，避免闪烁
+    refreshOnWindowFocus: false, // 窗口获取焦点时不自动刷新
+    onError: (error) => {
+      console.error('获取热门产品数据失败:', error)
+    }
+  })
 
-  // 模拟数据定期更新
-  useEffect(() => {
-    // 每30秒更新一次数据
-    const timer = setInterval(() => {
-      setProductData(generateHotProductsData())
-    }, 30000)
-
-    return () => clearInterval(timer)
-  }, [])
-
-  // 根据选中的类型过滤数据
-  const filteredData = productData.filter(
-    (product) => product.type === activeType
-  )
+  // 从API获取的产品数据
+  const productData = data?.data || []
 
   return (
-    <DashboardCard
-      title={`热门${activeType}销售`}
-      contentHeight="calc(100% - 40px)"
-    >
+    <DashboardCard title="热门产品销量排行" contentHeight="100%">
       <div className="hot-products-content">
-        <div className="product-type-tabs">
-          <div
-            className={`tab-item ${activeType === ProductType.B_END ? 'active' : ''}`}
-            onClick={() => setActiveType(ProductType.B_END)}
-          >
-            B端产品
-          </div>
-          <div
-            className={`tab-item ${activeType === ProductType.C_END ? 'active' : ''}`}
-            onClick={() => setActiveType(ProductType.C_END)}
-          >
-            C端产品
-          </div>
-        </div>
-
-        <div className="chart-container">
-          {/* 使用key确保组件完全重新渲染 */}
+        <div className="chart-container" style={{ height: '100%' }}>
           <ProductSalesBar
-            key={`product-chart-${activeType}`}
-            data={filteredData}
-            showTypeGroup={false}
+            data={productData}
+            loading={loading}
             notMerge={true}
           />
         </div>
