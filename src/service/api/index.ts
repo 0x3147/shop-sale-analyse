@@ -3,7 +3,8 @@ import type {
   ApiResponse,
   DailySales,
   MonthSalesResponse,
-  ProductSummary
+  ProductSummary,
+  Traffic
 } from '../types'
 
 /**
@@ -28,4 +29,12 @@ export function getStoreMonthSales(): Promise<ApiResponse<MonthSalesResponse>> {
  */
 export function getHotProducts(): Promise<ApiResponse<ProductSummary[]>> {
   return get<ApiResponse<ProductSummary[]>>('/dashboard/hot_products/')
+}
+
+/**
+ * 获取所有店铺流量数据
+ * @returns 所有店铺的流量、访客、转化率和点击率数据
+ */
+export function getStoreTraffic(): Promise<ApiResponse<Traffic[]>> {
+  return get<ApiResponse<Traffic[]>>('/dashboard/store_traffic/')
 }

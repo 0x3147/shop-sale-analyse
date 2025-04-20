@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import './DashboardCard.less'
 
-interface DashboardCardProps {
+export interface DashboardCardProps {
   title: string
   children: ReactNode
   colSpan?: number
@@ -9,6 +9,8 @@ interface DashboardCardProps {
   contentHeight?: string
   // 是否显示边框装饰
   showDecoration?: boolean
+  // 标题栏右侧额外内容
+  extra?: ReactNode
 }
 
 /**
@@ -21,7 +23,8 @@ export function DashboardCard({
   colSpan = 4,
   rowSpan = 1,
   contentHeight = 'auto',
-  showDecoration = true
+  showDecoration = true,
+  extra
 }: DashboardCardProps) {
   return (
     <div
@@ -44,6 +47,7 @@ export function DashboardCard({
       {/* 卡片标题 */}
       <div className="dashboard-card-header">
         <h3 className="dashboard-card-title">{title}</h3>
+        {extra && <div className="dashboard-card-extra">{extra}</div>}
       </div>
 
       {/* 卡片内容 */}

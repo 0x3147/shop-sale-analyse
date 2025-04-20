@@ -39,3 +39,18 @@ export interface ProductSummary {
   product_name: string
   total_sales: number
 }
+
+/**
+ * 店铺流量数据类型
+ */
+export interface Traffic {
+  id: number
+  store_id: number
+  store_name: string
+  category: string
+  timestamp: string
+  exposure: number // 曝光量
+  visitors: number // 访客数
+  conversion_rate: number // 转化率
+  click_rate: number // 点击率
+}

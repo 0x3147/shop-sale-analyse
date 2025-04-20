@@ -1,238 +1,74 @@
-import { EChartsOption } from 'echarts'
-import { useEffect, useState } from 'react'
-import { DashboardCard } from '../../../../cards/DashboardCard'
-import { BaseEChart } from '../../../../charts/BaseEChart'
-import { randomFloat } from '../../../../utils/mockData'
+import { DashboardCard } from '@/components/dashboard/cards/DashboardCard'
+import { StoreTrafficChart } from '@/components/dashboard/charts/StoreTrafficChart'
+import { getStoreTraffic } from '@/service/api/index'
+import { useRequest } from 'ahooks'
+import { useState } from 'react'
 import './index.less'
 
-interface ConversionData {
-  date: string
-  conversion: number
-  click: number
-}
+// 指标切换类型
+type MetricType = 'exposure' | 'visitors' | 'conversion_rate' | 'click_rate'
 
-/**
- * 生成模拟的转化率和点击率数据
- */
-function generateConversionData(): ConversionData[] {
-  // 生成最近30天的数据
-  const data: ConversionData[] = []
-  const now = new Date()
-
-  for (let i = 29; i >= 0; i--) {
-    const date = new Date(now)
-    date.setDate(date.getDate() - i)
-    const dateStr = date.toLocaleDateString('zh-CN', {
-      month: 'numeric',
-      day: 'numeric'
-    })
-
-    // 生成随机转化率和点击率，确保有一定的趋势性
-    const baseConversion = 3 + Math.sin(i / 10) * 0.5 // 基础转化率在2.5%~3.5%之间波动
-    const baseClick = 22 + Math.cos(i / 8) * 4 // 基础点击率在18%~26%之间波动
-
-    // 添加随机波动
-    const conversion = randomFloat(
-      Math.max(2, baseConversion - 0.8),
-      Math.min(5, baseConversion + 0.8),
-      1
-    )
-    const click = randomFloat(
-      Math.max(15, baseClick - 3),
-      Math.min(30, baseClick + 3),
-      1
-    )
-
-    data.push({
-      date: dateStr,
-      conversion,
-      click
-    })
-  }
-
-  return data
-}
+// 指标数据
+const metricOptions = [
+  { key: 'exposure', label: '曝光量' },
+  { key: 'visitors', label: '访客数' },
+  { key: 'conversion_rate', label: '转化率' },
+  { key: 'click_rate', label: '点击率' }
+]
 
 /**
  * 转化率和点击率图表组件
  */
 export function ConversionTrend() {
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState<ConversionData[]>(generateConversionData())
+  // 当前选中的指标
+  const [activeMetric, setActiveMetric] =
+    useState<MetricType>('conversion_rate')
 
-  useEffect(() => {
-    // 模拟数据加载
-    const timer = setTimeout(() => {
-      setLoading(false)
-    }, 1000)
+  // 使用API获取店铺流量数据
+  const { data, loading } = useRequest(getStoreTraffic, {
+    pollingInterval: 30000, // 每30秒轮询一次
+    loadingDelay: 300, // 延迟显示loading状态，避免闪烁
+    refreshOnWindowFocus: false, // 窗口获取焦点时不自动刷新
+    onError: (error) => {
+      console.error('获取店铺流量数据失败:', error)
+    }
+  })
 
-    return () => clearTimeout(timer)
-  }, [])
+  // 从API获取的流量数据
+  const trafficData = data?.data || []
 
-  // 定义图表配置
-  const option: EChartsOption = {
-    tooltip: {
-      trigger: 'axis',
-      formatter: function (params: any) {
-        const date = params[0].name
-        const conversion = params[0].value
-        const click = params[1].value
-
-        return `<div style="font-size:14px;color:#fff;font-weight:bold;margin-bottom:8px">${date}</div>
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <span style="margin-right:5px;display:inline-block;width:10px;height:10px;border-radius:50%;background-color:${params[0].color};"></span>
-                  <span style="flex:1">转化率:</span>
-                  <span style="font-weight:bold">${conversion}%</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <span style="margin-right:5px;display:inline-block;width:10px;height:10px;border-radius:50%;background-color:${params[1].color};"></span>
-                  <span style="flex:1">点击率:</span>
-                  <span style="font-weight:bold">${click}%</span>
-                </div>`
-      }
-    },
-    legend: {
-      data: ['转化率', '点击率'],
-      textStyle: {
-        color: '#a1b4d4'
-      },
-      right: 10,
-      top: 0
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '5%',
-      top: '50px',
-      containLabel: true
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: data.map((item) => item.date),
-      axisLabel: {
-        rotate: 45,
-        interval: 'auto'
-      }
-    },
-    yAxis: [
-      {
-        type: 'value',
-        name: '转化率',
-        min: 0,
-        max: 6,
-        interval: 1,
-        axisLabel: {
-          formatter: '{value}%'
-        },
-        position: 'left',
-        axisLine: {
-          show: true,
-          lineStyle: {
-            color: '#f59e0b'
-          }
-        },
-        splitLine: {
-          lineStyle: {
-            color: '#162c57'
-          }
-        }
-      },
-      {
-        type: 'value',
-        name: '点击率',
-        min: 0,
-        max: 40,
-        interval: 5,
-        axisLabel: {
-          formatter: '{value}%'
-        },
-        position: 'right',
-        axisLine: {
-          show: true,
-          lineStyle: {
-            color: '#3b82f6'
-          }
-        },
-        splitLine: {
-          show: false
-        }
-      }
-    ],
-    series: [
-      {
-        name: '转化率',
-        type: 'line',
-        yAxisIndex: 0,
-        data: data.map((item) => item.conversion),
-        smooth: true,
-        showSymbol: false,
-        lineStyle: {
-          width: 3,
-          color: '#f59e0b'
-        },
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: 'rgba(245, 158, 11, 0.3)'
-              },
-              {
-                offset: 1,
-                color: 'rgba(245, 158, 11, 0.05)'
-              }
-            ]
-          }
-        }
-      },
-      {
-        name: '点击率',
-        type: 'line',
-        yAxisIndex: 1,
-        data: data.map((item) => item.click),
-        smooth: true,
-        showSymbol: false,
-        lineStyle: {
-          width: 3,
-          color: '#3b82f6'
-        },
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: 'rgba(59, 130, 246, 0.3)'
-              },
-              {
-                offset: 1,
-                color: 'rgba(59, 130, 246, 0.05)'
-              }
-            ]
-          }
-        }
-      }
-    ]
+  // 指标切换
+  const handleMetricChange = (metric: MetricType) => {
+    setActiveMetric(metric)
   }
 
+  // 获取当前指标信息
+  const currentMetric = metricOptions.find((item) => item.key === activeMetric)
+
   return (
-    <DashboardCard title="转化率与点击率趋势" contentHeight="300px">
+    <DashboardCard
+      title={`店铺${currentMetric?.label || '流量数据'}排行`}
+      contentHeight="300px"
+    >
       <div className="conversion-trend-chart">
-        <BaseEChart
-          option={option}
-          loading={loading}
-          style={{ height: '100%', width: '100%' }}
-        />
+        <div className="metric-tabs">
+          {metricOptions.map((option) => (
+            <div
+              key={option.key}
+              className={`metric-tab ${activeMetric === option.key ? 'active' : ''}`}
+              onClick={() => handleMetricChange(option.key as MetricType)}
+            >
+              {option.label}
+            </div>
+          ))}
+        </div>
+        <div className="chart-container">
+          <StoreTrafficChart
+            data={trafficData}
+            loading={loading}
+            activeMetric={activeMetric}
+          />
+        </div>
       </div>
     </DashboardCard>
   )
