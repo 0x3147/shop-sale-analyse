@@ -4,9 +4,14 @@ import axios, {
   InternalAxiosRequestConfig
 } from 'axios'
 
+// 根据环境确定baseURL
+// 开发环境使用相对路径，让代理生效
+// 生产环境使用完整URL
+const BASE_URL = import.meta.env.DEV ? '' : 'http://8.141.124.102:8000/'
+
 // 创建axios实例
 const service: AxiosInstance = axios.create({
-  baseURL: 'http://8.141.124.102:8000/',
+  baseURL: BASE_URL,
   timeout: 30000, // 请求超时时间
   headers: {
     'Content-Type': 'application/json;charset=utf-8'

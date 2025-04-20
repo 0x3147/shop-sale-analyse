@@ -1,5 +1,6 @@
 import { EChartsOption } from 'echarts'
 import { CSSProperties, useEffect, useState } from 'react'
+import { DailySales } from '../../../service/types'
 import { BaseEChart } from './BaseEChart'
 
 /**
@@ -17,7 +18,7 @@ interface ShopSalesBarProps {
   /**
    * 店铺销售额数据
    */
-  data: ShopSalesData[]
+  data: DailySales[]
   /**
    * 组件样式
    */
@@ -34,12 +35,29 @@ interface ShopSalesBarProps {
    * 是否自动排序
    */
   autoSort?: boolean
-
   /**
    * 单位
    */
   unit?: string
+  /**
+   * 颜色映射，如果没有提供，则使用默认颜色
+   */
+  colorMap?: Record<string, string>
 }
+
+// 默认颜色列表
+const DEFAULT_COLORS = [
+  '#5470c6',
+  '#91cc75',
+  '#fac858',
+  '#ee6666',
+  '#73c0de',
+  '#3ba272',
+  '#fc8452',
+  '#9a60b4',
+  '#ea7ccc',
+  '#1d7fbc'
+]
 
 /**
  * 店铺销售额横向柱状图组件
@@ -51,8 +69,8 @@ export function ShopSalesBar({
   className,
   loading = false,
   autoSort = true,
-
-  unit = '¥'
+  unit = '¥',
+  colorMap = {}
 }: ShopSalesBarProps) {
   // ECharts配置项
   const [option, setOption] = useState<EChartsOption>({})
@@ -61,10 +79,21 @@ export function ShopSalesBar({
   useEffect(() => {
     if (!data || data.length === 0) return
 
+    // 将接口数据转换为组件所需的数据格式
+    const formattedData = data.map((item, index) => ({
+      id: item.store_id,
+      name: item.store_name,
+      color:
+        colorMap[item.store_name] ||
+        DEFAULT_COLORS[index % DEFAULT_COLORS.length],
+      sales: item.sales,
+      trend: 0 // 接口数据中没有趋势数据，默认为0
+    }))
+
     // 如果需要自动排序，则按销售额降序排列
     const sortedData = autoSort
-      ? [...data].sort((a, b) => b.sales - a.sales)
-      : data
+      ? [...formattedData].sort((a, b) => b.sales - a.sales)
+      : formattedData
 
     // 准备柱状图数据
     const shopNames = sortedData.map((item) => item.name)
@@ -81,15 +110,11 @@ export function ShopSalesBar({
         formatter: (params: any) => {
           const data = params[0]
           const shop = sortedData.find((item) => item.name === data.name)
-          const trendIcon = shop?.trend && shop.trend > 0 ? '↑' : '↓'
-          const trendClass =
-            shop?.trend && shop.trend > 0 ? 'trend-up' : 'trend-down'
 
           return `
             <div class="tooltip-item">
               <div class="tooltip-title">${data.name}</div>
               <div class="tooltip-value">${unit}${data.value.toLocaleString()}</div>
-              <div class="tooltip-trend ${trendClass}">${Math.abs(shop?.trend || 0)}% ${trendIcon}</div>
             </div>
           `
         }
@@ -161,7 +186,7 @@ export function ShopSalesBar({
     }
 
     setOption(chartOption)
-  }, [data, autoSort, unit])
+  }, [data, autoSort, unit, colorMap])
 
   return (
     <BaseEChart
