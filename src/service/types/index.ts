@@ -54,3 +54,11 @@ export interface Traffic {
   conversion_rate: number // 转化率
   click_rate: number // 点击率
 }
+
+/**
+ * 热门国家数据类型
+ */
+export interface CountrySummary {
+  country: string // 国家名称
+  total_orders: number // 订单总数
+}
