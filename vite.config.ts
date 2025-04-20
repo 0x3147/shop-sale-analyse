@@ -14,18 +14,11 @@ export default defineConfig({
     host: true,
     cors: true,
     proxy: {
-      // 代理所有API请求
-      '/dashboard': {
+      // 开发环境下API请求代理
+      '/api': {
         target: 'http://8.141.124.102:8000',
-        changeOrigin: true
-      },
-      '/stores': {
-        target: 'http://8.141.124.102:8000',
-        changeOrigin: true
-      },
-      '/upload': {
-        target: 'http://8.141.124.102:8000',
-        changeOrigin: true
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
   }

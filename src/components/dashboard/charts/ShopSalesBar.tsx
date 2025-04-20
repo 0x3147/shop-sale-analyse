@@ -1,5 +1,5 @@
 import { EChartsOption } from 'echarts'
-import { CSSProperties, useEffect, useState } from 'react'
+import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import { DailySales } from '../../../service/types'
 import { BaseEChart } from './BaseEChart'
 
@@ -74,13 +74,15 @@ export function ShopSalesBar({
 }: ShopSalesBarProps) {
   // ECharts配置项
   const [option, setOption] = useState<EChartsOption>({})
+  // 记录最大销售额，用于固定坐标轴
+  const maxSalesRef = useRef<number>(0)
 
-  // 处理数据并更新图表配置
-  useEffect(() => {
-    if (!data || data.length === 0) return
+  // 使用useMemo缓存格式化后的数据，避免不必要的重复计算
+  const formattedData = useMemo(() => {
+    if (!data || data.length === 0) return []
 
     // 将接口数据转换为组件所需的数据格式
-    const formattedData = data.map((item, index) => ({
+    return data.map((item, index) => ({
       id: item.store_id,
       name: item.store_name,
       color:
@@ -89,6 +91,11 @@ export function ShopSalesBar({
       sales: item.sales,
       trend: 0 // 接口数据中没有趋势数据，默认为0
     }))
+  }, [data, colorMap])
+
+  // 处理数据并更新图表配置
+  useEffect(() => {
+    if (formattedData.length === 0) return
 
     // 如果需要自动排序，则按销售额降序排列
     const sortedData = autoSort
@@ -99,6 +106,14 @@ export function ShopSalesBar({
     const shopNames = sortedData.map((item) => item.name)
     const shopColors = sortedData.map((item) => item.color)
     const salesData = sortedData.map((item) => item.sales)
+
+    // 计算当前最大销售额
+    const currentMax = Math.max(...salesData, 0)
+
+    // 更新最大销售额参考值，确保坐标轴范围不会缩小
+    if (currentMax > maxSalesRef.current) {
+      maxSalesRef.current = currentMax * 1.2 // 增加20%的空间
+    }
 
     // 设置柱状图配置
     const chartOption: EChartsOption = {
@@ -121,6 +136,7 @@ export function ShopSalesBar({
       },
       xAxis: {
         type: 'value',
+        max: maxSalesRef.current, // 使用固定的最大值
         axisLabel: {
           formatter: (value: number) => {
             // 简化大数字显示，例如：1.2k、3.5m
@@ -169,10 +185,8 @@ export function ShopSalesBar({
           },
           // 柱状图样式
           barWidth: '60%',
-          // 柱状图动画
-          animation: true,
-          animationDuration: 1500,
-          animationEasing: 'elasticOut'
+          // 禁用动画，减少闪烁
+          animation: false
         }
       ],
       // 确保图表占满容器
@@ -186,7 +200,7 @@ export function ShopSalesBar({
     }
 
     setOption(chartOption)
-  }, [data, autoSort, unit, colorMap])
+  }, [formattedData, autoSort, unit])
 
   return (
     <BaseEChart

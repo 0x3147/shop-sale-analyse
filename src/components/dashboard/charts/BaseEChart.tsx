@@ -1,6 +1,6 @@
 import { EChartsOption } from 'echarts'
 import ReactEcharts from 'echarts-for-react'
-import { CSSProperties, useEffect, useState } from 'react'
+import { CSSProperties, useEffect, useRef, useState } from 'react'
 
 interface BaseEChartProps {
   option: EChartsOption
@@ -25,6 +25,8 @@ export function BaseEChart({
 }: BaseEChartProps) {
   // 默认ECharts主题配置
   const [baseOption, setBaseOption] = useState<EChartsOption>({})
+  const echartRef = useRef<ReactEcharts>(null)
+  const prevLoadingRef = useRef(loading)
 
   // 合并默认配置和用户配置
   useEffect(() => {
@@ -80,7 +82,9 @@ export function BaseEChart({
         bottom: '3%',
         top: '8%',
         containLabel: true
-      }
+      },
+      // 禁用默认的加载动画
+      animation: false
     }
 
     // 是否合并配置
@@ -92,15 +96,41 @@ export function BaseEChart({
     }
   }, [option, notMerge])
 
+  // 处理加载状态变化，避免不必要的重绘
+  useEffect(() => {
+    // 只有当loading状态变化时才触发
+    if (prevLoadingRef.current !== loading && echartRef.current) {
+      const instance = echartRef.current.getEchartsInstance()
+
+      if (loading) {
+        instance.showLoading({
+          text: '加载中...',
+          color: '#1890ff',
+          textColor: '#fff',
+          maskColor: 'rgba(0, 0, 0, 0.3)'
+        })
+      } else {
+        instance.hideLoading()
+      }
+
+      prevLoadingRef.current = loading
+    }
+  }, [loading])
+
   return (
     <ReactEcharts
+      ref={echartRef}
       option={baseOption}
       style={{ height: '100%', width: '100%', ...style }}
       className={`echarts-container ${className}`}
-      showLoading={loading}
+      // 禁用内置loading效果，使用自定义loading
+      showLoading={false}
       theme={theme}
       opts={{ renderer: 'canvas', devicePixelRatio: 2 }}
-      notMerge={notMerge}
+      // 使用merge模式而不是替换模式，减少重绘
+      notMerge={false}
+      // 设置较长的动画时长，减少刷新频率
+      lazyUpdate={true}
     />
   )
 }
