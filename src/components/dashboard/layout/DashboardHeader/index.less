@@ -51,4 +51,90 @@
       border-top: 3px solid #2483ff;
     }
   }
+
+  .time-wrapper {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .beijing-time {
+      background: linear-gradient(
+        to left,
+        rgba(13, 37, 82, 0.6),
+        rgba(29, 67, 147, 0.4)
+      );
+      border: 1px solid rgba(61, 119, 255, 0.3);
+      border-radius: 12px;
+      padding: 4px 10px;
+      min-width: 160px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      &:hover {
+        border-color: rgba(61, 119, 255, 0.6);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .city-label {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-bottom: 1px;
+      }
+
+      .time-display {
+        font-size: 24px;
+        font-weight: bold;
+        color: #6fbbff;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+
+        &:before {
+          content: '';
+          display: inline-block;
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background-color: #6fbbff;
+          margin-right: 6px;
+          box-shadow: 0 0 8px #6fbbff;
+          animation: pulse 2s infinite;
+        }
+      }
+
+      .date-display {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-top: 0px;
+        letter-spacing: 1px;
+      }
+    }
+
+    .foreign-time {
+      // 外国时间区域
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(111, 187, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(111, 187, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(111, 187, 255, 0);
+  }
 }
