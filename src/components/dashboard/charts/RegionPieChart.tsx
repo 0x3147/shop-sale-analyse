@@ -16,7 +16,7 @@ interface RegionPieChartProps {
 }
 
 /**
- * 区域销售分布饼图组件
+ * 区域销售分布玫瑰图组件
  */
 export function RegionPieChart({
   data,
@@ -27,11 +27,19 @@ export function RegionPieChart({
   // 排序数据
   const sortedData = [...data].sort((a, b) => b.value - a.value)
 
-  // 定义饼图配置
+  // 定义玫瑰图配置
   const option: EChartsOption = {
     tooltip: {
       trigger: 'item',
       formatter: '{b}: {c}个订单 ({d}%)'
+    },
+    // 隐藏X轴
+    xAxis: {
+      show: false
+    },
+    // 隐藏Y轴
+    yAxis: {
+      show: false
     },
     legend: {
       orient: 'vertical',
@@ -56,16 +64,28 @@ export function RegionPieChart({
       {
         name: '国家分布',
         type: 'pie',
-        radius: ['40%', '70%'],
+        radius: ['10%', '70%'],
         center: ['35%', '50%'],
-        avoidLabelOverlap: false,
+        roseType: 'area', // 设置为南丁格尔玫瑰图
+        avoidLabelOverlap: true,
         itemStyle: {
           borderRadius: 4,
           borderColor: '#0c2454',
           borderWidth: 2
         },
         label: {
-          show: false
+          show: true,
+          position: 'outside',
+          formatter: '{b}',
+          fontSize: 12,
+          color: '#ffffff',
+          textShadowColor: 'rgba(0, 0, 0, 0.8)',
+          textShadowBlur: 3,
+          textShadowOffsetX: 1,
+          textShadowOffsetY: 1,
+          backgroundColor: 'rgba(12, 36, 84, 0.6)',
+          borderRadius: 3,
+          padding: [3, 5]
         },
         emphasis: {
           label: {
@@ -80,7 +100,14 @@ export function RegionPieChart({
           }
         },
         labelLine: {
-          show: false
+          show: true,
+          length: 10,
+          length2: 15,
+          smooth: true,
+          lineStyle: {
+            color: 'rgba(255, 255, 255, 0.5)',
+            width: 1
+          }
         },
         data: sortedData.map((item) => ({
           value: item.value,

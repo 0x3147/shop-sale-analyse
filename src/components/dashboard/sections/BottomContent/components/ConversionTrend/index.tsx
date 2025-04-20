@@ -2,7 +2,7 @@ import { DashboardCard } from '@/components/dashboard/cards/DashboardCard'
 import { StoreTrafficChart } from '@/components/dashboard/charts/StoreTrafficChart'
 import { getStoreTraffic } from '@/service/api/index'
 import { useRequest } from 'ahooks'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './index.less'
 
 // 指标切换类型
@@ -24,6 +24,10 @@ export function ConversionTrend() {
   const [activeMetric, setActiveMetric] =
     useState<MetricType>('conversion_rate')
 
+  // 控制自动切换
+  const [autoSwitch, setAutoSwitch] = useState(true)
+  const switchInterval = 10000 // 10秒切换一次
+
   // 使用API获取店铺流量数据
   const { data, loading } = useRequest(getStoreTraffic, {
     pollingInterval: 30000, // 每30秒轮询一次
@@ -40,7 +44,30 @@ export function ConversionTrend() {
   // 指标切换
   const handleMetricChange = (metric: MetricType) => {
     setActiveMetric(metric)
+    // 手动切换时暂停自动切换
+    setAutoSwitch(false)
+    // 5秒后恢复自动切换
+    setTimeout(() => setAutoSwitch(true), 5000)
   }
+
+  // 自动切换tab
+  useEffect(() => {
+    if (!autoSwitch) return
+
+    const timer = setInterval(() => {
+      // 找到当前指标的索引
+      const currentIndex = metricOptions.findIndex(
+        (item) => item.key === activeMetric
+      )
+      // 计算下一个指标的索引，循环切换
+      const nextIndex = (currentIndex + 1) % metricOptions.length
+      // 设置下一个指标
+      setActiveMetric(metricOptions[nextIndex].key as MetricType)
+    }, switchInterval)
+
+    // 清理定时器
+    return () => clearInterval(timer)
+  }, [activeMetric, autoSwitch, switchInterval])
 
   // 获取当前指标信息
   const currentMetric = metricOptions.find((item) => item.key === activeMetric)
