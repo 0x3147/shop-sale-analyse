@@ -62,3 +62,19 @@ export interface CountrySummary {
   country: string // 国家名称
   total_orders: number // 订单总数
 }
+
+export interface DepartmentState {
+  stats: {
+    id: number
+    store_id: number
+    date: string
+    total_sales: number
+    ad_cost: number
+    roi: number
+  }[]
+  summary: {
+    total_sales: number
+    total_ad_cost: number
+    avg_roi: number
+  }
+}

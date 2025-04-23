@@ -3,6 +3,7 @@ import type {
   ApiResponse,
   CountrySummary,
   DailySales,
+  DepartmentState,
   MonthSalesResponse,
   ProductSummary,
   Traffic
@@ -46,4 +47,12 @@ export function getHotCountries(): Promise<ApiResponse<CountrySummary[]>> {
  */
 export function getStoreTraffic(): Promise<ApiResponse<Traffic[]>> {
   return get<ApiResponse<Traffic[]>>('/dashboard/store_traffic/')
+}
+
+/**
+ * 获取所有店铺部门销售额数据
+ * @returns 所有店铺的部门销售额数据
+ */
+export function getDepartmentSales(): Promise<ApiResponse<DepartmentState>> {
+  return get<ApiResponse<DepartmentState>>('/dashboard/department_stats/')
 }
