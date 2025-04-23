@@ -124,7 +124,6 @@ export function ShopSalesBar({
         },
         formatter: (params: any) => {
           const data = params[0]
-          const shop = sortedData.find((item) => item.name === data.name)
 
           return `
             <div class="tooltip-item">
