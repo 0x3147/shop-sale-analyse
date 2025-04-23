@@ -208,6 +208,18 @@ export function ShopMonthlySales({
             type: 'dashed'
           }
         },
+        confine: true,
+        position: function (
+          pos: [number, number],
+          size: { contentSize: [number, number]; viewSize: [number, number] }
+        ) {
+          // 计算tooltip应该显示的位置
+          // 优先显示在鼠标上方，如果空间不足则显示在下方
+          const obj: Record<string, number> = { top: 10 }
+          const key = pos[0] < size.viewSize[0] / 2 ? 'left' : 'right'
+          obj[key] = 30
+          return obj
+        },
         formatter: (params: any) => {
           const month = params[0].axisValue
           let html = `<div class="tooltip-title">${month}</div>`

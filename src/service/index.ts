@@ -6,7 +6,7 @@ import axios, {
 
 // 根据环境确定baseURL
 // 开发环境使用代理URL，生产环境使用实际URL
-const BASE_URL = import.meta.env.DEV ? '/api' : 'http://localhost:8000/'
+const BASE_URL = import.meta.env.DEV ? '/api' : 'http://127.0.0.1:8000/'
 
 // 创建axios实例
 const service: AxiosInstance = axios.create({
