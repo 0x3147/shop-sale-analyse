@@ -105,39 +105,77 @@ export function DepartmentSummary() {
         {/* 统计数据展示 */}
         <div className={`summary-data-grid ${loading ? 'loading' : ''}`}>
           <div className="summary-item">
+            <div className="item-icon sales-icon">
+              <svg
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+            </div>
             <div className="item-label">总销售额</div>
             <div className="item-value">
               ¥ {formatNumber(summaryData.total_sales)}
             </div>
             <div className={`item-trend trend-${salesTrend}`}>
-              {salesTrend === 'up' && '↑ '}
-              {salesTrend === 'down' && '↓ '}
-              {salesTrend === 'flat' && '→ '}
-              {salesTrendPercent}
+              {salesTrend === 'up' && <span className="trend-icon">↑</span>}
+              {salesTrend === 'down' && <span className="trend-icon">↓</span>}
+              {salesTrend === 'flat' && <span className="trend-icon">→</span>}
+              <span className="trend-value">{salesTrendPercent}</span>
             </div>
           </div>
           <div className="summary-item">
+            <div className="item-icon cost-icon">
+              <svg
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M16 8a4 4 0 0 0-8 0v8" />
+                <path d="M8 16a4 4 0 0 0 8 0" />
+              </svg>
+            </div>
             <div className="item-label">广告成本</div>
             <div className="item-value">
               ¥ {formatNumber(summaryData.total_ad_cost)}
             </div>
             <div className={`item-trend trend-${adCostTrend}`}>
-              {adCostTrend === 'up' && '↑ '}
-              {adCostTrend === 'down' && '↓ '}
-              {adCostTrend === 'flat' && '→ '}
-              {adCostTrendPercent}
+              {adCostTrend === 'up' && <span className="trend-icon">↑</span>}
+              {adCostTrend === 'down' && <span className="trend-icon">↓</span>}
+              {adCostTrend === 'flat' && <span className="trend-icon">→</span>}
+              <span className="trend-value">{adCostTrendPercent}</span>
             </div>
           </div>
           <div className="summary-item">
+            <div className="item-icon roi-icon">
+              <svg
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+              </svg>
+            </div>
             <div className="item-label">平均ROI</div>
             <div className="item-value">
               {formatNumber(summaryData.avg_roi)}
             </div>
             <div className={`item-trend trend-${roiTrend}`}>
-              {roiTrend === 'up' && '↑ '}
-              {roiTrend === 'down' && '↓ '}
-              {roiTrend === 'flat' && '→ '}
-              {roiTrendPercent}
+              {roiTrend === 'up' && <span className="trend-icon">↑</span>}
+              {roiTrend === 'down' && <span className="trend-icon">↓</span>}
+              {roiTrend === 'flat' && <span className="trend-icon">→</span>}
+              <span className="trend-value">{roiTrendPercent}</span>
             </div>
           </div>
         </div>
@@ -158,7 +196,9 @@ export function DepartmentSummary() {
                     100
                   )}%`
                 }}
-              ></div>
+              >
+                <div className="gauge-shine"></div>
+              </div>
             </div>
             <div className="gauge-value">
               {formatNumber(
