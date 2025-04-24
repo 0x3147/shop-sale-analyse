@@ -16,7 +16,7 @@ export default defineConfig({
     proxy: {
       // 开发环境下API请求代理
       '/api': {
-        target: 'http://8.141.124.102:8000',
+        target: 'http://8.141.124.102',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }

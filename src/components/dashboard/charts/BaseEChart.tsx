@@ -83,8 +83,8 @@ export function BaseEChart({
         top: '8%',
         containLabel: true
       },
-      // 禁用默认的加载动画
-      animation: false
+      // 启用默认的动画
+      animation: true
     }
 
     // 是否合并配置
@@ -129,8 +129,8 @@ export function BaseEChart({
       opts={{ renderer: 'canvas', devicePixelRatio: 2 }}
       // 使用merge模式而不是替换模式，减少重绘
       notMerge={false}
-      // 设置较长的动画时长，减少刷新频率
-      lazyUpdate={true}
+      // 允许动画，以确保正常的交互行为
+      lazyUpdate={false}
     />
   )
 }
