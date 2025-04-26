@@ -1,3 +1,59 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    @apply h-full m-0 p-0 overflow-hidden;
+    font-family:
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+      Arial, sans-serif;
+  }
+
+  #root {
+    @apply h-full w-full;
+  }
+
+  /* 数字等宽字体，用于数据展示 */
+  .tabular-nums {
+    font-feature-settings: 'tnum';
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /* 添加发光文字效果 */
+  .text-glow {
+    @apply text-[#15f4ee] drop-shadow-[0_0_8px_rgba(21,244,238,0.6)];
+  }
+
+  /* 渐变边框效果 */
+  .gradient-border {
+    @apply relative;
+
+    &::before {
+      content: '';
+      @apply absolute inset-0 bg-gradient-to-r from-[#1d7dfc] to-[#15f4ee] rounded-sm -z-10;
+      margin: -1px;
+    }
+  }
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-[#0a1a3c];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-[#1d3b7b] rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-[#2d4b8b];
+}
