@@ -81,82 +81,87 @@
 
       &.time-display {
         grid-column: span 1;
-        display: flex;
-        flex-direction: column;
         background-color: rgba(15, 40, 80, 0.4);
-        padding: 15px;
-        justify-content: space-between;
 
-        .beijing-time-container {
-          text-align: center;
-          margin-bottom: 20px;
+        :global(.dashboard-card) {
+          height: 100%;
+          box-shadow: none;
+          background: none;
 
-          .city-label {
-            font-size: 16px;
-            color: #8fb3f1;
-            margin-bottom: 5px;
-          }
-
-          .time-display {
-            font-size: 38px;
-            font-weight: bold;
-            color: #15f4ee;
-            text-shadow: 0 0 10px rgba(21, 244, 238, 0.3);
-            margin-bottom: 5px;
-          }
-
-          .date-display {
-            font-size: 14px;
-            color: #a1c4ff;
+          .dashboard-card-content {
+            height: calc(100% - 40px) !important;
+            padding: 0;
           }
         }
 
-        .foreign-time-list {
-          flex: 1;
+        .time-display-container {
           display: flex;
           flex-direction: column;
-          gap: 10px;
-          overflow: hidden;
+          height: 100%;
+          justify-content: space-between;
+          padding: 10px;
 
-          :global(.time-container) {
-            height: 100%;
+          // 北京时间部分
+          .beijing-time-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 10px;
+            border-bottom: 1px dashed rgba(94, 200, 234, 0.3);
 
-            .multiple-cities {
+            .city-label {
+              font-size: 16px;
+              color: #8fb3f1;
+              margin-bottom: 10px;
+            }
+
+            .time-display {
+              font-size: 38px;
+              font-weight: bold;
+              color: #15f4ee;
+              text-shadow: 0 0 10px rgba(21, 244, 238, 0.3);
+              margin-bottom: 5px;
+            }
+
+            .date-display {
+              font-size: 14px;
+              color: #a1c4ff;
+            }
+          }
+
+          // 外国时间部分
+          .foreign-time-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 15px 10px;
+
+            .city-selector {
               display: flex;
               flex-direction: column;
-              gap: 15px;
-              max-height: 100%;
-              overflow: hidden;
-
-              .city-time-item {
-                display: flex;
-                flex-direction: column;
-                padding: 10px;
-                background-color: rgba(28, 62, 122, 0.3);
-                border-radius: 8px;
-                border: 1px solid rgba(94, 200, 234, 0.15);
-
-                .city-name {
-                  font-size: 14px;
-                  color: #8fb3f1;
-                  margin-bottom: 5px;
-                }
-
-                .time {
-                  font-size: 20px;
-                  font-weight: bold;
-                  color: #15f4ee;
-                }
-
-                .date {
-                  font-size: 12px;
-                  color: #a1c4ff;
-                }
-              }
+              justify-content: center;
+              align-items: center;
+              height: 100%;
+              width: 100%;
             }
           }
         }
       }
     }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(111, 187, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(111, 187, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(111, 187, 255, 0);
   }
 }

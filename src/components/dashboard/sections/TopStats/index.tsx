@@ -1,6 +1,7 @@
 import logoImg from '@/assets/logo.png'
 import { formatInTimeZone } from 'date-fns-tz'
 import { useEffect, useState } from 'react'
+import { DashboardCard } from '../../cards/DashboardCard'
 import { CurrentTime } from '../../layout/CurrentTime'
 import { DepartmentSummary } from './components/DepartmentSummary'
 import { ShopDailySales } from './components/ShopDailySales'
@@ -47,19 +48,25 @@ export function TopStats() {
           </div>
         </div>
 
-        {/* 右侧：时间显示 */}
+        {/* 右侧：时间显示 - 使用DashboardCard包裹 */}
         <div className="stats-cell time-display">
-          {/* 北京时间 */}
-          <div className="beijing-time-container">
-            <div className="city-label">北京时间</div>
-            <div className="time-display">{beijingTime}</div>
-            <div className="date-display">{beijingDate}</div>
-          </div>
+          <DashboardCard title="热门国家时间" contentHeight="100%">
+            <div className="time-display-container">
+              {/* 北京时间 */}
+              <div className="beijing-time-section">
+                <div className="city-label">北京时间</div>
+                <div className="time-display">{beijingTime}</div>
+                <div className="date-display">{beijingDate}</div>
+              </div>
 
-          {/* 其他时区时间 */}
-          <div className="foreign-time-list">
-            <CurrentTime excludeBeijing={true} maxDisplay={3} />
-          </div>
+              {/* 其他国家时间 - 使用下拉选择方式 */}
+              <div className="foreign-time-section">
+                <div className="city-selector">
+                  <CurrentTime excludeBeijing={true} maxDisplay={1} />
+                </div>
+              </div>
+            </div>
+          </DashboardCard>
         </div>
       </div>
     </div>
