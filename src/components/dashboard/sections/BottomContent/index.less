@@ -1,0 +1,21 @@
+.bottom-content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 16px;
+  padding: 0;
+
+  /* 左右两个图表 */
+  > div {
+    flex: 1;
+    min-width: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 10, 30, 0.15);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+    }
+  }
+}

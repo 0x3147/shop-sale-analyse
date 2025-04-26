@@ -1,0 +1,140 @@
+.dashboard-header {
+  position: relative;
+  display: flex;
+  height: 96px;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #1d3b7b;
+  background: linear-gradient(to bottom, #0c2454, #0c1f44);
+  overflow: visible;
+
+  .title {
+    font-size: 46px;
+    font-weight: bold;
+    color: #6fbbff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(111, 187, 255, 0.5);
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 5;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40%;
+      height: 3px;
+      background: linear-gradient(to right, transparent, #3d77ff, transparent);
+      border-radius: 3px;
+    }
+  }
+
+  .decoration {
+    position: absolute;
+    height: 48px;
+    width: 48px;
+
+    &.decoration-left-top {
+      left: 0;
+      top: 0;
+      border-left: 3px solid #2483ff;
+      border-top: 3px solid #2483ff;
+    }
+
+    &.decoration-right-top {
+      right: 0;
+      top: 0;
+      border-right: 3px solid #2483ff;
+      border-top: 3px solid #2483ff;
+    }
+  }
+
+  .time-wrapper {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .beijing-time {
+      background: linear-gradient(
+        to left,
+        rgba(13, 37, 82, 0.6),
+        rgba(29, 67, 147, 0.4)
+      );
+      border: 1px solid rgba(61, 119, 255, 0.3);
+      border-radius: 12px;
+      padding: 4px 10px;
+      min-width: 160px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      &:hover {
+        border-color: rgba(61, 119, 255, 0.6);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .city-label {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-bottom: 1px;
+      }
+
+      .time-display {
+        font-size: 24px;
+        font-weight: bold;
+        color: #6fbbff;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+
+        &:before {
+          content: '';
+          display: inline-block;
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background-color: #6fbbff;
+          margin-right: 6px;
+          box-shadow: 0 0 8px #6fbbff;
+          animation: pulse 2s infinite;
+        }
+      }
+
+      .date-display {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-top: 0px;
+        letter-spacing: 1px;
+      }
+    }
+
+    .foreign-time {
+      // 外国时间区域
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(111, 187, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(111, 187, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(111, 187, 255, 0);
+  }
+}

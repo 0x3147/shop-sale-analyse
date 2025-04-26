@@ -9,5 +9,17 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src')
     }
+  },
+  server: {
+    host: true,
+    cors: true,
+    proxy: {
+      // 开发环境下API请求代理
+      '/api': {
+        target: 'http://8.141.124.102',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 })

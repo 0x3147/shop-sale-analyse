@@ -1,0 +1,167 @@
+.top-stats {
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 15px;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+
+    .stats-cell {
+      height: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 10, 30, 0.15);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-3px);
+      }
+
+      &.daily-sales {
+        grid-column: span 1;
+      }
+
+      &.center-content {
+        grid-column: span 1;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(15, 40, 80, 0.4);
+        padding: 15px;
+
+        .logo-container {
+          flex: 1.8;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 15px;
+          background-color: rgba(15, 40, 80, 0.2);
+          border-radius: 8px;
+          padding: 10px;
+
+          .logo-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+          }
+        }
+
+        .department-summary-container {
+          flex: 3.2;
+          overflow: hidden;
+
+          :global(.dashboard-card) {
+            box-shadow: none;
+            background: none;
+            height: 100%;
+
+            .dashboard-card-header {
+              padding: 0;
+              margin-bottom: 8px;
+
+              .dashboard-card-title {
+                font-size: 18px;
+              }
+            }
+
+            .dashboard-card-content {
+              padding: 0;
+              height: calc(100% - 28px) !important;
+              overflow: hidden;
+            }
+          }
+        }
+      }
+
+      &.time-display {
+        grid-column: span 1;
+        background-color: rgba(15, 40, 80, 0.4);
+
+        :global(.dashboard-card) {
+          height: 100%;
+          box-shadow: none;
+          background: none;
+
+          .dashboard-card-content {
+            height: calc(100% - 40px) !important;
+            padding: 0;
+          }
+        }
+
+        .time-display-container {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          justify-content: space-between;
+          padding: 10px;
+
+          // 北京时间部分
+          .beijing-time-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 10px;
+            border-bottom: 1px dashed rgba(94, 200, 234, 0.3);
+
+            .city-label {
+              font-size: 16px;
+              color: #8fb3f1;
+              margin-bottom: 10px;
+            }
+
+            .time-display {
+              font-size: 38px;
+              font-weight: bold;
+              color: #15f4ee;
+              text-shadow: 0 0 10px rgba(21, 244, 238, 0.3);
+              margin-bottom: 5px;
+            }
+
+            .date-display {
+              font-size: 14px;
+              color: #a1c4ff;
+            }
+          }
+
+          // 外国时间部分
+          .foreign-time-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 15px 10px;
+
+            .city-selector {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              height: 100%;
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(111, 187, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(111, 187, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(111, 187, 255, 0);
+  }
+}
