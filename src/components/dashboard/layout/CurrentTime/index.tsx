@@ -153,12 +153,19 @@ interface CurrentTimeProps {
    * 是否排除北京时间
    */
   excludeBeijing?: boolean
+  /**
+   * 最大显示的城市数量
+   */
+  maxDisplay?: number
 }
 
 /**
  * 当前时间组件 - 支持多国家时区显示
  */
-export function CurrentTime({ excludeBeijing = false }: CurrentTimeProps) {
+export function CurrentTime({
+  excludeBeijing = false,
+  maxDisplay = 5
+}: CurrentTimeProps) {
   const [time, setTime] = useState(new Date())
   const [selectedCity, setSelectedCity] = useState<CityTimeItem>({
     country: '美国',
@@ -229,30 +236,53 @@ export function CurrentTime({ excludeBeijing = false }: CurrentTimeProps) {
 
   return (
     <div className="time-container">
-      <div
-        className="current-city"
-        onClick={() => setShowDropdown(!showDropdown)}
-      >
-        {selectedCity.city} ({selectedCity.country})
-        <span className="dropdown-icon">{showDropdown ? '▲' : '▼'}</span>
-      </div>
+      {/* 如果只显示一个选定的城市 */}
+      {maxDisplay === 1 && (
+        <>
+          <div
+            className="current-city"
+            onClick={() => setShowDropdown(!showDropdown)}
+          >
+            {selectedCity.city} ({selectedCity.country})
+            <span className="dropdown-icon">{showDropdown ? '▲' : '▼'}</span>
+          </div>
 
-      {showDropdown && (
-        <div className="city-dropdown">
-          {cityOptions.map((item) => (
+          {showDropdown && (
+            <div className="city-dropdown">
+              {cityOptions.map((item) => (
+                <div
+                  key={`${item.country}-${item.city}`}
+                  className={`city-option ${selectedCity.country === item.country ? 'active' : ''}`}
+                  onClick={() => handleSelectCity(item)}
+                >
+                  {item.city} ({item.country})
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="time">{formatTime(time, selectedCity.timezone)}</div>
+          <div className="date">{formatDate(time, selectedCity.timezone)}</div>
+        </>
+      )}
+
+      {/* 如果显示多个城市 */}
+      {maxDisplay > 1 && (
+        <div className="multiple-cities">
+          {cityOptions.slice(0, maxDisplay).map((city) => (
             <div
-              key={`${item.country}-${item.city}`}
-              className={`city-option ${selectedCity.country === item.country ? 'active' : ''}`}
-              onClick={() => handleSelectCity(item)}
+              key={`${city.country}-${city.city}`}
+              className="city-time-item"
             >
-              {item.city} ({item.country})
+              <div className="city-name">
+                {city.city} ({city.country})
+              </div>
+              <div className="time">{formatTime(time, city.timezone)}</div>
+              <div className="date">{formatDate(time, city.timezone)}</div>
             </div>
           ))}
         </div>
       )}
-
-      <div className="time">{formatTime(time, selectedCity.timezone)}</div>
-      <div className="date">{formatDate(time, selectedCity.timezone)}</div>
     </div>
   )
 }

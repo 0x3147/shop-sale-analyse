@@ -8,7 +8,16 @@ import './index.less'
  * 部门统计数据组件
  * 展示部门销售额、广告成本和ROI数据
  */
-export function DepartmentSummary() {
+export interface DepartmentSummaryProps {
+  /**
+   * 是否使用简化模式，不显示效率分析部分
+   */
+  simplified?: boolean
+}
+
+export function DepartmentSummary({
+  simplified = false
+}: DepartmentSummaryProps) {
   // 本地状态存储当前显示的数据
   const [summaryData, setSummaryData] = useState<{
     total_sales: number
@@ -180,45 +189,47 @@ export function DepartmentSummary() {
           </div>
         </div>
 
-        {/* 效率指标 - 销售成本比 */}
-        <div className="efficiency-section">
-          <div className="section-title">效率分析</div>
-          <div className="efficiency-gauge">
-            <div className="gauge-label">销售/成本比</div>
-            <div className="gauge-track">
-              <div
-                className="gauge-fill"
-                style={{
-                  width: `${Math.min(
-                    (summaryData.total_sales /
-                      (summaryData.total_ad_cost || 1)) *
-                      20,
-                    100
-                  )}%`
-                }}
-              >
-                <div className="gauge-shine"></div>
+        {/* 效率指标 - 销售成本比 - 仅在非简化模式下显示 */}
+        {!simplified && (
+          <div className="efficiency-section">
+            <div className="section-title">效率分析</div>
+            <div className="efficiency-gauge">
+              <div className="gauge-label">销售/成本比</div>
+              <div className="gauge-track">
+                <div
+                  className="gauge-fill"
+                  style={{
+                    width: `${Math.min(
+                      (summaryData.total_sales /
+                        (summaryData.total_ad_cost || 1)) *
+                        20,
+                      100
+                    )}%`
+                  }}
+                >
+                  <div className="gauge-shine"></div>
+                </div>
+              </div>
+              <div className="gauge-value">
+                {formatNumber(
+                  summaryData.total_sales / (summaryData.total_ad_cost || 1)
+                )}
               </div>
             </div>
-            <div className="gauge-value">
-              {formatNumber(
-                summaryData.total_sales / (summaryData.total_ad_cost || 1)
-              )}
+            <div className="roi-description">
+              <div className="roi-title">ROI健康度</div>
+              <div
+                className={`roi-status roi-status-${summaryData.avg_roi > 3 ? 'good' : summaryData.avg_roi > 2 ? 'normal' : 'warning'}`}
+              >
+                {summaryData.avg_roi > 3
+                  ? '良好'
+                  : summaryData.avg_roi > 2
+                    ? '正常'
+                    : '警告'}
+              </div>
             </div>
           </div>
-          <div className="roi-description">
-            <div className="roi-title">ROI健康度</div>
-            <div
-              className={`roi-status roi-status-${summaryData.avg_roi > 3 ? 'good' : summaryData.avg_roi > 2 ? 'normal' : 'warning'}`}
-            >
-              {summaryData.avg_roi > 3
-                ? '良好'
-                : summaryData.avg_roi > 2
-                  ? '正常'
-                  : '警告'}
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </DashboardCard>
   )

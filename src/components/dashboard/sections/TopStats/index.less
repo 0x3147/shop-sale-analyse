@@ -3,13 +3,15 @@
   height: 100%;
   padding: 8px;
   box-sizing: border-box;
+  overflow: hidden;
 
   .stats-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 16px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 15px;
     width: 100%;
     height: 100%;
+    max-height: 100%;
 
     .stats-cell {
       height: 100%;
@@ -26,8 +28,134 @@
         grid-column: span 1;
       }
 
-      &.department-summary {
+      &.center-content {
         grid-column: span 1;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(15, 40, 80, 0.4);
+        padding: 15px;
+
+        .logo-container {
+          flex: 1.8;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 15px;
+          background-color: rgba(15, 40, 80, 0.2);
+          border-radius: 8px;
+          padding: 10px;
+
+          .logo-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+          }
+        }
+
+        .department-summary-container {
+          flex: 3.2;
+          overflow: hidden;
+
+          :global(.dashboard-card) {
+            box-shadow: none;
+            background: none;
+            height: 100%;
+
+            .dashboard-card-header {
+              padding: 0;
+              margin-bottom: 8px;
+
+              .dashboard-card-title {
+                font-size: 18px;
+              }
+            }
+
+            .dashboard-card-content {
+              padding: 0;
+              height: calc(100% - 28px) !important;
+              overflow: hidden;
+            }
+          }
+        }
+      }
+
+      &.time-display {
+        grid-column: span 1;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(15, 40, 80, 0.4);
+        padding: 15px;
+        justify-content: space-between;
+
+        .beijing-time-container {
+          text-align: center;
+          margin-bottom: 20px;
+
+          .city-label {
+            font-size: 16px;
+            color: #8fb3f1;
+            margin-bottom: 5px;
+          }
+
+          .time-display {
+            font-size: 38px;
+            font-weight: bold;
+            color: #15f4ee;
+            text-shadow: 0 0 10px rgba(21, 244, 238, 0.3);
+            margin-bottom: 5px;
+          }
+
+          .date-display {
+            font-size: 14px;
+            color: #a1c4ff;
+          }
+        }
+
+        .foreign-time-list {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          overflow: hidden;
+
+          :global(.time-container) {
+            height: 100%;
+
+            .multiple-cities {
+              display: flex;
+              flex-direction: column;
+              gap: 15px;
+              max-height: 100%;
+              overflow: hidden;
+
+              .city-time-item {
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+                background-color: rgba(28, 62, 122, 0.3);
+                border-radius: 8px;
+                border: 1px solid rgba(94, 200, 234, 0.15);
+
+                .city-name {
+                  font-size: 14px;
+                  color: #8fb3f1;
+                  margin-bottom: 5px;
+                }
+
+                .time {
+                  font-size: 20px;
+                  font-weight: bold;
+                  color: #15f4ee;
+                }
+
+                .date {
+                  font-size: 12px;
+                  color: #a1c4ff;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
