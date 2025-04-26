@@ -13,7 +13,7 @@ interface DashboardLayoutProps {
  */
 export function DashboardLayout({
   children,
-  title = '店铺销售数据分析大屏'
+  title = '京科外贸部实时数据分析'
 }: DashboardLayoutProps) {
   return (
     // 大屏主容器，深色背景，满屏显示
