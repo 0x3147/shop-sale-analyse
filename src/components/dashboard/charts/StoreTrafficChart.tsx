@@ -1,6 +1,6 @@
 import { Traffic } from '@/service/types'
 import { EChartsOption } from 'echarts'
-import { CSSProperties, useEffect, useMemo, useState } from 'react'
+import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import { BaseEChart } from './BaseEChart'
 
 interface StoreTrafficChartProps {
@@ -67,6 +67,9 @@ export function StoreTrafficChart({
 }: StoreTrafficChartProps) {
   // ECharts配置项
   const [option, setOption] = useState<EChartsOption>({})
+  // 使用useRef跟踪上一次的配置和依赖
+  const prevMetricRef = useRef(activeMetric)
+  const prevStoreDataRef = useRef<any[]>([])
 
   // 处理数据生成图表配置
   const storeData = useMemo(() => {
@@ -98,6 +101,19 @@ export function StoreTrafficChart({
   // 更新图表配置
   useEffect(() => {
     if (!storeData || storeData.length === 0) return
+
+    // 检查数据和指标是否真的变化了
+    const metricChanged = prevMetricRef.current !== activeMetric
+    const dataChanged =
+      JSON.stringify(prevStoreDataRef.current) !== JSON.stringify(storeData)
+
+    if (!metricChanged && !dataChanged) {
+      return // 如果没有实质性变化，则不更新
+    }
+
+    // 更新引用值
+    prevMetricRef.current = activeMetric
+    prevStoreDataRef.current = [...storeData]
 
     const metric = metricConfig[activeMetric]
     const storeNames = storeData.map((item) => item.store_name)
@@ -200,7 +216,14 @@ export function StoreTrafficChart({
       ]
     }
 
-    setOption(chartOption)
+    // 使用函数形式的setState，避免依赖旧的state
+    setOption((prevOption) => {
+      // 如果实质上相同，则返回旧的option避免重渲染
+      if (JSON.stringify(prevOption) === JSON.stringify(chartOption)) {
+        return prevOption
+      }
+      return chartOption
+    })
   }, [storeData, activeMetric])
 
   return (

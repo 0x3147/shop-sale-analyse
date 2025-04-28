@@ -3,6 +3,11 @@ import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import { DailySales } from '../../../service/types'
 import { BaseEChart } from './BaseEChart'
 
+// 辅助函数：检查两个对象是否有实质性变化
+const hasChanged = (prevObj: any, nextObj: any): boolean => {
+  return JSON.stringify(prevObj) !== JSON.stringify(nextObj)
+}
+
 /**
  * 店铺销售额数据接口
  */
@@ -76,6 +81,11 @@ export function ShopSalesBar({
   const [option, setOption] = useState<EChartsOption>({})
   // 记录最大销售额，用于固定坐标轴
   const maxSalesRef = useRef<number>(0)
+  // 用于跟踪依赖项的变化
+  const prevFormattedDataRef = useRef<ShopSalesData[]>([])
+  const prevAutoSortRef = useRef(autoSort)
+  const prevUnitRef = useRef(unit)
+  const prevChartOptionRef = useRef<EChartsOption>({})
 
   // 使用useMemo缓存格式化后的数据，避免不必要的重复计算
   const formattedData = useMemo(() => {
@@ -96,6 +106,21 @@ export function ShopSalesBar({
   // 处理数据并更新图表配置
   useEffect(() => {
     if (formattedData.length === 0) return
+
+    // 检查依赖项是否真的变化了
+    const dataChanged = hasChanged(prevFormattedDataRef.current, formattedData)
+    const autoSortChanged = prevAutoSortRef.current !== autoSort
+    const unitChanged = prevUnitRef.current !== unit
+
+    // 如果所有依赖项都没变化，则直接返回
+    if (!dataChanged && !autoSortChanged && !unitChanged) {
+      return
+    }
+
+    // 更新引用
+    prevFormattedDataRef.current = [...formattedData]
+    prevAutoSortRef.current = autoSort
+    prevUnitRef.current = unit
 
     // 如果需要自动排序，则按销售额降序排列
     const sortedData = autoSort
@@ -198,7 +223,16 @@ export function ShopSalesBar({
       }
     }
 
-    setOption(chartOption)
+    // 检查图表配置是否有实质性变化
+    if (!hasChanged(prevChartOptionRef.current, chartOption)) {
+      return // 如果图表配置没有变化，则不更新状态
+    }
+
+    // 更新引用
+    prevChartOptionRef.current = { ...chartOption }
+
+    // 使用函数形式的setState，避免依赖旧的state
+    setOption(() => chartOption)
   }, [formattedData, autoSort, unit])
 
   return (
