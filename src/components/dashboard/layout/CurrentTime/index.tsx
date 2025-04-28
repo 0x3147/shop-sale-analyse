@@ -34,7 +34,9 @@ const COUNTRY_TIMEZONE_MAP: Record<string, string> = {
   南非: 'Africa/Johannesburg',
   埃及: 'Africa/Cairo',
   土耳其: 'Europe/Istanbul',
-  沙特阿拉伯: 'Asia/Riyadh'
+  沙特阿拉伯: 'Asia/Riyadh',
+  乌克兰: 'Europe/Kiev',
+  秘鲁: 'America/Lima'
 }
 
 // 国家首都映射
@@ -67,7 +69,9 @@ const COUNTRY_CAPITAL_MAP: Record<string, string> = {
   南非: '约翰内斯堡',
   埃及: '开罗',
   土耳其: '安卡拉',
-  沙特阿拉伯: '利雅得'
+  沙特阿拉伯: '利雅得',
+  乌克兰: '基辅',
+  秘鲁: '利马'
 }
 
 // 格式化函数
@@ -157,6 +161,10 @@ interface CurrentTimeProps {
    * 最大显示的城市数量
    */
   maxDisplay?: number
+  /**
+   * 固定展示的国家列表
+   */
+  fixedCountries?: string[]
 }
 
 /**
@@ -164,7 +172,8 @@ interface CurrentTimeProps {
  */
 export function CurrentTime({
   excludeBeijing = false,
-  maxDisplay = 5
+  maxDisplay = 5,
+  fixedCountries
 }: CurrentTimeProps) {
   const [time, setTime] = useState(new Date())
   const [selectedCity, setSelectedCity] = useState<CityTimeItem>({
@@ -175,10 +184,23 @@ export function CurrentTime({
   const [showDropdown, setShowDropdown] = useState(false)
   const [cityOptions, setCityOptions] = useState<CityTimeItem[]>([])
 
-  // 使用API获取热门国家数据
+  // 处理固定国家列表
+  useEffect(() => {
+    if (fixedCountries && fixedCountries.length > 0) {
+      const fixedCityOptions = fixedCountries.map((country) => ({
+        country,
+        city: getCapital(country),
+        timezone: guessTimezone(country)
+      }))
+      setCityOptions(fixedCityOptions)
+    }
+  }, [fixedCountries])
+
+  // 使用API获取热门国家数据 (仅在未指定固定国家时使用)
   useRequest(getHotCountries, {
     pollingInterval: 60000, // 每分钟更新一次
     refreshOnWindowFocus: false,
+    ready: !fixedCountries, // 只有在未指定固定国家时才调用API
     onSuccess: (res) => {
       if (res.success && res.data && res.data.length > 0) {
         // 获取热门国家，并准备城市时间选项
@@ -234,10 +256,68 @@ export function CurrentTime({
     setShowDropdown(false)
   }
 
+  // 格式化时间的简化版本 - 针对固定国家网格显示
+  const formatCompactTime = (date: Date, timezone: string) => {
+    try {
+      // 获取格式化的时间字符串
+      const timeStr = formatInTimeZone(date, timezone, 'HH:mm:ss')
+      // 分割时间字符串，以便为分隔符添加样式
+      const [hours, minutes, seconds] = timeStr.split(':')
+
+      // 返回带有特殊样式分隔符的JSX
+      return (
+        <>
+          {hours}
+          <span className="time-separator">:</span>
+          {minutes}
+          <span className="time-separator">:</span>
+          {seconds}
+        </>
+      )
+    } catch (error) {
+      console.error('时区转换错误:', error)
+      return date.toLocaleTimeString('zh-CN', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      })
+    }
+  }
+
+  // 是否采用紧凑模式 - 特别针对8个国家的情况
+  const isCompactMode = fixedCountries && fixedCountries.length === 8
+
   return (
     <div className="time-container">
+      {/* 如果指定了固定国家列表 */}
+      {fixedCountries && (
+        <div
+          className={`fixed-countries-grid ${isCompactMode ? 'compact-mode' : ''}`}
+        >
+          {cityOptions.map((city) => (
+            <div
+              key={`${city.country}-${city.city}`}
+              className="city-time-item"
+            >
+              <div className="city-name">
+                {city.city} ({city.country})
+              </div>
+              <div className="time">
+                {isCompactMode
+                  ? formatCompactTime(time, city.timezone)
+                  : formatTime(time, city.timezone)}
+              </div>
+              {!isCompactMode && (
+                <div className="date">{formatDate(time, city.timezone)}</div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* 如果只显示一个选定的城市 */}
-      {maxDisplay === 1 && (
+      {!fixedCountries && maxDisplay === 1 && (
         <>
           <div
             className="current-city"
@@ -267,7 +347,7 @@ export function CurrentTime({
       )}
 
       {/* 如果显示多个城市 */}
-      {maxDisplay > 1 && (
+      {!fixedCountries && maxDisplay > 1 && (
         <div className="multiple-cities">
           {cityOptions.slice(0, maxDisplay).map((city) => (
             <div
