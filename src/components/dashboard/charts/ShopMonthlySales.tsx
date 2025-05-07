@@ -175,7 +175,7 @@ export function ShopMonthlySales({
         width: 3
       },
       symbolSize: 6,
-      smooth: true,
+      smooth: false,
       // 选中效果
       emphasis: {
         focus: 'series',

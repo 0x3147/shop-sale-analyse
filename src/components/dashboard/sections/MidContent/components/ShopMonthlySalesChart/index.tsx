@@ -27,7 +27,7 @@ export function ShopMonthlySalesChart() {
           data={data?.data || {}}
           loading={loading}
           showLegend={true}
-          maxShops={10} // 最多显示7个店铺的数据，避免图表过于拥挤
+          maxShops={10}
         />
       </div>
     </DashboardCard>
