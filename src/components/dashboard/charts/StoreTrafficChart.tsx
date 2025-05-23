@@ -137,6 +137,9 @@ export function StoreTrafficChart({
           `
         }
       },
+      legend: {
+        show: false
+      },
       grid: {
         top: '15%',
         left: '3%',
