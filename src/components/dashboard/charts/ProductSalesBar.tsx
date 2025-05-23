@@ -79,7 +79,7 @@ export function ProductSalesBar({
         left: '3%',
         right: '4%',
         bottom: '3%',
-        top: '10',
+        top: '15%',
         containLabel: true
       },
       xAxis: {
@@ -145,14 +145,14 @@ export function ProductSalesBar({
           }),
           label: {
             show: true,
-            position: 'top',
+            position: 'inside',
             formatter: (params: any) => {
               const value = params.value
               return value >= 10000
                 ? `${(value / 10000).toFixed(1)}万`
                 : value.toLocaleString()
             },
-            color: '#a1b4d4'
+            color: '#ffffff'
           }
         }
       ]

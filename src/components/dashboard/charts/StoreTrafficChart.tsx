@@ -126,24 +126,22 @@ export function StoreTrafficChart({
           type: 'shadow'
         },
         formatter: (params: any) => {
-          const dataIndex = params[0].dataIndex
-          const store = storeData[dataIndex]
+          const data = params[0]
+          const item = storeData[data.dataIndex]
 
           return `
-            <div class="tooltip-title">${store.store_name}</div>
             <div class="tooltip-item">
-              <span class="label">${metric.name}:</span>
-              <span class="value">${metric.formatter(store[activeMetric])}</span>
+              <div class="tooltip-title">${item.store_name}</div>
+              <div class="tooltip-value">${metric.name}: ${metric.formatter(data.value)}</div>
             </div>
-            <div class="tooltip-category">分类: ${store.category}</div>
           `
         }
       },
       grid: {
+        top: '15%',
         left: '3%',
         right: '4%',
         bottom: '3%',
-        top: '50px',
         containLabel: true
       },
       xAxis: {
@@ -206,8 +204,8 @@ export function StoreTrafficChart({
           },
           label: {
             show: true,
-            position: 'top',
-            color: '#a1b4d4',
+            position: 'inside',
+            color: '#ffffff',
             formatter: (params: any) => {
               return metric.formatter(params.value)
             }
