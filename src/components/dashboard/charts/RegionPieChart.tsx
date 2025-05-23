@@ -42,6 +42,7 @@ export function RegionPieChart({
       show: false
     },
     legend: {
+      show: false,
       orient: 'vertical',
       right: 10,
       top: 'center',
@@ -65,7 +66,7 @@ export function RegionPieChart({
         name: '国家分布',
         type: 'pie',
         radius: ['10%', '70%'],
-        center: ['35%', '50%'],
+        center: ['50%', '50%'],
         roseType: 'area', // 设置为南丁格尔玫瑰图
         avoidLabelOverlap: true,
         itemStyle: {

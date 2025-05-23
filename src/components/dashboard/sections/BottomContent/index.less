@@ -5,17 +5,33 @@
   gap: 16px;
   padding: 0;
 
-  /* 左右两个图表 */
-  > div {
+  /* 左侧图表区域 */
+  .left-charts {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    min-width: 0;
+
+    .chart-item {
+      flex: 1;
+      min-width: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 10, 30, 0.15);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  /* 右侧扩展区域 */
+  .right-extension {
     flex: 1;
     min-width: 0;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 10, 30, 0.15);
-    transition: transform 0.3s ease;
-
-    &:hover {
-      transform: translateY(-3px);
-    }
+    /* 这个区域将被热门产品组件占用，暂时隐藏 */
+    display: none;
   }
 }
