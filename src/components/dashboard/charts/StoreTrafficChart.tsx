@@ -141,33 +141,13 @@ export function StoreTrafficChart({
         show: false
       },
       grid: {
-        top: '15%',
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
+        top: '10%',
+        left: '25%',
+        right: '10%',
+        bottom: '5%',
         containLabel: true
       },
       xAxis: {
-        type: 'category',
-        data: storeNames,
-        axisLabel: {
-          interval: 0,
-          rotate: 45,
-          color: '#a1b4d4',
-          formatter: (value: string) => {
-            if (value.length > 8) {
-              return value.slice(0, 8) + '...'
-            }
-            return value
-          }
-        },
-        axisLine: {
-          lineStyle: {
-            color: 'rgba(161, 180, 212, 0.3)'
-          }
-        }
-      },
-      yAxis: {
         type: 'value',
         name: metric.name,
         nameTextStyle: {
@@ -197,17 +177,37 @@ export function StoreTrafficChart({
           }
         }
       },
+      yAxis: {
+        type: 'category',
+        data: storeNames,
+        axisLabel: {
+          color: '#a1b4d4',
+          interval: 0,
+          fontSize: 12,
+          width: 120,
+          overflow: 'none'
+        },
+        axisLine: {
+          lineStyle: {
+            color: 'rgba(161, 180, 212, 0.3)'
+          }
+        },
+        axisTick: {
+          show: false
+        }
+      },
       series: [
         {
           name: metric.name,
           type: 'bar',
           data: metricValues,
           itemStyle: {
-            color: metric.color
+            color: metric.color,
+            borderRadius: [0, 4, 4, 0]
           },
           label: {
-            show: true,
-            position: 'inside',
+            show: false,
+            position: 'right',
             color: '#ffffff',
             formatter: (params: any) => {
               return metric.formatter(params.value)
