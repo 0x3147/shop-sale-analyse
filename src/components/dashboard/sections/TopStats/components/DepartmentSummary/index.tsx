@@ -1,4 +1,3 @@
-import { DashboardCard } from '@/components/dashboard/cards/DashboardCard'
 import { getDepartmentSales } from '@/service/api'
 import { useRequest } from 'ahooks'
 import { useRef, useState } from 'react'
@@ -109,128 +108,124 @@ export function DepartmentSummary({
   const roiTrendPercent = calculateTrendPercent('avg_roi')
 
   return (
-    <DashboardCard title="部门统计数据" contentHeight="100%">
-      <div className="department-summary-content">
-        {/* 统计数据展示 */}
-        <div className={`summary-data-grid ${loading ? 'loading' : ''}`}>
-          <div className="summary-item">
-            <div className="item-icon sales-icon">
-              <svg
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
+    <div className="department-summary-content">
+      {/* 统计数据展示 */}
+      <div className={`summary-data-grid ${loading ? 'loading' : ''}`}>
+        <div className="summary-item">
+          <div className="item-icon sales-icon">
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <div className="item-label">总销售额</div>
+          <div className="item-value">
+            ¥ {formatNumber(summaryData.total_sales)}
+          </div>
+          <div className={`item-trend trend-${salesTrend}`}>
+            {salesTrend === 'up' && <span className="trend-icon">↑</span>}
+            {salesTrend === 'down' && <span className="trend-icon">↓</span>}
+            {salesTrend === 'flat' && <span className="trend-icon">→</span>}
+            <span className="trend-value">{salesTrendPercent}</span>
+          </div>
+        </div>
+        <div className="summary-item">
+          <div className="item-icon cost-icon">
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M16 8a4 4 0 0 0-8 0v8" />
+              <path d="M8 16a4 4 0 0 0 8 0" />
+            </svg>
+          </div>
+          <div className="item-label">广告成本</div>
+          <div className="item-value">
+            ¥ {formatNumber(summaryData.total_ad_cost)}
+          </div>
+          <div className={`item-trend trend-${adCostTrend}`}>
+            {adCostTrend === 'up' && <span className="trend-icon">↑</span>}
+            {adCostTrend === 'down' && <span className="trend-icon">↓</span>}
+            {adCostTrend === 'flat' && <span className="trend-icon">→</span>}
+            <span className="trend-value">{adCostTrendPercent}</span>
+          </div>
+        </div>
+        <div className="summary-item">
+          <div className="item-icon roi-icon">
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+          </div>
+          <div className="item-label">平均ROI</div>
+          <div className="item-value">{formatNumber(summaryData.avg_roi)}</div>
+          <div className={`item-trend trend-${roiTrend}`}>
+            {roiTrend === 'up' && <span className="trend-icon">↑</span>}
+            {roiTrend === 'down' && <span className="trend-icon">↓</span>}
+            {roiTrend === 'flat' && <span className="trend-icon">→</span>}
+            <span className="trend-value">{roiTrendPercent}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 效率指标 - 销售成本比 - 仅在非简化模式下显示 */}
+      {!simplified && (
+        <div className="efficiency-section">
+          <div className="section-title">效率分析</div>
+          <div className="efficiency-gauge">
+            <div className="gauge-label">销售/成本比</div>
+            <div className="gauge-track">
+              <div
+                className="gauge-fill"
+                style={{
+                  width: `${Math.min(
+                    (summaryData.total_sales /
+                      (summaryData.total_ad_cost || 1)) *
+                      20,
+                    100
+                  )}%`
+                }}
               >
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-              </svg>
+                <div className="gauge-shine"></div>
+              </div>
             </div>
-            <div className="item-label">总销售额</div>
-            <div className="item-value">
-              ¥ {formatNumber(summaryData.total_sales)}
-            </div>
-            <div className={`item-trend trend-${salesTrend}`}>
-              {salesTrend === 'up' && <span className="trend-icon">↑</span>}
-              {salesTrend === 'down' && <span className="trend-icon">↓</span>}
-              {salesTrend === 'flat' && <span className="trend-icon">→</span>}
-              <span className="trend-value">{salesTrendPercent}</span>
+            <div className="gauge-value">
+              {formatNumber(
+                summaryData.total_sales / (summaryData.total_ad_cost || 1)
+              )}
             </div>
           </div>
-          <div className="summary-item">
-            <div className="item-icon cost-icon">
-              <svg
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <path d="M16 8a4 4 0 0 0-8 0v8" />
-                <path d="M8 16a4 4 0 0 0 8 0" />
-              </svg>
-            </div>
-            <div className="item-label">广告成本</div>
-            <div className="item-value">
-              ¥ {formatNumber(summaryData.total_ad_cost)}
-            </div>
-            <div className={`item-trend trend-${adCostTrend}`}>
-              {adCostTrend === 'up' && <span className="trend-icon">↑</span>}
-              {adCostTrend === 'down' && <span className="trend-icon">↓</span>}
-              {adCostTrend === 'flat' && <span className="trend-icon">→</span>}
-              <span className="trend-value">{adCostTrendPercent}</span>
-            </div>
-          </div>
-          <div className="summary-item">
-            <div className="item-icon roi-icon">
-              <svg
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-              </svg>
-            </div>
-            <div className="item-label">平均ROI</div>
-            <div className="item-value">
-              {formatNumber(summaryData.avg_roi)}
-            </div>
-            <div className={`item-trend trend-${roiTrend}`}>
-              {roiTrend === 'up' && <span className="trend-icon">↑</span>}
-              {roiTrend === 'down' && <span className="trend-icon">↓</span>}
-              {roiTrend === 'flat' && <span className="trend-icon">→</span>}
-              <span className="trend-value">{roiTrendPercent}</span>
+          <div className="roi-description">
+            <div className="roi-title">ROI健康度</div>
+            <div
+              className={`roi-status roi-status-${summaryData.avg_roi > 3 ? 'good' : summaryData.avg_roi > 2 ? 'normal' : 'warning'}`}
+            >
+              {summaryData.avg_roi > 3
+                ? '良好'
+                : summaryData.avg_roi > 2
+                  ? '正常'
+                  : '警告'}
             </div>
           </div>
         </div>
-
-        {/* 效率指标 - 销售成本比 - 仅在非简化模式下显示 */}
-        {!simplified && (
-          <div className="efficiency-section">
-            <div className="section-title">效率分析</div>
-            <div className="efficiency-gauge">
-              <div className="gauge-label">销售/成本比</div>
-              <div className="gauge-track">
-                <div
-                  className="gauge-fill"
-                  style={{
-                    width: `${Math.min(
-                      (summaryData.total_sales /
-                        (summaryData.total_ad_cost || 1)) *
-                        20,
-                      100
-                    )}%`
-                  }}
-                >
-                  <div className="gauge-shine"></div>
-                </div>
-              </div>
-              <div className="gauge-value">
-                {formatNumber(
-                  summaryData.total_sales / (summaryData.total_ad_cost || 1)
-                )}
-              </div>
-            </div>
-            <div className="roi-description">
-              <div className="roi-title">ROI健康度</div>
-              <div
-                className={`roi-status roi-status-${summaryData.avg_roi > 3 ? 'good' : summaryData.avg_roi > 2 ? 'normal' : 'warning'}`}
-              >
-                {summaryData.avg_roi > 3
-                  ? '良好'
-                  : summaryData.avg_roi > 2
-                    ? '正常'
-                    : '警告'}
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </DashboardCard>
+      )}
+    </div>
   )
 }
