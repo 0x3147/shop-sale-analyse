@@ -142,7 +142,7 @@ export function StoreTrafficChart({
       },
       grid: {
         top: '10%',
-        left: '25%',
+        left: '12%',
         right: '10%',
         bottom: '5%',
         containLabel: true
