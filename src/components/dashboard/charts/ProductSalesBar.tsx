@@ -25,6 +25,10 @@ interface ProductSalesBarProps {
    * 是否禁用配置合并
    */
   notMerge?: boolean
+  /**
+   * 当前激活的产品类型
+   */
+  activeType?: 'B_END' | 'C_END'
 }
 
 /**
@@ -36,7 +40,8 @@ export function ProductSalesBar({
   style,
   className,
   loading = false,
-  notMerge = false
+  notMerge = false,
+  activeType = 'B_END'
 }: ProductSalesBarProps) {
   // ECharts配置项
   const [option, setOption] = useState<EChartsOption>({})
@@ -52,6 +57,23 @@ export function ProductSalesBar({
 
     // 产品名称和销售数据
     const productNames = sortedData.map((item) => item.product_name)
+
+    // 根据产品类型设置不同的颜色
+    const getColorGradient = (type: 'B_END' | 'C_END') => {
+      if (type === 'B_END') {
+        // B端：蓝色渐变
+        return new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+          { offset: 0, color: 'rgba(80, 175, 255, 0.9)' },
+          { offset: 1, color: 'rgba(40, 110, 190, 0.5)' }
+        ])
+      } else {
+        // C端：绿色渐变
+        return new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+          { offset: 0, color: 'rgba(21, 244, 238, 0.9)' },
+          { offset: 1, color: 'rgba(15, 180, 175, 0.5)' }
+        ])
+      }
+    }
 
     // 设置柱状图配置
     const chartOption: EChartsOption = {
@@ -71,6 +93,7 @@ export function ProductSalesBar({
             <div class="tooltip-item">
               <div class="tooltip-title">${product.product_name}</div>
               <div class="tooltip-sales">销量: ${product.total_sales.toLocaleString()}</div>
+              <div class="tooltip-type">${activeType === 'B_END' ? 'B端产品' : 'C端产品'}</div>
             </div>
           `
         }
@@ -135,10 +158,7 @@ export function ProductSalesBar({
             return {
               value: item.total_sales,
               itemStyle: {
-                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                  { offset: 0, color: 'rgba(80, 175, 255, 0.9)' },
-                  { offset: 1, color: 'rgba(40, 110, 190, 0.5)' }
-                ]),
+                color: getColorGradient(activeType),
                 borderRadius: [4, 4, 0, 0]
               }
             }
@@ -159,7 +179,7 @@ export function ProductSalesBar({
     }
 
     setOption(chartOption)
-  }, [data])
+  }, [data, activeType])
 
   return (
     <BaseEChart
