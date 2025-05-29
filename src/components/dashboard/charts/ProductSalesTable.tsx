@@ -1,0 +1,118 @@
+import { ProductSummary } from '@/service/types'
+import { Table } from 'antd'
+import { ColumnsType } from 'antd/es/table'
+import { CSSProperties } from 'react'
+import './ProductSalesTable.less'
+
+interface ProductSalesTableProps {
+  /**
+   * 产品销售数据
+   */
+  data: ProductSummary[]
+  /**
+   * 组件样式
+   */
+  style?: CSSProperties
+  /**
+   * 组件类名
+   */
+  className?: string
+  /**
+   * 是否显示加载状态
+   */
+  loading?: boolean
+  /**
+   * 当前激活的产品类型
+   */
+  activeType?: 'B_END' | 'C_END'
+}
+
+/**
+ * 产品销售表格组件
+ * 用于展示热门产品的销售情况
+ */
+export function ProductSalesTable({
+  data,
+  style,
+  className,
+  loading = false,
+  activeType = 'B_END'
+}: ProductSalesTableProps) {
+  // 统一的表格列配置（B端和C端相同）
+  const columns: ColumnsType<ProductSummary> = [
+    {
+      title: '商品名称',
+      dataIndex: 'product_name',
+      key: 'product_name',
+      width: '20%',
+      ellipsis: true
+    },
+    {
+      title: '商品类目',
+      dataIndex: 'product_category',
+      key: 'product_category',
+      width: '20%',
+      ellipsis: true,
+      render: (value) => value || '-'
+    },
+    {
+      title: '支付金额',
+      dataIndex: 'payment_amount',
+      key: 'payment_amount',
+      width: '20%',
+      render: (value) => {
+        if (value === null || value === undefined) return '-'
+        return `¥${value.toLocaleString()}`
+      },
+      sorter: (a, b) => (a.payment_amount || 0) - (b.payment_amount || 0)
+    },
+    {
+      title: '商品访客数',
+      dataIndex: 'product_visitors',
+      key: 'product_visitors',
+      width: '20%',
+      render: (value) => {
+        if (value === null || value === undefined) return '-'
+        return value.toLocaleString()
+      },
+      sorter: (a, b) => (a.product_visitors || 0) - (b.product_visitors || 0)
+    },
+    {
+      title: '搜索曝光量',
+      dataIndex: 'search_exposure',
+      key: 'search_exposure',
+      width: '20%',
+      render: (value) => {
+        if (value === null || value === undefined) return '-'
+        return value.toLocaleString()
+      },
+      sorter: (a, b) => (a.search_exposure || 0) - (b.search_exposure || 0)
+    }
+  ]
+
+  // 为表格数据添加key
+  const tableData = data.map((item, index) => ({
+    ...item,
+    key: `${item.product_name}_${index}`
+  }))
+
+  return (
+    <div className={`product-sales-table ${className || ''}`} style={style}>
+      <Table
+        columns={columns}
+        dataSource={tableData}
+        loading={loading}
+        pagination={{
+          pageSize: 10,
+          showSizeChanger: false,
+          showQuickJumper: false,
+          showTotal: (total, range) =>
+            `第 ${range[0]}-${range[1]} 条，共 ${total} 条`
+        }}
+        size="small"
+        scroll={{ y: 400 }}
+        className="dashboard-table"
+      />
+    </div>
+  )
+}

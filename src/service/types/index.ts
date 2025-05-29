@@ -35,9 +35,36 @@ export type MonthSalesResponse = Record<string, MonthlySales[]>
  * 热门产品数据类型
  */
 export interface ProductSummary {
-  product_id: number
   product_name: string
-  total_sales: number
+  product_category: string | null
+  payment_amount: number | null
+  product_visitors: number | null
+  search_exposure: number | null
+}
+
+/**
+ * 产品表格列配置
+ */
+export interface ProductColumn {
+  title: string
+  dataIndex: string
+  key: string
+}
+
+/**
+ * 产品端数据结构（B端或C端）
+ */
+export interface ProductEndData {
+  columns: ProductColumn[]
+  data: ProductSummary[]
+}
+
+/**
+ * 热门产品完整响应数据类型
+ */
+export interface HotProductsResponse {
+  b_products: ProductEndData
+  c_products: ProductEndData
 }
 
 /**

@@ -4,8 +4,8 @@ import type {
   CountrySummary,
   DailySales,
   DepartmentState,
+  HotProductsResponse,
   MonthSalesResponse,
-  ProductSummary,
   Traffic
 } from '../types'
 
@@ -27,10 +27,10 @@ export function getStoreMonthSales(): Promise<ApiResponse<MonthSalesResponse>> {
 
 /**
  * 获取热门产品数据
- * @returns 所有店铺的热门产品数据列表
+ * @returns 包含B端和C端的热门产品数据
  */
-export function getHotProducts(): Promise<ApiResponse<ProductSummary[]>> {
-  return get<ApiResponse<ProductSummary[]>>('/dashboard/hot_products/')
+export function getHotProducts(): Promise<ApiResponse<HotProductsResponse>> {
+  return get<ApiResponse<HotProductsResponse>>('/dashboard/hot_products/')
 }
 
 /**

@@ -1,5 +1,5 @@
 import { DashboardCard } from '@/components/dashboard/cards/DashboardCard'
-import { ProductSalesBar } from '@/components/dashboard/charts/ProductSalesBar'
+import { ProductSalesTable } from '@/components/dashboard/charts/ProductSalesTable'
 import { getHotProducts } from '@/service/api/index'
 import { useRequest } from 'ahooks'
 import { useEffect, useState } from 'react'
@@ -15,8 +15,8 @@ const productTypeOptions = [
 ]
 
 /**
- * 热门产品柱状图组件
- * 展示热门产品的销售额数据
+ * 热门产品表格组件
+ * 展示热门产品的销售数据
  */
 export function HotProductsTreemap() {
   // 当前选中的产品类型
@@ -26,23 +26,31 @@ export function HotProductsTreemap() {
   const [autoSwitch, setAutoSwitch] = useState(true)
   const switchInterval = 30000 // 30秒切换一次
 
-  // 使用API获取热门产品数据
-  const { data, loading } = useRequest(getHotProducts, {
-    pollingInterval: 30000, // 每30秒轮询一次
-    pollingWhenHidden: false, // 页面隐藏时不轮询
-    loadingDelay: 300, // 延迟显示loading状态，避免闪烁
-    refreshOnWindowFocus: false, // 窗口获取焦点时不自动刷新
+  // 使用API获取热门产品数据（包含B端和C端）
+  const {
+    data,
+    loading,
+    run: runRequest
+  } = useRequest(getHotProducts, {
+    manual: true, // 手动触发
+    loadingDelay: 300,
+    refreshOnWindowFocus: false,
     onError: (error) => {
       console.error('获取热门产品数据失败:', error)
     }
   })
 
-  // 从API获取的产品数据
-  const productData = data?.data || []
+  // 从API响应中提取B端和C端数据
+  const bEndData = data?.data?.b_products?.data || []
+  const cEndData = data?.data?.c_products?.data || []
+
+  // 根据当前类型获取对应数据
+  const currentData = activeType === 'B_END' ? bEndData : cEndData
 
   // 产品类型切换
   const handleTypeChange = (type: ProductType) => {
     setActiveType(type)
+
     // 手动切换时暂停自动切换
     setAutoSwitch(false)
     // 5秒后恢复自动切换
@@ -68,6 +76,20 @@ export function HotProductsTreemap() {
     return () => clearInterval(timer)
   }, [activeType, autoSwitch, switchInterval])
 
+  // 定期请求数据（每30秒）
+  useEffect(() => {
+    // 立即请求一次
+    runRequest()
+
+    // 设置定时器定期请求
+    const timer = setInterval(() => {
+      runRequest()
+    }, 30000)
+
+    // 清理定时器
+    return () => clearInterval(timer)
+  }, [runRequest])
+
   // 获取当前类型信息
   const currentType = productTypeOptions.find((item) => item.key === activeType)
 
@@ -88,11 +110,10 @@ export function HotProductsTreemap() {
             </div>
           ))}
         </div>
-        <div className="chart-container" style={{ height: '100%' }}>
-          <ProductSalesBar
-            data={productData}
+        <div className="table-container" style={{ height: '100%', flex: 1 }}>
+          <ProductSalesTable
+            data={currentData}
             loading={loading}
-            notMerge={true}
             activeType={activeType}
           />
         </div>
