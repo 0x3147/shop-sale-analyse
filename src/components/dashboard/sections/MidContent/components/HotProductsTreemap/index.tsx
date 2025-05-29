@@ -27,14 +27,11 @@ export function HotProductsTreemap() {
   const switchInterval = 30000 // 30秒切换一次
 
   // 使用API获取热门产品数据（包含B端和C端）
-  const {
-    data,
-    loading,
-    run: runRequest
-  } = useRequest(getHotProducts, {
-    manual: true, // 手动触发
-    loadingDelay: 300,
-    refreshOnWindowFocus: false,
+  const { data, loading } = useRequest(getHotProducts, {
+    pollingInterval: 30000, // 每30秒轮询一次
+    pollingWhenHidden: false, // 页面隐藏时不轮询
+    loadingDelay: 300, // 延迟显示loading状态，避免闪烁
+    refreshOnWindowFocus: false, // 窗口获取焦点时不自动刷新
     onError: (error) => {
       console.error('获取热门产品数据失败:', error)
     }
@@ -75,20 +72,6 @@ export function HotProductsTreemap() {
     // 清理定时器
     return () => clearInterval(timer)
   }, [activeType, autoSwitch, switchInterval])
-
-  // 定期请求数据（每30秒）
-  useEffect(() => {
-    // 立即请求一次
-    runRequest()
-
-    // 设置定时器定期请求
-    const timer = setInterval(() => {
-      runRequest()
-    }, 30000)
-
-    // 清理定时器
-    return () => clearInterval(timer)
-  }, [runRequest])
 
   // 获取当前类型信息
   const currentType = productTypeOptions.find((item) => item.key === activeType)
