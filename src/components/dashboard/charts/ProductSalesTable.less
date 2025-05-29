@@ -5,15 +5,18 @@
 
   .dashboard-table {
     flex: 1;
+    height: 100%;
 
     // 表格整体样式
     .ant-table {
       background: transparent;
+      height: 100%;
 
       .ant-table-container {
         background: transparent;
         border: 1px solid rgba(94, 200, 234, 0.15);
         border-radius: 8px;
+        height: 100%;
       }
 
       // 表头样式
@@ -24,8 +27,9 @@
             border-bottom: 1px solid rgba(94, 200, 234, 0.2);
             color: #8fb3f1;
             font-weight: 600;
-            font-size: 14px;
-            padding: 12px 8px;
+            font-size: 32px;
+            padding: 35px 20px;
+            height: 110px;
 
             &:not(:last-child) {
               border-right: 1px solid rgba(94, 200, 234, 0.1);
@@ -52,6 +56,7 @@
       .ant-table-tbody {
         tr {
           background: rgba(15, 34, 75, 0.3);
+          height: 180px;
 
           &:hover {
             background: rgba(45, 85, 160, 0.4) !important;
@@ -64,8 +69,11 @@
           td {
             border-bottom: 1px solid rgba(94, 200, 234, 0.1);
             color: #a1c4ff;
-            font-size: 13px;
-            padding: 10px 8px;
+            font-size: 30px;
+            font-weight: 500;
+            padding: 40px 20px;
+            height: 140px;
+            vertical-align: middle;
 
             &:not(:last-child) {
               border-right: 1px solid rgba(94, 200, 234, 0.05);
@@ -75,68 +83,26 @@
       }
     }
 
-    // 分页样式
-    .ant-pagination {
-      margin-top: 16px;
-      text-align: center;
-
-      .ant-pagination-item {
-        background: rgba(28, 62, 122, 0.3);
-        border: 1px solid rgba(94, 200, 234, 0.2);
-
-        a {
-          color: #a1c4ff;
-        }
-
-        &:hover {
-          background: rgba(45, 85, 160, 0.4);
-          border-color: rgba(94, 200, 234, 0.4);
-
-          a {
-            color: #15f4ee;
-          }
-        }
-
-        &.ant-pagination-item-active {
-          background: rgba(21, 244, 238, 0.2);
-          border-color: #15f4ee;
-
-          a {
-            color: #15f4ee;
-          }
-        }
-      }
-
-      .ant-pagination-prev,
-      .ant-pagination-next {
-        .ant-pagination-item-link {
-          background: rgba(28, 62, 122, 0.3);
-          border: 1px solid rgba(94, 200, 234, 0.2);
-          color: #a1c4ff;
-
-          &:hover {
-            background: rgba(45, 85, 160, 0.4);
-            border-color: rgba(94, 200, 234, 0.4);
-            color: #15f4ee;
-          }
-        }
-      }
-
-      .ant-pagination-total-text {
-        color: #8fb3f1;
-        font-size: 12px;
-      }
-    }
-
     // 空数据样式
     .ant-empty {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
       .ant-empty-description {
         color: #8fb3f1;
+        font-size: 22px;
       }
     }
 
     // 加载状态样式
     .ant-spin {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
       .ant-spin-dot {
         .ant-spin-dot-item {
           background-color: #15f4ee;

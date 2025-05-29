@@ -9,21 +9,22 @@
     display: flex;
     justify-content: center;
     gap: 12px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     padding: 0 10px;
+    flex-shrink: 0;
 
     .product-type-tab {
-      padding: 12px 24px;
+      padding: 10px 20px;
       border-radius: 8px;
       background: rgba(15, 40, 80, 0.3);
       border: 1px solid rgba(94, 200, 234, 0.2);
       color: #8fb3f1;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
       user-select: none;
-      min-width: 120px;
+      min-width: 100px;
       text-align: center;
 
       &:hover {
@@ -47,8 +48,7 @@
   // 表格容器
   .table-container {
     flex: 1;
-    height: 100%;
-    padding-top: 10px;
+    height: 0;
     overflow: hidden;
     position: relative;
     display: flex;

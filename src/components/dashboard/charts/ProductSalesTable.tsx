@@ -35,8 +35,7 @@ export function ProductSalesTable({
   data,
   style,
   className,
-  loading = false,
-  activeType = 'B_END'
+  loading = false
 }: ProductSalesTableProps) {
   // 统一的表格列配置（B端和C端相同）
   const columns: ColumnsType<ProductSummary> = [
@@ -102,15 +101,8 @@ export function ProductSalesTable({
         columns={columns}
         dataSource={tableData}
         loading={loading}
-        pagination={{
-          pageSize: 10,
-          showSizeChanger: false,
-          showQuickJumper: false,
-          showTotal: (total, range) =>
-            `第 ${range[0]}-${range[1]} 条，共 ${total} 条`
-        }}
-        size="small"
-        scroll={{ y: 400 }}
+        pagination={false}
+        size="large"
         className="dashboard-table"
       />
     </div>
