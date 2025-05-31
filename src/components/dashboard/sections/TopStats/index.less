@@ -33,27 +33,27 @@
         display: flex;
         flex-direction: column;
         background-color: rgba(15, 40, 80, 0.4);
-        padding: 15px;
+        padding: 8px;
 
         .logo-container {
-          flex: 1;
+          flex: 1.5;
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 15px;
+          margin-bottom: 8px;
           background-color: rgba(15, 40, 80, 0.2);
-          border-radius: 8px;
-          padding: 10px;
+          border-radius: 6px;
+          padding: 5px;
 
           .logo-image {
-            max-width: 50%;
-            max-height: 50%;
+            max-width: 90%;
+            max-height: 90%;
             object-fit: contain;
           }
         }
 
         .department-summary-container {
-          flex: 4;
+          flex: 3.5;
           overflow: hidden;
 
           :global(.dashboard-card) {
@@ -63,16 +63,16 @@
 
             .dashboard-card-header {
               padding: 0;
-              margin-bottom: 8px;
+              margin-bottom: 5px;
 
               .dashboard-card-title {
-                font-size: 18px;
+                font-size: 16px;
               }
             }
 
             .dashboard-card-content {
               padding: 0;
-              height: calc(100% - 28px) !important;
+              height: calc(100% - 21px) !important;
               overflow: hidden;
             }
           }
