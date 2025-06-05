@@ -58,15 +58,34 @@
           background: rgba(15, 34, 75, 0.3);
           height: 180px;
 
-          &:hover {
-            background: rgba(45, 85, 160, 0.4) !important;
-          }
-
           &:nth-child(even) {
             background: rgba(28, 62, 122, 0.2);
           }
 
+          // 修复悬停时整行变白的问题
+          &:hover {
+            background: rgba(45, 85, 160, 0.4) !important;
+
+            td {
+              background: rgba(45, 85, 160, 0.4) !important;
+
+              &.ant-table-column-sort {
+                background: rgba(45, 85, 160, 0.4) !important;
+              }
+            }
+          }
+
+          // 覆盖Ant Design的默认悬停样式
+          &.ant-table-row:hover {
+            background: rgba(45, 85, 160, 0.4) !important;
+
+            > td {
+              background: rgba(45, 85, 160, 0.4) !important;
+            }
+          }
+
           td {
+            background: inherit;
             border-bottom: 1px solid rgba(94, 200, 234, 0.1);
             color: #a1c4ff;
             font-size: 26px;
@@ -78,6 +97,18 @@
             &:not(:last-child) {
               border-right: 1px solid rgba(94, 200, 234, 0.05);
             }
+
+            // 修复排序列背景变白的问题
+            &.ant-table-column-sort {
+              background: inherit !important;
+            }
+          }
+        }
+
+        // 偶数行的排序列样式
+        tr:nth-child(even) {
+          td.ant-table-column-sort {
+            background: rgba(28, 62, 122, 0.2) !important;
           }
         }
       }

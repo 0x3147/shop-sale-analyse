@@ -62,8 +62,7 @@ export function ProductSalesTable({
       render: (value) => {
         if (value === null || value === undefined) return '-'
         return `¥${value.toLocaleString()}`
-      },
-      sorter: (a, b) => (a.payment_amount || 0) - (b.payment_amount || 0)
+      }
     },
     {
       title: '商品访客数',
@@ -73,8 +72,7 @@ export function ProductSalesTable({
       render: (value) => {
         if (value === null || value === undefined) return '-'
         return value.toLocaleString()
-      },
-      sorter: (a, b) => (a.product_visitors || 0) - (b.product_visitors || 0)
+      }
     },
     {
       title: '搜索曝光量',
@@ -84,8 +82,7 @@ export function ProductSalesTable({
       render: (value) => {
         if (value === null || value === undefined) return '-'
         return value.toLocaleString()
-      },
-      sorter: (a, b) => (a.search_exposure || 0) - (b.search_exposure || 0)
+      }
     }
   ]
 
