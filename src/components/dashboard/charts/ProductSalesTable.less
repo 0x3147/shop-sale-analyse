@@ -6,6 +6,7 @@
   .dashboard-table {
     flex: 1;
     height: 100%;
+    overflow: hidden;
 
     // 表格整体样式
     .ant-table {
@@ -17,6 +18,26 @@
         border: 1px solid rgba(94, 200, 234, 0.15);
         border-radius: 8px;
         height: 100%;
+        overflow: auto;
+
+        // 自定义滚动条样式
+        &::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: rgba(15, 40, 80, 0.3);
+          border-radius: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: rgba(94, 200, 234, 0.4);
+          border-radius: 4px;
+
+          &:hover {
+            background: rgba(94, 200, 234, 0.6);
+          }
+        }
       }
 
       // 表头样式
@@ -30,6 +51,9 @@
             font-size: 28px;
             padding: 35px 20px;
             height: 110px;
+            position: sticky;
+            top: 0;
+            z-index: 1;
 
             &:not(:last-child) {
               border-right: 1px solid rgba(94, 200, 234, 0.1);
@@ -56,7 +80,6 @@
       .ant-table-tbody {
         tr {
           background: rgba(15, 34, 75, 0.3);
-          height: 180px;
 
           &:nth-child(even) {
             background: rgba(28, 62, 122, 0.2);
@@ -88,11 +111,15 @@
             background: inherit;
             border-bottom: 1px solid rgba(94, 200, 234, 0.1);
             color: #a1c4ff;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 500;
-            padding: 40px 20px;
-            height: 140px;
-            vertical-align: middle;
+            padding: 35px 20px;
+            min-height: 140px;
+            vertical-align: top;
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: normal;
+            line-height: 1.4;
 
             &:not(:last-child) {
               border-right: 1px solid rgba(94, 200, 234, 0.05);

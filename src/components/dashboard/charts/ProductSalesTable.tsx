@@ -43,7 +43,7 @@ export function ProductSalesTable({
       title: '商品名称',
       dataIndex: 'product_name',
       key: 'product_name',
-      width: '20%',
+      width: '40%',
       ellipsis: true
     },
     {
@@ -58,7 +58,7 @@ export function ProductSalesTable({
       title: '支付金额',
       dataIndex: 'payment_amount',
       key: 'payment_amount',
-      width: '20%',
+      width: '13%',
       render: (value) => {
         if (value === null || value === undefined) return '-'
         return `¥${value.toLocaleString()}`
@@ -68,7 +68,7 @@ export function ProductSalesTable({
       title: '商品访客数',
       dataIndex: 'product_visitors',
       key: 'product_visitors',
-      width: '20%',
+      width: '14%',
       render: (value) => {
         if (value === null || value === undefined) return '-'
         return value.toLocaleString()
@@ -78,7 +78,7 @@ export function ProductSalesTable({
       title: '搜索曝光量',
       dataIndex: 'search_exposure',
       key: 'search_exposure',
-      width: '20%',
+      width: '13%',
       render: (value) => {
         if (value === null || value === undefined) return '-'
         return value.toLocaleString()
