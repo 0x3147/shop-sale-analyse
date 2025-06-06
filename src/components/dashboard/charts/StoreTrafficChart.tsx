@@ -206,7 +206,7 @@ export function StoreTrafficChart({
             borderRadius: [0, 4, 4, 0]
           },
           label: {
-            show: false,
+            show: true,
             position: 'right',
             color: '#ffffff',
             formatter: (params: any) => {
