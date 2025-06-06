@@ -22,9 +22,9 @@ interface ProductSalesTableProps {
    */
   loading?: boolean
   /**
-   * 当前激活的产品类型
+   * 当前激活的产品排名类型
    */
-  activeType?: 'B_END' | 'C_END'
+  activeType?: 'TOP5' | 'NEXT5'
 }
 
 /**

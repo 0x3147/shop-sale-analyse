@@ -52,19 +52,22 @@ export interface ProductColumn {
 }
 
 /**
- * 产品端数据结构（B端或C端）
+ * 产品列表数据结构
  */
-export interface ProductEndData {
+export interface ProductListData {
+  title: string
   columns: ProductColumn[]
   data: ProductSummary[]
+  count: number
 }
 
 /**
  * 热门产品完整响应数据类型
  */
 export interface HotProductsResponse {
-  b_products: ProductEndData
-  c_products: ProductEndData
+  top5: ProductListData
+  next5: ProductListData
+  total_count: number
 }
 
 /**
