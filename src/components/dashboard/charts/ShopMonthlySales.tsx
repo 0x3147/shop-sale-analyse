@@ -234,11 +234,13 @@ export function ShopMonthlySales({
         bottom: 0,
         data: topShops.map((shop) => shop.name),
         textStyle: {
-          color: '#a1b4d4'
+          color: '#a1b4d4',
+          fontSize: 18
         },
         pageIconColor: '#8fb3f1',
         pageTextStyle: {
-          color: '#a1b4d4'
+          color: '#a1b4d4',
+          fontSize: 16
         },
         inactiveColor: '#555'
       },
@@ -262,7 +264,8 @@ export function ShopMonthlySales({
         },
         axisLabel: {
           color: '#7a9ac5',
-          rotate: 0
+          rotate: 0,
+          fontSize: 18
         }
       },
       // Y轴设置
@@ -282,6 +285,7 @@ export function ShopMonthlySales({
         },
         axisLabel: {
           color: '#7a9ac5',
+          fontSize: 18,
           formatter: (value: number) => {
             // 简化大数字显示
             if (value >= 1000000) {

@@ -78,7 +78,7 @@ export function RegionPieChart({
           show: true,
           position: 'outside',
           formatter: '{b}',
-          fontSize: 12,
+          fontSize: 16,
           color: '#ffffff',
           textShadowColor: 'rgba(0, 0, 0, 0.8)',
           textShadowBlur: 3,
@@ -91,7 +91,7 @@ export function RegionPieChart({
         emphasis: {
           label: {
             show: true,
-            fontSize: 14,
+            fontSize: 18,
             fontWeight: 'bold'
           },
           itemStyle: {

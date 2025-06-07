@@ -65,16 +65,19 @@ export function BaseEChart({
     const defaultOption: EChartsOption = {
       backgroundColor: 'transparent',
       textStyle: {
-        color: '#a1b4d4'
+        color: '#a1b4d4',
+        fontSize: 16
       },
       title: {
         textStyle: {
-          color: '#add6ff'
+          color: '#add6ff',
+          fontSize: 20
         }
       },
       legend: {
         textStyle: {
-          color: '#a1b4d4'
+          color: '#a1b4d4',
+          fontSize: 16
         }
       },
       xAxis: {
@@ -84,7 +87,8 @@ export function BaseEChart({
           }
         },
         axisLabel: {
-          color: '#7a9ac5'
+          color: '#7a9ac5',
+          fontSize: 16
         },
         splitLine: {
           lineStyle: {
@@ -99,7 +103,8 @@ export function BaseEChart({
           }
         },
         axisLabel: {
-          color: '#7a9ac5'
+          color: '#7a9ac5',
+          fontSize: 16
         },
         splitLine: {
           lineStyle: {

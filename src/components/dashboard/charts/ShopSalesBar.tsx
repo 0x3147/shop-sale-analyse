@@ -162,6 +162,7 @@ export function ShopSalesBar({
         type: 'value',
         max: maxSalesRef.current, // 使用固定的最大值
         axisLabel: {
+          fontSize: 16,
           formatter: (value: number) => {
             // 简化大数字显示，例如：1.2k、3.5m
             if (value >= 1000000) {
@@ -178,6 +179,7 @@ export function ShopSalesBar({
         data: shopNames,
         axisLabel: {
           interval: 0,
+          fontSize: 16,
           // 确保标签完整显示
           formatter: (value: string) => {
             if (value.length > 5) {
@@ -202,6 +204,7 @@ export function ShopSalesBar({
           label: {
             show: true,
             position: 'right',
+            fontSize: 16,
             formatter: (params: any) => {
               return unit + params.value.toLocaleString()
             },
