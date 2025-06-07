@@ -78,7 +78,7 @@ export function RegionPieChart({
           show: true,
           position: 'outside',
           formatter: '{b}',
-          fontSize: 16,
+          fontSize: 26,
           color: '#ffffff',
           textShadowColor: 'rgba(0, 0, 0, 0.8)',
           textShadowBlur: 3,
