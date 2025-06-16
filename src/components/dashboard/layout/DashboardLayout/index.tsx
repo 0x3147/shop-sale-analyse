@@ -25,11 +25,6 @@ export function DashboardLayout({
       <main className="dashboard-main">
         <div className="dashboard-content">{children}</div>
       </main>
-
-      {/* 底部版权区域 */}
-      <footer className="dashboard-footer">
-        <span>数据更新时间: {new Date().toLocaleString()}</span>
-      </footer>
     </div>
   )
 }
