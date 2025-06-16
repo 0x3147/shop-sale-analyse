@@ -1,7 +1,7 @@
-import { Dashboard } from '@/components/dashboard/Dashboard'
+import { CarouselPage1 } from '@/components/dashboard/carousel/CarouselPage1'
 
 function App() {
-  return <Dashboard />
+  return <CarouselPage1 />
 }
 
 export default App
