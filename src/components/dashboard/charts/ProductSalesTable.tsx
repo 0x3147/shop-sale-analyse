@@ -107,6 +107,10 @@ export function ProductSalesTable({
       width: widths.payment,
       render: (value) => {
         if (value === null || value === undefined) return '-'
+        // 如果列标题包含"占比"，则显示为百分比格式
+        if (titles.payment.includes('占比')) {
+          return `${value.toFixed(2)}%`
+        }
         return `¥${value.toLocaleString()}`
       }
     },
