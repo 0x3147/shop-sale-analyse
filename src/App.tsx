@@ -1,4 +1,4 @@
-import { CarouselPage1 } from '@/components/dashboard/carousel/CarouselPage1'
+import CarouselPage1 from '@/components/dashboard/carousel/carouselPage1'
 
 function App() {
   return <CarouselPage1 />

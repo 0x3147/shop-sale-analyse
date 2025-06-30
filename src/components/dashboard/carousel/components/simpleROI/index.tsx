@@ -1,13 +1,13 @@
 import { getDepartmentSales } from '@/service/api'
 import { useRequest } from 'ahooks'
 import { useState } from 'react'
-import './SimpleROI.less'
+import './index.less'
 
 /**
  * 简单的ROI显示组件
  * 专门用于轮播页面，避免复杂的DepartmentSummary组件样式冲突
  */
-export function SimpleROI() {
+export default function SimpleROI() {
   // 本地状态存储当前显示的数据
   const [summaryData, setSummaryData] = useState<{
     total_sales: number

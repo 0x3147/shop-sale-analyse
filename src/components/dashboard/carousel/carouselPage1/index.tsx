@@ -3,19 +3,19 @@ import { getStoreDailySales, getStoreTraffic } from '@/service/api'
 import { DailySales, Traffic } from '@/service/types'
 import { useRequest } from 'ahooks'
 import { useState } from 'react'
-import { DashboardCard } from '../cards/DashboardCard'
-import { ShopSalesBar } from '../charts/ShopSalesBar'
-import { StoreTrafficChart } from '../charts/StoreTrafficChart'
-import { DashboardLayout } from '../layout/DashboardLayout'
-import { ShopMonthlySalesChart } from '../sections/MidContent/components/ShopMonthlySalesChart'
-import { SimpleROI } from './components/SimpleROI'
+import { DashboardCard } from '../../cards/DashboardCard'
+import { ShopSalesBar } from '../../charts/ShopSalesBar'
+import { StoreTrafficChart } from '../../charts/StoreTrafficChart'
+import { DashboardLayout } from '../../layout/DashboardLayout'
+import { ShopMonthlySalesChart } from '../../sections/MidContent/components/ShopMonthlySalesChart'
+import SimpleROI from '../components/simpleROI'
 import './index.less'
 
 /**
  * 轮播页面1 - 销售概览页面
  * 左右两侧组件向上延伸，中间保持Logo和ROI区域
  */
-export function CarouselPage1() {
+export default function CarouselPage1() {
   // 店铺日销售额数据
   const [salesData, setSalesData] = useState<DailySales[]>([])
 
