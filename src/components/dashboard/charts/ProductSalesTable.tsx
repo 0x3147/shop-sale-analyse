@@ -25,6 +25,26 @@ interface ProductSalesTableProps {
    * 当前激活的产品排名类型
    */
   activeType?: 'TOP5' | 'NEXT5'
+  /**
+   * 自定义列宽配置（用于不同场景的宽度需求）
+   */
+  columnWidths?: {
+    productName?: string
+    category?: string
+    payment?: string
+    visitors?: string
+    exposure?: string
+  }
+  /**
+   * 自定义列标题配置（用于不同场景的列名需求）
+   */
+  columnTitles?: {
+    productName?: string
+    category?: string
+    payment?: string
+    visitors?: string
+    exposure?: string
+  }
 }
 
 /**
@@ -35,50 +55,76 @@ export function ProductSalesTable({
   data,
   style,
   className,
-  loading = false
+  loading = false,
+  columnWidths,
+  columnTitles
 }: ProductSalesTableProps) {
-  // 统一的表格列配置（B端和C端相同）
+  // 默认配置
+  const defaultWidths = {
+    productName: '45%',
+    category: '18%',
+    payment: '12%',
+    visitors: '13%',
+    exposure: '12%'
+  }
+
+  const defaultTitles = {
+    productName: '商品名称',
+    category: '商品类目',
+    payment: '支付金额',
+    visitors: '商品访客数',
+    exposure: '搜索曝光量'
+  }
+
+  const widths = columnWidths
+    ? { ...defaultWidths, ...columnWidths }
+    : defaultWidths
+
+  const titles = columnTitles
+    ? { ...defaultTitles, ...columnTitles }
+    : defaultTitles
+
   const columns: ColumnsType<ProductSummary> = [
     {
-      title: '商品名称',
+      title: titles.productName,
       dataIndex: 'product_name',
       key: 'product_name',
-      width: '45%',
+      width: widths.productName,
       ellipsis: false
     },
     {
-      title: '商品类目',
+      title: titles.category,
       dataIndex: 'product_category',
       key: 'product_category',
-      width: '18%',
+      width: widths.category,
       ellipsis: true,
       render: (value) => value || '-'
     },
     {
-      title: '支付金额',
+      title: titles.payment,
       dataIndex: 'payment_amount',
       key: 'payment_amount',
-      width: '12%',
+      width: widths.payment,
       render: (value) => {
         if (value === null || value === undefined) return '-'
         return `¥${value.toLocaleString()}`
       }
     },
     {
-      title: '商品访客数',
+      title: titles.visitors,
       dataIndex: 'product_visitors',
       key: 'product_visitors',
-      width: '13%',
+      width: widths.visitors,
       render: (value) => {
         if (value === null || value === undefined) return '-'
         return value.toLocaleString()
       }
     },
     {
-      title: '搜索曝光量',
+      title: titles.exposure,
       dataIndex: 'search_exposure',
       key: 'search_exposure',
-      width: '12%',
+      width: widths.exposure,
       render: (value) => {
         if (value === null || value === undefined) return '-'
         return value.toLocaleString()

@@ -100,15 +100,15 @@ export default function CountryHotProducts({
 
   return (
     <div className="country-hot-products">
-      {/* 国家标题 */}
-      <div className="country-header">
+      {/* 当前国家标识 */}
+      <div className="country-indicator">
         <span className="country-title">
           {countryData.currentTitle || '各国热门商品排行'}
         </span>
       </div>
 
       {/* 表格内容 */}
-      <div className="table-wrapper">
+      <div className="table-content">
         <ProductSalesTable
           data={countryData.currentData}
           loading={isLoading}
