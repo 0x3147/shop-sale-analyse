@@ -107,9 +107,7 @@ export default function GMVAnalysisTable({
           (item: CountryAnalysisItem): ProductSummary => ({
             product_name: item.store_name, // 店铺名称对应商品名称
             product_category: item.country_region, // 国家地区对应商品类目
-            payment_amount: parseFloat(
-              item.payment_amount_ratio.replace('%', '')
-            ), // 支付金额占比对应支付金额
+            payment_amount: item.payment_amount_ratio, // 支付金额占比直接展示原始值
             product_visitors: parseInt(item.growth_index.replace(',', '')), // 上升指数对应访客数
             search_exposure: parseInt(item.logistics_days) // 物流天数对应搜索曝光量
           })

@@ -37,7 +37,7 @@ export type MonthSalesResponse = Record<string, MonthlySales[]>
 export interface ProductSummary {
   product_name: string
   product_category: string | null
-  payment_amount: number | null
+  payment_amount: number | string | null
   product_visitors: number | null
   search_exposure: number | null
 }
