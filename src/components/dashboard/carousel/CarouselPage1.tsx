@@ -8,8 +8,8 @@ import { ShopSalesBar } from '../charts/ShopSalesBar'
 import { StoreTrafficChart } from '../charts/StoreTrafficChart'
 import { DashboardLayout } from '../layout/DashboardLayout'
 import { ShopMonthlySalesChart } from '../sections/MidContent/components/ShopMonthlySalesChart'
-import './CarouselPage1.less'
 import { SimpleROI } from './components/SimpleROI'
+import './index.less'
 
 /**
  * 轮播页面1 - 销售概览页面
