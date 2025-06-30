@@ -20,6 +20,12 @@
         height: 100%;
         overflow: auto;
 
+        .ant-table-body {
+          height: auto !important;
+          max-height: calc(100% - 120px); // 减去表头高度
+          overflow-y: auto;
+        }
+
         // 自定义滚动条样式
         &::-webkit-scrollbar {
           width: 8px;

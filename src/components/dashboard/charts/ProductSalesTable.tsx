@@ -147,7 +147,6 @@ export function ProductSalesTable({
         pagination={false}
         size="large"
         className="dashboard-table"
-        scroll={{ y: 500 }} // 固定表格主体高度为240px
       />
     </div>
   )

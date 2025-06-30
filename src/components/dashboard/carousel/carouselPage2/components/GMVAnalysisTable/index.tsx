@@ -30,7 +30,6 @@ interface GMVAnalysisTableProps {
  */
 export default function GMVAnalysisTable({
   type,
-  title,
   switchInterval = 15000
 }: GMVAnalysisTableProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
