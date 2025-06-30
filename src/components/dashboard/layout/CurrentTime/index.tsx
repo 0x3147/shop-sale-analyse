@@ -1,43 +1,6 @@
-import { getHotCountries } from '@/service/api'
-import { useRequest } from 'ahooks'
 import { formatInTimeZone } from 'date-fns-tz'
 import { useEffect, useState } from 'react'
 import './index.less'
-
-// 全球主要国家与时区映射关系 - 仅作为备用
-const COUNTRY_TIMEZONE_MAP: Record<string, string> = {
-  中国: 'Asia/Shanghai',
-  美国: 'America/New_York',
-  日本: 'Asia/Tokyo',
-  英国: 'Europe/London',
-  德国: 'Europe/Berlin',
-  法国: 'Europe/Paris',
-  澳大利亚: 'Australia/Sydney',
-  加拿大: 'America/Toronto',
-  印度: 'Asia/Kolkata',
-  巴西: 'America/Sao_Paulo',
-  俄罗斯: 'Europe/Moscow',
-  韩国: 'Asia/Seoul',
-  新加坡: 'Asia/Singapore',
-  阿联酋: 'Asia/Dubai',
-  墨西哥: 'America/Mexico_City',
-  西班牙: 'Europe/Madrid',
-  意大利: 'Europe/Rome',
-  荷兰: 'Europe/Amsterdam',
-  瑞典: 'Europe/Stockholm',
-  瑞士: 'Europe/Zurich',
-  泰国: 'Asia/Bangkok',
-  越南: 'Asia/Ho_Chi_Minh',
-  马来西亚: 'Asia/Kuala_Lumpur',
-  印度尼西亚: 'Asia/Jakarta',
-  菲律宾: 'Asia/Manila',
-  南非: 'Africa/Johannesburg',
-  埃及: 'Africa/Cairo',
-  土耳其: 'Europe/Istanbul',
-  沙特阿拉伯: 'Asia/Riyadh',
-  乌克兰: 'Europe/Kiev',
-  秘鲁: 'America/Lima'
-}
 
 // 国家首都映射
 const COUNTRY_CAPITAL_MAP: Record<string, string> = {
@@ -104,11 +67,6 @@ const formatDate = (date: Date, timezone: string) => {
 
 // 根据国家名称猜测时区
 const guessTimezone = (country: string): string => {
-  // 首先检查我们预设的映射
-  if (COUNTRY_TIMEZONE_MAP[country]) {
-    return COUNTRY_TIMEZONE_MAP[country]
-  }
-
   // 简单的国家-城市映射猜测
   const commonCities: Record<string, string> = {
     英国: 'Europe/London',
@@ -171,7 +129,6 @@ interface CurrentTimeProps {
  * 当前时间组件 - 支持多国家时区显示
  */
 export function CurrentTime({
-  excludeBeijing = false,
   maxDisplay = 5,
   fixedCountries
 }: CurrentTimeProps) {
@@ -195,51 +152,6 @@ export function CurrentTime({
       setCityOptions(fixedCityOptions)
     }
   }, [fixedCountries])
-
-  // 使用API获取热门国家数据 (仅在未指定固定国家时使用)
-  useRequest(getHotCountries, {
-    pollingInterval: 60000, // 每分钟更新一次
-    refreshOnWindowFocus: false,
-    ready: !fixedCountries, // 只有在未指定固定国家时才调用API
-    onSuccess: (res) => {
-      if (res.success && res.data && res.data.length > 0) {
-        // 获取热门国家，并准备城市时间选项
-        let hotCountryOptions = res.data.map((item) => {
-          const countryName = item.country
-          return {
-            country: countryName,
-            city: getCapital(countryName),
-            timezone: guessTimezone(countryName)
-          }
-        })
-
-        // 如果需要排除北京时间
-        if (excludeBeijing) {
-          hotCountryOptions = hotCountryOptions.filter(
-            (item) => !(item.country === '中国' && item.city === '北京')
-          )
-        }
-
-        // 排序，确保没有中国时，默认显示第一个国家
-        setCityOptions(hotCountryOptions)
-
-        // 如果当前没有选中的国家或者选中的是被排除的北京，默认选择第一个
-        if (
-          !selectedCity.country ||
-          (excludeBeijing &&
-            selectedCity.country === '中国' &&
-            selectedCity.city === '北京') ||
-          !hotCountryOptions.some(
-            (item) => item.country === selectedCity.country
-          )
-        ) {
-          if (hotCountryOptions.length > 0) {
-            setSelectedCity(hotCountryOptions[0])
-          }
-        }
-      }
-    }
-  })
 
   // 每秒更新当前时间
   useEffect(() => {
