@@ -128,3 +128,41 @@ export interface CountryProductData {
   data: ProductSummary[]
   count: number
 }
+
+/**
+ * 国家分析数据项
+ */
+export interface CountryAnalysisItem {
+  store_id: number
+  store_name: string
+  country_region: string
+  payment_amount_ratio: string
+  growth_index: string
+  logistics_days: string
+}
+
+/**
+ * 国家分析分组数据
+ * 使用动态键名以支持中文分组类型
+ */
+export interface CountryAnalysisGroups {
+  [groupType: string]: CountryAnalysisItem[]
+}
+
+/**
+ * 国家分析汇总数据
+ */
+export interface CountryAnalysisSummary {
+  total_types: number
+  total_countries: number
+}
+
+/**
+ * 国家分析响应数据类型
+ */
+export interface CountryAnalysisResponse {
+  date: string
+  columns: ProductColumn[]
+  type_groups: CountryAnalysisGroups
+  summary: CountryAnalysisSummary
+}

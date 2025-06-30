@@ -1,6 +1,7 @@
 import { get } from '../index'
 import type {
   ApiResponse,
+  CountryAnalysisResponse,
   CountryHotProductsResponse,
   DailySales,
   DepartmentState,
@@ -60,3 +61,15 @@ export function getCountryHotProducts(): Promise<
     '/dashboard/hot_products/'
   )
 }
+
+/**
+ * 获取国家分析数据
+ * @returns 按GMV和增速分组的国家分析数据
+ */
+export function getCountryAnalysis(): Promise<
+  ApiResponse<CountryAnalysisResponse>
+> {
+  return get<ApiResponse<CountryAnalysisResponse>>(
+    '/dashboard/country_analysis/'
+  )
+} 
