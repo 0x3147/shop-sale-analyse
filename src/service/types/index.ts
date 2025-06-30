@@ -108,3 +108,23 @@ export interface DepartmentState {
     avg_roi: number
   }
 }
+
+/**
+ * 国家热门产品响应数据类型
+ * 根据新的接口格式定义
+ */
+export interface CountryHotProductsResponse {
+  date: string
+  columns: ProductColumn[]
+  [countryName: string]: any // 国家名称作为键，值为国家产品数据
+}
+
+/**
+ * 单个国家的热门产品数据
+ */
+export interface CountryProductData {
+  title: string
+  columns: ProductColumn[]
+  data: ProductSummary[]
+  count: number
+}
