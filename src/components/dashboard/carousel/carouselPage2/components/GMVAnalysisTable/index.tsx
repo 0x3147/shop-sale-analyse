@@ -124,20 +124,27 @@ export default function GMVAnalysisTable({
 
   // GMV表格的自定义配置
   const gmvColumnWidths = {
-    productName: '20%', // 减小店铺名称列宽度
-    category: '15%', // 国家地区列宽度
-    payment: '15%', // 支付金额占比列宽度
-    visitors: '20%', // 上升指数列宽度
-    exposure: '15%' // 物流天数列宽度
+    category: '25%', // 国家地区列宽度
+    payment: '25%', // 支付金额占比列宽度
+    visitors: '25%', // 上升指数列宽度
+    exposure: '25%' // 物流天数列宽度
   }
 
   const gmvColumnTitles = {
-    productName: '店铺名称', // GMV表格显示店铺名称
     category: '国家&地区', // GMV表格显示国家地区
     payment: '支付金额占比', // GMV表格显示支付金额占比
     visitors: '上升指数', // GMV表格显示上升指数
     exposure: '物流天数' // GMV表格显示物流天数
   }
+
+  // 隐藏店铺名称列
+  const hiddenColumns: (
+    | 'productName'
+    | 'category'
+    | 'payment'
+    | 'visitors'
+    | 'exposure'
+  )[] = ['productName']
 
   return (
     <div className="gmv-analysis-table">
@@ -157,6 +164,7 @@ export default function GMVAnalysisTable({
           style={{ height: '100%' }}
           columnWidths={gmvColumnWidths}
           columnTitles={gmvColumnTitles}
+          hiddenColumns={hiddenColumns}
         />
       </div>
     </div>

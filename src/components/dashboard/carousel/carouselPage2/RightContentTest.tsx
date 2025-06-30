@@ -13,7 +13,7 @@ export default function RightContentTest() {
         style={{
           height: '100%',
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
+          gridTemplateColumns: '1fr 2fr 1fr',
           gap: '15px'
         }}
       >

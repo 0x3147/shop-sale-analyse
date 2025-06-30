@@ -45,6 +45,16 @@ interface ProductSalesTableProps {
     visitors?: string
     exposure?: string
   }
+  /**
+   * 隐藏的列（完全不显示这些列）
+   */
+  hiddenColumns?: (
+    | 'productName'
+    | 'category'
+    | 'payment'
+    | 'visitors'
+    | 'exposure'
+  )[]
 }
 
 /**
@@ -57,7 +67,8 @@ export function ProductSalesTable({
   className,
   loading = false,
   columnWidths,
-  columnTitles
+  columnTitles,
+  hiddenColumns = []
 }: ProductSalesTableProps) {
   // 默认配置
   const defaultWidths = {
@@ -84,61 +95,82 @@ export function ProductSalesTable({
     ? { ...defaultTitles, ...columnTitles }
     : defaultTitles
 
-  const columns: ColumnsType<ProductSummary> = [
+  // 定义所有可能的列
+  const allColumns = [
     {
-      title: titles.productName,
-      dataIndex: 'product_name',
-      key: 'product_name',
-      width: widths.productName,
-      ellipsis: false
-    },
-    {
-      title: titles.category,
-      dataIndex: 'product_category',
-      key: 'product_category',
-      width: widths.category,
-      ellipsis: true,
-      render: (value) => value || '-'
-    },
-    {
-      title: titles.payment,
-      dataIndex: 'payment_amount',
-      key: 'payment_amount',
-      width: widths.payment,
-      render: (value) => {
-        if (value === null || value === undefined) return '-'
-        // 如果值是字符串类型，直接显示（如百分比字符串）
-        if (typeof value === 'string') {
-          return value
-        }
-        // 如果列标题包含"占比"，则显示为百分比格式
-        if (titles.payment.includes('占比')) {
-          return `${value.toFixed(2)}%`
-        }
-        return `¥${value.toLocaleString()}`
+      key: 'productName',
+      column: {
+        title: titles.productName,
+        dataIndex: 'product_name',
+        key: 'product_name',
+        width: widths.productName,
+        ellipsis: false
       }
     },
     {
-      title: titles.visitors,
-      dataIndex: 'product_visitors',
-      key: 'product_visitors',
-      width: widths.visitors,
-      render: (value) => {
-        if (value === null || value === undefined) return '-'
-        return value.toLocaleString()
+      key: 'category',
+      column: {
+        title: titles.category,
+        dataIndex: 'product_category',
+        key: 'product_category',
+        width: widths.category,
+        ellipsis: true,
+        render: (value: any) => value || '-'
       }
     },
     {
-      title: titles.exposure,
-      dataIndex: 'search_exposure',
-      key: 'search_exposure',
-      width: widths.exposure,
-      render: (value) => {
-        if (value === null || value === undefined) return '-'
-        return value.toLocaleString()
+      key: 'payment',
+      column: {
+        title: titles.payment,
+        dataIndex: 'payment_amount',
+        key: 'payment_amount',
+        width: widths.payment,
+        render: (value: any) => {
+          if (value === null || value === undefined) return '-'
+          // 如果值是字符串类型，直接显示（如百分比字符串）
+          if (typeof value === 'string') {
+            return value
+          }
+          // 如果列标题包含"占比"，则显示为百分比格式
+          if (titles.payment.includes('占比')) {
+            return `${value.toFixed(2)}%`
+          }
+          return `¥${value.toLocaleString()}`
+        }
+      }
+    },
+    {
+      key: 'visitors',
+      column: {
+        title: titles.visitors,
+        dataIndex: 'product_visitors',
+        key: 'product_visitors',
+        width: widths.visitors,
+        render: (value: any) => {
+          if (value === null || value === undefined) return '-'
+          return value.toLocaleString()
+        }
+      }
+    },
+    {
+      key: 'exposure',
+      column: {
+        title: titles.exposure,
+        dataIndex: 'search_exposure',
+        key: 'search_exposure',
+        width: widths.exposure,
+        render: (value: any) => {
+          if (value === null || value === undefined) return '-'
+          return value.toLocaleString()
+        }
       }
     }
   ]
+
+  // 根据hiddenColumns过滤列
+  const columns: ColumnsType<ProductSummary> = allColumns
+    .filter(({ key }) => !hiddenColumns.includes(key as any))
+    .map(({ column }) => column)
 
   // 为表格数据添加key
   const tableData = data.map((item, index) => ({
