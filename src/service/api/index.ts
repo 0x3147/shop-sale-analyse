@@ -2,7 +2,6 @@ import { get } from '../index'
 import type {
   ApiResponse,
   CountryHotProductsResponse,
-  CountrySummary,
   DailySales,
   DepartmentState,
   HotProductsResponse,
@@ -32,14 +31,6 @@ export function getStoreMonthSales(): Promise<ApiResponse<MonthSalesResponse>> {
  */
 export function getHotProducts(): Promise<ApiResponse<HotProductsResponse>> {
   return get<ApiResponse<HotProductsResponse>>('/dashboard/hot_products/')
-}
-
-/**
- * 获取热门国家销售数据
- * @returns 热门国家销售数据列表
- */
-export function getHotCountries(): Promise<ApiResponse<CountrySummary[]>> {
-  return get<ApiResponse<CountrySummary[]>>('/dashboard/hot_countries/')
 }
 
 /**

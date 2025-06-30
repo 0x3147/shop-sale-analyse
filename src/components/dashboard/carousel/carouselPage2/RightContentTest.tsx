@@ -1,4 +1,4 @@
-import { DashboardLayout } from '../../layout/DashboardLayout'
+import CompactLayout from './components/CompactLayout'
 import RightContent from './components/RightContent'
 
 /**
@@ -7,14 +7,13 @@ import RightContent from './components/RightContent'
  */
 export default function RightContentTest() {
   return (
-    <DashboardLayout>
+    <CompactLayout>
       <div
         style={{
-          height: '100vh',
+          height: '100%',
           display: 'grid',
           gridTemplateColumns: '2fr 1fr',
-          gap: '15px',
-          padding: '8px'
+          gap: '15px'
         }}
       >
         {/* 左侧占位区域 */}
@@ -39,6 +38,6 @@ export default function RightContentTest() {
           <RightContent />
         </div>
       </div>
-    </DashboardLayout>
+    </CompactLayout>
   )
 }
