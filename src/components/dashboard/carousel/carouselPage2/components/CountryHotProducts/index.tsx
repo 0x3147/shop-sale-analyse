@@ -113,6 +113,7 @@ export default function CountryHotProducts({
           data={countryData.currentData}
           loading={isLoading}
           className="country-products-table"
+          style={{ height: '100%' }}
         />
       </div>
     </div>
