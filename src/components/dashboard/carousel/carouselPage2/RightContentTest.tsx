@@ -1,6 +1,8 @@
+import { DashboardCard } from '@/components/dashboard/cards/DashboardCard'
 import CompactLayout from './components/CompactLayout'
 import LeftContent from './components/LeftContent'
 import RightContent from './components/RightContent'
+import WorldHotCountriesMap from './components/WorldHotCountriesMap'
 
 /**
  * 第二个页面内容测试组件
@@ -22,7 +24,12 @@ export default function RightContentTest() {
           <LeftContent />
         </div>
 
-        <div style={{ height: '100%' }}></div>
+        {/* 中间区域 - 世界热门国家地图 */}
+        <div style={{ height: '100%' }}>
+          <DashboardCard title="全球热门商品国家分布" contentHeight="100%">
+            <WorldHotCountriesMap />
+          </DashboardCard>
+        </div>
 
         {/* 右侧内容 */}
         <div style={{ height: '100%' }}>
