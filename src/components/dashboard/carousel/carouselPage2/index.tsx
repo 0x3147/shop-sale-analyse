@@ -5,10 +5,10 @@ import RightContent from './components/RightContent'
 import WorldHotCountriesMap from './components/WorldHotCountriesMap'
 
 /**
- * 第二个页面内容测试组件
- * 用于测试和预览完整的第二个页面效果
+ * 第二个轮播页面组件
+ * 显示左侧内容、中间世界地图、右侧内容的完整布局
  */
-export default function RightContentTest() {
+export default function CarouselPage2() {
   return (
     <CompactLayout>
       <div
