@@ -1,5 +1,4 @@
 import { ConversionTrend } from './components/ConversionTrend'
-import { RegionDistribution } from './components/RegionDistribution'
 import './index.less'
 
 /**
@@ -13,9 +12,6 @@ export function BottomContent() {
       <div className="left-charts">
         <div className="chart-item">
           <ConversionTrend />
-        </div>
-        <div className="chart-item">
-          <RegionDistribution />
         </div>
       </div>
 
