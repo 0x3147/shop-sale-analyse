@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react'
 import UniversalTable, { TableColumn } from '../UniversalTable'
 import './index.less'
 
-// 排行榜类型列表（按照API返回的中文键名）
-const RANKING_TYPES = ['人气榜', '效果榜', '蓝海榜', '飙升榜'] as const
 
 // 定义实际API返回的数据结构
 interface ApiRankingTypes {
