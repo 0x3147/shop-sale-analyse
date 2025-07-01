@@ -46,15 +46,14 @@ export default function SearchAnalysisTable({
       title: '搜索词',
       dataIndex: 'search_term',
       key: 'search_term',
-      width: '20%',
+      align: 'center',
       ellipsis: true
     },
     {
       title: '搜索人气',
       dataIndex: 'search_popularity',
       key: 'search_popularity',
-      width: '15%',
-      align: 'right',
+      align: 'center',
       render: (value: any) => {
         if (value === null || value === undefined) return '-'
         return typeof value === 'number' ? value.toLocaleString() : value
@@ -64,8 +63,7 @@ export default function SearchAnalysisTable({
       title: '搜索指数',
       dataIndex: 'search_index',
       key: 'search_index',
-      width: '15%',
-      align: 'right',
+      align: 'center',
       render: (value: any) => {
         if (value === null || value === undefined) return '-'
         return typeof value === 'number' ? value.toLocaleString() : value
@@ -75,8 +73,7 @@ export default function SearchAnalysisTable({
       title: '点击率',
       dataIndex: 'click_rate',
       key: 'click_rate',
-      width: '12%',
-      align: 'right',
+      align: 'center',
       render: (value: any) => {
         if (value === null || value === undefined) return '-'
         return value
@@ -86,8 +83,7 @@ export default function SearchAnalysisTable({
       title: '支付转化率',
       dataIndex: 'payment_conversion_rate',
       key: 'payment_conversion_rate',
-      width: '15%',
-      align: 'right',
+      align: 'center',
       render: (value: any) => {
         if (value === null || value === undefined) return '-'
         return value
@@ -97,8 +93,7 @@ export default function SearchAnalysisTable({
       title: '竞争指数',
       dataIndex: 'competition_index',
       key: 'competition_index',
-      width: '13%',
-      align: 'right',
+      align: 'center',
       render: (value: any) => {
         if (value === null || value === undefined) return '-'
         return typeof value === 'number' ? value.toLocaleString() : value
@@ -108,7 +103,7 @@ export default function SearchAnalysisTable({
       title: 'Top3热搜国',
       dataIndex: 'top3_hot_countries',
       key: 'top3_hot_countries',
-      width: '10%',
+      align: 'center',
       ellipsis: true,
       render: (value: any) => {
         if (value === null || value === undefined) return '-'
