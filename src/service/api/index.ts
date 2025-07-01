@@ -7,6 +7,7 @@ import type {
   DepartmentState,
   HotProductsResponse,
   MonthSalesResponse,
+  SearchAnalysisResponse,
   Traffic
 } from '../types'
 
@@ -72,4 +73,14 @@ export function getCountryAnalysis(): Promise<
   return get<ApiResponse<CountryAnalysisResponse>>(
     '/dashboard/country_analysis/'
   )
-} 
+}
+
+/**
+ * 获取热搜词分析数据
+ * @returns 热搜词分析数据包含搜索词、人气、指数、转化率等信息
+ */
+export function getSearchAnalysis(): Promise<
+  ApiResponse<SearchAnalysisResponse>
+> {
+  return get<ApiResponse<SearchAnalysisResponse>>('/dashboard/search_analysis/')
+}

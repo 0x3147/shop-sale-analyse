@@ -166,3 +166,45 @@ export interface CountryAnalysisResponse {
   type_groups: CountryAnalysisGroups
   summary: CountryAnalysisSummary
 }
+
+/**
+ * 热搜词分析数据项
+ */
+export interface SearchAnalysisItem {
+  store_id: number
+  store_name: string
+  search_term: string
+  is_brand_original: string // "Y" 或 "N"
+  search_popularity: string
+  search_index: string
+  click_rate: string
+  payment_conversion_rate: string
+  competition_index: string
+  top3_hot_countries: string
+}
+
+/**
+ * 热搜词分析表格列配置
+ */
+export interface SearchAnalysisColumn {
+  title: string
+  dataIndex: string
+  key: string
+}
+
+/**
+ * 热搜词分析汇总数据
+ */
+export interface SearchAnalysisSummary {
+  total_search_terms: number
+}
+
+/**
+ * 热搜词分析响应数据类型
+ */
+export interface SearchAnalysisResponse {
+  date: string
+  columns: SearchAnalysisColumn[]
+  data: SearchAnalysisItem[]
+  summary: SearchAnalysisSummary
+}
