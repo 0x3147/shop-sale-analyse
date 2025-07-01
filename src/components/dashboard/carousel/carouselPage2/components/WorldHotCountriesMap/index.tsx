@@ -1,9 +1,11 @@
+import logoImg from '@/assets/logo.png'
 import { getCountryHotProducts } from '@/service/api'
 import { CountryHotProductsResponse } from '@/service/types'
 import { useRequest } from 'ahooks'
 import * as echarts from 'echarts'
 import ReactECharts from 'echarts-for-react'
 import { useEffect, useState } from 'react'
+import SimpleROI from '../../../components/simpleROI'
 import './index.less'
 
 interface WorldHotCountriesMapProps {
@@ -220,6 +222,20 @@ export default function WorldHotCountriesMap({
 
   return (
     <div className="world-hot-countries-map">
+      {/* Logo区域 - 左下角 */}
+      <div className="logo-overlay">
+        <div className="logo-container">
+          <img src={logoImg} alt="京科社技" className="logo-image" />
+        </div>
+      </div>
+
+      {/* ROI区域 - 右上角 */}
+      <div className="roi-overlay">
+        <div className="roi-container">
+          <SimpleROI />
+        </div>
+      </div>
+
       {isLoading ? (
         <div className="loading-container">
           <div className="loading-spinner" />
