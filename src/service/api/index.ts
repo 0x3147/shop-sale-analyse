@@ -6,7 +6,9 @@ import type {
   DailySales,
   DepartmentState,
   HotProductsResponse,
+  IndustryRankingResponse,
   MonthSalesResponse,
+  RisingSearchResponse,
   SearchAnalysisResponse,
   Traffic
 } from '../types'
@@ -83,4 +85,28 @@ export function getSearchAnalysis(): Promise<
   ApiResponse<SearchAnalysisResponse>
 > {
   return get<ApiResponse<SearchAnalysisResponse>>('/dashboard/search_analysis/')
+}
+
+/**
+ * 获取飙升词分析数据
+ * @returns 飙升词分析数据包含搜索词、飙升幅度、增长指标等信息
+ */
+export function getRisingSearchTerms(): Promise<
+  ApiResponse<RisingSearchResponse>
+> {
+  return get<ApiResponse<RisingSearchResponse>>(
+    '/dashboard/rising_search_terms/'
+  )
+}
+
+/**
+ * 获取行业排行榜数据
+ * @returns 行业排行榜数据
+ */
+export function getIndustryRanking(): Promise<
+  ApiResponse<IndustryRankingResponse>
+> {
+  return get<ApiResponse<IndustryRankingResponse>>(
+    '/dashboard/industry_ranking/'
+  )
 }

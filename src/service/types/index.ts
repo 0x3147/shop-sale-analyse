@@ -208,3 +208,79 @@ export interface SearchAnalysisResponse {
   data: SearchAnalysisItem[]
   summary: SearchAnalysisSummary
 }
+
+/**
+ * 飙升词分析数据项
+ */
+export interface RisingSearchItem {
+  search_term: string // 搜索词
+  search_index: string // 搜索指数
+  search_surge_rate: string // 搜索指数飙升幅度
+  exposure_growth_rate: string // 曝光商品数增长幅度
+  merchant_growth_rate: string // 曝光商家数增长幅度
+}
+
+/**
+ * 飙升词分析表格列配置
+ */
+export interface RisingSearchColumn {
+  title: string
+  dataIndex: string
+  key: string
+}
+
+/**
+ * 飙升词分析汇总数据
+ */
+export interface RisingSearchSummary {
+  total_rising_terms: number
+}
+
+/**
+ * 飙升词分析响应数据类型
+ */
+export interface RisingSearchResponse {
+  success: boolean
+  msg: string
+  data: {
+    date: string
+    items: RisingSearchItem[]
+  }
+}
+
+// 行业排行榜接口相关类型
+export interface IndustryRankingItem {
+  id: number
+  store_id: number
+  store_name: string
+  date: string
+  product_name: string
+  market_size: string // 市场规模
+  market_growth_rate: string // 市场增速
+  market_supply_demand: string // 市场供需
+  market_conversion: string // 市场转化
+}
+
+export interface IndustryRankingColumn {
+  title: string
+  dataIndex: string
+  key: string
+}
+
+export interface IndustryRankingResponse {
+  success: boolean
+  msg: string
+  data: {
+    date: string
+    columns: IndustryRankingColumn[]
+    ranking_types: {
+      popularity: IndustryRankingItem[]
+      effectiveness: IndustryRankingItem[]
+      blue_ocean: IndustryRankingItem[]
+      trending: IndustryRankingItem[]
+    }
+    summary: {
+      total_count: number
+    }
+  }
+}
