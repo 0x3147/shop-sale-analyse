@@ -36,7 +36,8 @@ export default function SearchAnalysisTable({
   useEffect(() => {
     if (data?.data) {
       const responseData = data.data as SearchAnalysisResponse
-      setTableData(responseData.data || [])
+      // 只显示前5条数据
+      setTableData((responseData.data || []).slice(0, 5))
     }
   }, [data])
 

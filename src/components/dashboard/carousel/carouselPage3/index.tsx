@@ -1,5 +1,6 @@
 import { DashboardCard } from '../../cards/DashboardCard'
 import CompactLayout from '../carouselPage2/components/CompactLayout'
+import IndustryRankingTable from './components/IndustryRankingTable'
 import RisingSearchTable from './components/RisingSearchTable'
 import SearchAnalysisTable from './components/SearchAnalysisTable'
 import './index.less'
@@ -22,20 +23,10 @@ export default function CarouselPage3() {
           </DashboardCard>
         </div>
 
-        {/* 第三个表格 - 行业排行榜（待开发） */}
+        {/* 第三个表格 - 行业排行榜 */}
         <div className="table-section">
           <DashboardCard title="行业排行榜" contentHeight="100%">
-            <div
-              style={{
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#8fb3f1'
-              }}
-            >
-              待开发...
-            </div>
+            <IndustryRankingTable />
           </DashboardCard>
         </div>
       </div>

@@ -41,7 +41,8 @@ export default function RisingSearchTable({
 
       if (responseData && Array.isArray(responseData.data)) {
         console.log('设置表格数据:', responseData.data)
-        setTableData(responseData.data)
+        // 只显示前5条数据
+        setTableData(responseData.data.slice(0, 5))
       } else {
         console.log('数据格式不符合预期:', responseData)
       }
