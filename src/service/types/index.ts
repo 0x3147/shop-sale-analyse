@@ -213,11 +213,14 @@ export interface SearchAnalysisResponse {
  * 飙升词分析数据项
  */
 export interface RisingSearchItem {
+  store_id: number
+  store_name: string
   search_term: string // 搜索词
+  is_brand_original: string // 是否品牌原词
   search_index: string // 搜索指数
-  search_surge_rate: string // 搜索指数飙升幅度
-  exposure_growth_rate: string // 曝光商品数增长幅度
-  merchant_growth_rate: string // 曝光商家数增长幅度
+  search_index_growth: string // 搜索指数飙升幅度
+  product_exposure_growth: string // 曝光商品数增长幅度
+  merchant_exposure_growth: string // 曝光商家数增长幅度
 }
 
 /**
@@ -244,7 +247,9 @@ export interface RisingSearchResponse {
   msg: string
   data: {
     date: string
-    items: RisingSearchItem[]
+    columns: RisingSearchColumn[]
+    data: RisingSearchItem[]
+    summary: RisingSearchSummary
   }
 }
 
