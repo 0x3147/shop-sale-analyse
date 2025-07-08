@@ -103,7 +103,7 @@ export default function GMVAnalysisTable({
 
       if (currentTypeData) {
         // 只取前8条数据，并转换为ProductSummary格式
-        const top8Data = currentTypeData.slice(0, 5).map(
+        const top8Data = currentTypeData.slice(0, 8).map(
           (item: CountryAnalysisItem): ProductSummary => ({
             product_name: item.store_name, // 店铺名称对应商品名称
             product_category: item.country_region, // 国家地区对应商品类目
