@@ -52,13 +52,6 @@ export default function RisingSearchTable({
   // 定义表格列配置
   const columns: TableColumn<RisingSearchItem>[] = [
     {
-      title: '店铺名称',
-      dataIndex: 'store_name',
-      key: 'store_name',
-      align: 'center',
-      ellipsis: true
-    },
-    {
       title: '搜索词',
       dataIndex: 'search_term',
       key: 'search_term',

@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import UniversalTable, { TableColumn } from '../UniversalTable'
 import './index.less'
 
-
 // 定义实际API返回的数据结构
 interface ApiRankingTypes {
   [key: string]: IndustryRankingItem[]
@@ -90,13 +89,6 @@ export default function IndustryRankingTable({
 
   // 定义表格列配置
   const columns: TableColumn<IndustryRankingItem>[] = [
-    {
-      title: '店铺名称',
-      dataIndex: 'store_name',
-      key: 'store_name',
-      align: 'center',
-      ellipsis: true
-    },
     {
       title: '产品名称',
       dataIndex: 'product_name',
