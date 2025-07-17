@@ -66,18 +66,18 @@ export function BaseEChart({
       backgroundColor: 'transparent',
       textStyle: {
         color: '#a1b4d4',
-        fontSize: 16
+        fontSize: 18
       },
       title: {
         textStyle: {
           color: '#add6ff',
-          fontSize: 20
+          fontSize: 22
         }
       },
       legend: {
         textStyle: {
           color: '#a1b4d4',
-          fontSize: 16
+          fontSize: 18
         }
       },
       xAxis: {
@@ -88,7 +88,7 @@ export function BaseEChart({
         },
         axisLabel: {
           color: '#7a9ac5',
-          fontSize: 16
+          fontSize: 18
         },
         splitLine: {
           lineStyle: {
@@ -104,7 +104,7 @@ export function BaseEChart({
         },
         axisLabel: {
           color: '#7a9ac5',
-          fontSize: 16
+          fontSize: 18
         },
         splitLine: {
           lineStyle: {

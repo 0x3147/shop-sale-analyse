@@ -154,11 +154,11 @@ export function StoreTrafficChart({
         nameGap: 65,
         nameTextStyle: {
           color: '#a1b4d4',
-          fontSize: 22
+          fontSize: 24
         },
         axisLabel: {
           color: '#a1b4d4',
-          fontSize: 20,
+          fontSize: 22,
           rotate: 45,
           formatter: (value: number) => {
             if (activeMetric === 'exposure' || activeMetric === 'visitors') {
@@ -188,7 +188,7 @@ export function StoreTrafficChart({
         axisLabel: {
           color: '#a1b4d4',
           interval: 0,
-          fontSize: 20,
+          fontSize: 22,
           width: 120,
           overflow: 'none'
         },
@@ -214,7 +214,7 @@ export function StoreTrafficChart({
             show: true,
             position: 'right',
             color: '#ffffff',
-            fontSize: 22,
+            fontSize: 24,
             formatter: (params: any) => {
               return metric.formatter(params.value)
             }
