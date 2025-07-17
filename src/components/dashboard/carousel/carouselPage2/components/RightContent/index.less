@@ -3,14 +3,18 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow: hidden; // 防止内容溢出
 
   .time-section {
-    flex: 0 0 20%; // 时间区域占35%
+    flex: 0 0 20%; // 时间区域占20%
     height: 20%;
+    overflow: hidden; // 防止时间区域溢出
   }
 
   .products-section {
-    flex: 1; // 产品表格占剩余65%
-    height: 0;
+    flex: 1; // 产品表格占剩余80%
+    height: 0; // 允许flex收缩
+    overflow: hidden; // 防止表格溢出影响布局
+    min-height: 0; // 确保可以正确收缩
   }
 }
