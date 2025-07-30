@@ -5,10 +5,10 @@ import { useRequest } from 'ahooks'
 import { useState } from 'react'
 import { DashboardCard } from '../../cards/DashboardCard'
 import { ShopSalesBar } from '../../charts/ShopSalesBar'
-import { StoreTrafficChart } from '../../charts/StoreTrafficChart'
 import { DashboardLayout } from '../../layout/DashboardLayout'
 import { ShopMonthlySalesChart } from '../../sections/MidContent/components/ShopMonthlySalesChart'
 import SimpleROI from '../components/simpleROI'
+import { MetricSwitcher } from './components/MetricSwitcher'
 import './index.less'
 
 /**
@@ -57,13 +57,13 @@ export default function CarouselPage1() {
   return (
     <DashboardLayout>
       <div className="carousel-page1-container">
-        {/* 左侧 - 店铺曝光量排行（向上延伸） */}
+        {/* 左侧 - 店铺流量指标排行（向上延伸） */}
         <div className="left-column">
-          <DashboardCard title="店铺曝光量排行" contentHeight="100%">
-            <StoreTrafficChart
+          <DashboardCard title="店铺流量数据排行" contentHeight="100%">
+            <MetricSwitcher
               data={trafficData}
-              activeMetric="exposure"
               loading={trafficLoading}
+              switchInterval={10000}
             />
           </DashboardCard>
         </div>
