@@ -1,32 +1,27 @@
 import logoImg from '@/assets/logo.png'
-import { formatInTimeZone } from 'date-fns-tz'
-import { useEffect, useState } from 'react'
 import { DashboardCard } from '../../cards/DashboardCard'
 import { CurrentTime } from '../../layout/CurrentTime'
 import { DepartmentSummary } from './components/DepartmentSummary'
 import { ShopDailySales } from './components/ShopDailySales'
 import './index.less'
 
+// 固定展示的国家列表
+const FIXED_COUNTRIES = [
+  '中国',
+  '美国',
+  '俄罗斯',
+  '乌克兰',
+  '墨西哥',
+  '巴西',
+  '意大利',
+  '秘鲁'
+]
+
 /**
  * 顶部统计区域组件
  * 展示各店铺日销售额数据、logo、部门统计数据和时间组件
  */
 export function TopStats() {
-  const [time, setTime] = useState(new Date())
-
-  // 每秒更新当前时间
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date())
-    }, 1000)
-
-    return () => clearInterval(timer)
-  }, [])
-
-  // 格式化北京时间
-  const beijingTime = formatInTimeZone(time, 'Asia/Shanghai', 'HH:mm:ss')
-  const beijingDate = formatInTimeZone(time, 'Asia/Shanghai', 'yyyy-MM-dd')
-
   return (
     <div className="top-stats">
       <div className="stats-grid">
@@ -52,19 +47,8 @@ export function TopStats() {
         <div className="stats-cell time-display">
           <DashboardCard title="热门国家时间" contentHeight="100%">
             <div className="time-display-container">
-              {/* 北京时间 */}
-              <div className="beijing-time-section">
-                <div className="city-label">北京时间</div>
-                <div className="time-display">{beijingTime}</div>
-                <div className="date-display">{beijingDate}</div>
-              </div>
-
-              {/* 其他国家时间 - 使用下拉选择方式 */}
-              <div className="foreign-time-section">
-                <div className="city-selector">
-                  <CurrentTime excludeBeijing={true} maxDisplay={1} />
-                </div>
-              </div>
+              {/* 固定展示指定国家时间 */}
+              <CurrentTime fixedCountries={FIXED_COUNTRIES} />
             </div>
           </DashboardCard>
         </div>

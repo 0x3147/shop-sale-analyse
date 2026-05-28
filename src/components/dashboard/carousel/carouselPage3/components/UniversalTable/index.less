@@ -1,0 +1,178 @@
+.universal-table {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .dashboard-table {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+
+    // 表格整体样式
+    .ant-table {
+      background: transparent;
+      height: 100%;
+
+      .ant-table-container {
+        background: transparent;
+        border: 1px solid rgba(94, 200, 234, 0.15);
+        border-radius: 8px;
+        height: 100%;
+        overflow: auto;
+
+        .ant-table-body {
+          height: auto !important;
+          max-height: calc(100% - 120px); // 减去表头高度
+          overflow-y: auto;
+        }
+
+        // 自定义滚动条样式
+        &::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: rgba(15, 40, 80, 0.3);
+          border-radius: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: rgba(94, 200, 234, 0.4);
+          border-radius: 4px;
+
+          &:hover {
+            background: rgba(94, 200, 234, 0.6);
+          }
+        }
+      }
+
+      // 表头样式
+      .ant-table-thead {
+        tr {
+          th {
+            background: rgba(28, 62, 122, 0.4);
+            border-bottom: 1px solid rgba(94, 200, 234, 0.2);
+            color: #8fb3f1;
+            font-weight: 600;
+            font-size: 38px;
+            padding: 6px 10px;
+            height: 120px;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+
+            &:not(:last-child) {
+              border-right: 1px solid rgba(94, 200, 234, 0.1);
+            }
+
+            // 排序箭头样式
+            .ant-table-column-sorter {
+              color: #8fb3f1;
+
+              .ant-table-column-sorter-up,
+              .ant-table-column-sorter-down {
+                color: #8fb3f1;
+
+                &.active {
+                  color: #15f4ee;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // 表格内容样式
+      .ant-table-tbody {
+        tr {
+          background: rgba(15, 34, 75, 0.3);
+
+          &:nth-child(even) {
+            background: rgba(28, 62, 122, 0.2);
+          }
+
+          // 修复悬停时整行变白的问题
+          &:hover {
+            background: rgba(45, 85, 160, 0.4) !important;
+
+            td {
+              background: rgba(45, 85, 160, 0.4) !important;
+
+              &.ant-table-column-sort {
+                background: rgba(45, 85, 160, 0.4) !important;
+              }
+            }
+          }
+
+          // 覆盖Ant Design的默认悬停样式
+          &.ant-table-row:hover {
+            background: rgba(45, 85, 160, 0.4) !important;
+
+            > td {
+              background: rgba(45, 85, 160, 0.4) !important;
+            }
+          }
+
+          td {
+            background: inherit;
+            border-bottom: 1px solid rgba(94, 200, 234, 0.1);
+            color: #a1c4ff;
+            font-size: 42px;
+            font-weight: 500;
+            padding: 4px 24px;
+            min-height: 120px;
+            vertical-align: top;
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: normal;
+            line-height: 1.4;
+
+            &:not(:last-child) {
+              border-right: 1px solid rgba(94, 200, 234, 0.05);
+            }
+
+            // 修复排序列背景变白的问题
+            &.ant-table-column-sort {
+              background: inherit !important;
+            }
+          }
+        }
+
+        // 偶数行的排序列样式
+        tr:nth-child(even) {
+          td.ant-table-column-sort {
+            background: rgba(28, 62, 122, 0.2) !important;
+          }
+        }
+      }
+    }
+
+    // 空数据样式
+    .ant-empty {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .ant-empty-description {
+        color: #8fb3f1;
+        font-size: 16px;
+      }
+
+      .ant-empty-image {
+        svg {
+          fill: #8fb3f1;
+        }
+      }
+    }
+
+    // 加载状态样式
+    .ant-spin {
+      .ant-spin-dot {
+        .ant-spin-dot-item {
+          background-color: #15f4ee;
+        }
+      }
+    }
+  }
+}

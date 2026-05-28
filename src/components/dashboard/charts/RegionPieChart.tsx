@@ -42,6 +42,7 @@ export function RegionPieChart({
       show: false
     },
     legend: {
+      show: false,
       orient: 'vertical',
       right: 10,
       top: 'center',
@@ -65,7 +66,7 @@ export function RegionPieChart({
         name: '国家分布',
         type: 'pie',
         radius: ['10%', '70%'],
-        center: ['35%', '50%'],
+        center: ['50%', '50%'],
         roseType: 'area', // 设置为南丁格尔玫瑰图
         avoidLabelOverlap: true,
         itemStyle: {
@@ -77,7 +78,7 @@ export function RegionPieChart({
           show: true,
           position: 'outside',
           formatter: '{b}',
-          fontSize: 12,
+          fontSize: 26,
           color: '#ffffff',
           textShadowColor: 'rgba(0, 0, 0, 0.8)',
           textShadowBlur: 3,
@@ -90,7 +91,7 @@ export function RegionPieChart({
         emphasis: {
           label: {
             show: true,
-            fontSize: 14,
+            fontSize: 18,
             fontWeight: 'bold'
           },
           itemStyle: {

@@ -1,0 +1,44 @@
+.industry-ranking-table {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .ranking-type-indicator {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    margin-bottom: 8px;
+    background: rgba(15, 40, 80, 0.3);
+    border-radius: 8px;
+    border: 1px solid rgba(94, 200, 234, 0.2);
+    text-align: center;
+
+    .ranking-type-title {
+      font-size: 40px;
+      font-weight: 600;
+      color: #15f4ee;
+      text-shadow: 0 0 8px rgba(21, 244, 238, 0.5);
+      animation: titleGlow 3s infinite;
+    }
+  }
+
+  .table-content {
+    flex: 1;
+    height: 0; // 允许flex收缩
+    overflow: hidden;
+
+    .industry-ranking-table-content {
+      height: 100%;
+    }
+  }
+}
+
+// 标题发光动画
+@keyframes titleGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 8px rgba(21, 244, 238, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 12px rgba(21, 244, 238, 0.8);
+  }
+}

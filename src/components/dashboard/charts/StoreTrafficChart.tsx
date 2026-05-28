@@ -1,6 +1,6 @@
 import { Traffic } from '@/service/types'
 import { EChartsOption } from 'echarts'
-import { CSSProperties, useEffect, useMemo, useState } from 'react'
+import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import { BaseEChart } from './BaseEChart'
 
 interface StoreTrafficChartProps {
@@ -67,6 +67,9 @@ export function StoreTrafficChart({
 }: StoreTrafficChartProps) {
   // ECharts配置项
   const [option, setOption] = useState<EChartsOption>({})
+  // 使用useRef跟踪上一次的配置和依赖
+  const prevMetricRef = useRef(activeMetric)
+  const prevStoreDataRef = useRef<any[]>([])
 
   // 处理数据生成图表配置
   const storeData = useMemo(() => {
@@ -99,6 +102,19 @@ export function StoreTrafficChart({
   useEffect(() => {
     if (!storeData || storeData.length === 0) return
 
+    // 检查数据和指标是否真的变化了
+    const metricChanged = prevMetricRef.current !== activeMetric
+    const dataChanged =
+      JSON.stringify(prevStoreDataRef.current) !== JSON.stringify(storeData)
+
+    if (!metricChanged && !dataChanged) {
+      return // 如果没有实质性变化，则不更新
+    }
+
+    // 更新引用值
+    prevMetricRef.current = activeMetric
+    prevStoreDataRef.current = [...storeData]
+
     const metric = metricConfig[activeMetric]
     const storeNames = storeData.map((item) => item.store_name)
     const metricValues = storeData.map((item) => item[activeMetric])
@@ -110,54 +126,40 @@ export function StoreTrafficChart({
           type: 'shadow'
         },
         formatter: (params: any) => {
-          const dataIndex = params[0].dataIndex
-          const store = storeData[dataIndex]
+          const data = params[0]
+          const item = storeData[data.dataIndex]
 
           return `
-            <div class="tooltip-title">${store.store_name}</div>
             <div class="tooltip-item">
-              <span class="label">${metric.name}:</span>
-              <span class="value">${metric.formatter(store[activeMetric])}</span>
+              <div class="tooltip-title">${item.store_name}</div>
+              <div class="tooltip-value">${metric.name}: ${metric.formatter(data.value)}</div>
             </div>
-            <div class="tooltip-category">分类: ${store.category}</div>
           `
         }
       },
+      legend: {
+        show: false
+      },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        top: '50px',
+        top: '20%',
+        left: '5%',
+        right: '30%',
+        bottom: '5%',
         containLabel: true
       },
       xAxis: {
-        type: 'category',
-        data: storeNames,
-        axisLabel: {
-          interval: 0,
-          rotate: 45,
-          color: '#a1b4d4',
-          formatter: (value: string) => {
-            if (value.length > 8) {
-              return value.slice(0, 8) + '...'
-            }
-            return value
-          }
-        },
-        axisLine: {
-          lineStyle: {
-            color: 'rgba(161, 180, 212, 0.3)'
-          }
-        }
-      },
-      yAxis: {
         type: 'value',
         name: metric.name,
+        nameLocation: 'end',
+        nameGap: 65,
         nameTextStyle: {
-          color: '#a1b4d4'
+          color: '#a1b4d4',
+          fontSize: 24
         },
         axisLabel: {
           color: '#a1b4d4',
+          fontSize: 22,
+          rotate: 45,
           formatter: (value: number) => {
             if (activeMetric === 'exposure' || activeMetric === 'visitors') {
               if (value >= 10000) {
@@ -180,18 +182,39 @@ export function StoreTrafficChart({
           }
         }
       },
+      yAxis: {
+        type: 'category',
+        data: storeNames,
+        axisLabel: {
+          color: '#a1b4d4',
+          interval: 0,
+          fontSize: 22,
+          width: 120,
+          overflow: 'none'
+        },
+        axisLine: {
+          lineStyle: {
+            color: 'rgba(161, 180, 212, 0.3)'
+          }
+        },
+        axisTick: {
+          show: false
+        }
+      },
       series: [
         {
           name: metric.name,
           type: 'bar',
           data: metricValues,
           itemStyle: {
-            color: metric.color
+            color: metric.color,
+            borderRadius: [0, 4, 4, 0]
           },
           label: {
             show: true,
-            position: 'top',
-            color: '#a1b4d4',
+            position: 'right',
+            color: '#ffffff',
+            fontSize: 24,
             formatter: (params: any) => {
               return metric.formatter(params.value)
             }
@@ -200,7 +223,14 @@ export function StoreTrafficChart({
       ]
     }
 
-    setOption(chartOption)
+    // 使用函数形式的setState，避免依赖旧的state
+    setOption((prevOption) => {
+      // 如果实质上相同，则返回旧的option避免重渲染
+      if (JSON.stringify(prevOption) === JSON.stringify(chartOption)) {
+        return prevOption
+      }
+      return chartOption
+    })
   }, [storeData, activeMetric])
 
   return (

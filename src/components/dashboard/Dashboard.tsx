@@ -2,6 +2,7 @@ import './Dashboard.less'
 import { DashboardLayout } from './layout/DashboardLayout'
 import { BottomContent } from './sections/BottomContent'
 import { MidContent } from './sections/MidContent'
+import { HotProductsTreemap } from './sections/MidContent/components/HotProductsTreemap'
 import { TopStats } from './sections/TopStats/index'
 
 /**
@@ -16,14 +17,25 @@ export function Dashboard() {
         <TopStats />
       </div>
 
-      {/* 中部区域 - 销售趋势和热门产品 */}
-      <div className="dashboard-section mid-section">
-        <MidContent />
-      </div>
+      {/* 主内容区域 - 重新设计布局 */}
+      <div className="dashboard-section main-content-area">
+        {/* 左侧区域 */}
+        <div className="left-area">
+          {/* 中部：店铺月销售趋势 */}
+          <div className="monthly-sales-section">
+            <MidContent />
+          </div>
 
-      {/* 底部区域 - 转化率和地域分布 */}
-      <div className="dashboard-section bottom-section">
-        <BottomContent />
+          {/* 底部：转化率和地域分布 */}
+          <div className="bottom-charts-section">
+            <BottomContent />
+          </div>
+        </div>
+
+        {/* 右侧区域：热门产品延伸 */}
+        <div className="right-area">
+          <HotProductsTreemap />
+        </div>
       </div>
     </DashboardLayout>
   )

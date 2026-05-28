@@ -2,6 +2,31 @@ import { EChartsOption } from 'echarts'
 import ReactEcharts from 'echarts-for-react'
 import { CSSProperties, useEffect, useRef, useState } from 'react'
 
+// 辅助函数：深拷贝对象
+const deepClone = (obj: any): any => {
+  if (obj === null || typeof obj !== 'object') {
+    return obj
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map((item) => deepClone(item))
+  }
+
+  const clonedObj: any = {}
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      clonedObj[key] = deepClone(obj[key])
+    }
+  }
+
+  return clonedObj
+}
+
+// 辅助函数：检查两个对象是否有实质性变化
+const hasChanged = (prevObj: any, nextObj: any): boolean => {
+  return JSON.stringify(prevObj) !== JSON.stringify(nextObj)
+}
+
 interface BaseEChartProps {
   option: EChartsOption
   loading?: boolean
@@ -27,23 +52,32 @@ export function BaseEChart({
   const [baseOption, setBaseOption] = useState<EChartsOption>({})
   const echartRef = useRef<ReactEcharts>(null)
   const prevLoadingRef = useRef(loading)
+  const prevOptionRef = useRef<EChartsOption>({})
 
   // 合并默认配置和用户配置
   useEffect(() => {
+    // 检查option是否真的变化了，避免不必要的重渲染
+    if (!hasChanged(prevOptionRef.current, option)) {
+      return
+    }
+
     // 大屏默认主题配置
     const defaultOption: EChartsOption = {
       backgroundColor: 'transparent',
       textStyle: {
-        color: '#a1b4d4'
+        color: '#a1b4d4',
+        fontSize: 18
       },
       title: {
         textStyle: {
-          color: '#add6ff'
+          color: '#add6ff',
+          fontSize: 22
         }
       },
       legend: {
         textStyle: {
-          color: '#a1b4d4'
+          color: '#a1b4d4',
+          fontSize: 18
         }
       },
       xAxis: {
@@ -53,7 +87,8 @@ export function BaseEChart({
           }
         },
         axisLabel: {
-          color: '#7a9ac5'
+          color: '#7a9ac5',
+          fontSize: 18
         },
         splitLine: {
           lineStyle: {
@@ -68,7 +103,8 @@ export function BaseEChart({
           }
         },
         axisLabel: {
-          color: '#7a9ac5'
+          color: '#7a9ac5',
+          fontSize: 18
         },
         splitLine: {
           lineStyle: {
@@ -87,12 +123,16 @@ export function BaseEChart({
       animation: true
     }
 
+    // 创建option的深拷贝，避免引用问题
+    const optionCopy = deepClone(option)
+    prevOptionRef.current = optionCopy
+
     // 是否合并配置
     if (notMerge) {
-      setBaseOption(option)
+      setBaseOption(optionCopy)
     } else {
       // 深度合并配置对象
-      setBaseOption({ ...defaultOption, ...option })
+      setBaseOption({ ...defaultOption, ...optionCopy })
     }
   }, [option, notMerge])
 
@@ -128,7 +168,7 @@ export function BaseEChart({
       theme={theme}
       opts={{ renderer: 'canvas', devicePixelRatio: 2 }}
       // 使用merge模式而不是替换模式，减少重绘
-      notMerge={false}
+      notMerge={notMerge}
       // 允许动画，以确保正常的交互行为
       lazyUpdate={false}
     />

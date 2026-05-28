@@ -1,11 +1,15 @@
 import { get } from '../index'
 import type {
   ApiResponse,
-  CountrySummary,
+  CountryAnalysisResponse,
+  CountryHotProductsResponse,
   DailySales,
   DepartmentState,
+  HotProductsResponse,
+  IndustryRankingResponse,
   MonthSalesResponse,
-  ProductSummary,
+  RisingSearchResponse,
+  SearchAnalysisResponse,
   Traffic
 } from '../types'
 
@@ -27,18 +31,10 @@ export function getStoreMonthSales(): Promise<ApiResponse<MonthSalesResponse>> {
 
 /**
  * 获取热门产品数据
- * @returns 所有店铺的热门产品数据列表
+ * @returns 包含B端和C端的热门产品数据
  */
-export function getHotProducts(): Promise<ApiResponse<ProductSummary[]>> {
-  return get<ApiResponse<ProductSummary[]>>('/dashboard/hot_products/')
-}
-
-/**
- * 获取热门国家销售数据
- * @returns 热门国家销售数据列表
- */
-export function getHotCountries(): Promise<ApiResponse<CountrySummary[]>> {
-  return get<ApiResponse<CountrySummary[]>>('/dashboard/hot_countries/')
+export function getHotProducts(): Promise<ApiResponse<HotProductsResponse>> {
+  return get<ApiResponse<HotProductsResponse>>('/dashboard/hot_products/')
 }
 
 /**
@@ -55,4 +51,62 @@ export function getStoreTraffic(): Promise<ApiResponse<Traffic[]>> {
  */
 export function getDepartmentSales(): Promise<ApiResponse<DepartmentState>> {
   return get<ApiResponse<DepartmentState>>('/dashboard/department_stats/')
+}
+
+/**
+ * 获取各国家热门产品数据
+ * @returns 各国家的热门产品Top5数据
+ */
+export function getCountryHotProducts(): Promise<
+  ApiResponse<CountryHotProductsResponse>
+> {
+  return get<ApiResponse<CountryHotProductsResponse>>(
+    '/dashboard/hot_products/'
+  )
+}
+
+/**
+ * 获取国家分析数据
+ * @returns 按GMV和增速分组的国家分析数据
+ */
+export function getCountryAnalysis(): Promise<
+  ApiResponse<CountryAnalysisResponse>
+> {
+  return get<ApiResponse<CountryAnalysisResponse>>(
+    '/dashboard/country_analysis/'
+  )
+}
+
+/**
+ * 获取热搜词分析数据
+ * @returns 热搜词分析数据包含搜索词、人气、指数、转化率等信息
+ */
+export function getSearchAnalysis(): Promise<
+  ApiResponse<SearchAnalysisResponse>
+> {
+  return get<ApiResponse<SearchAnalysisResponse>>('/dashboard/search_analysis/')
+}
+
+/**
+ * 获取飙升词分析数据
+ * @returns 飙升词分析数据包含搜索词、飙升幅度、增长指标等信息
+ */
+export function getRisingSearchTerms(): Promise<
+  ApiResponse<RisingSearchResponse>
+> {
+  return get<ApiResponse<RisingSearchResponse>>(
+    '/dashboard/rising_search_terms/'
+  )
+}
+
+/**
+ * 获取行业排行榜数据
+ * @returns 行业排行榜数据
+ */
+export function getIndustryRanking(): Promise<
+  ApiResponse<IndustryRankingResponse>
+> {
+  return get<ApiResponse<IndustryRankingResponse>>(
+    '/dashboard/industry_ranking/'
+  )
 }
